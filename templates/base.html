@@ -10,16 +10,13 @@
   </head>
 
   <body class="bg-gray-50 text-black font-serif leading-normal tracking-normal">
-    <div class="toast toast-top toast-end">
-      <div class="alert alert-info">
-        <span>Hello from daisyUi </span>
-      </div>
-    </div>
+    {% block content %}{% endblock %}
 
-    <div class="container mx-auto">
-      <section class="flex items-center justify-center h-screen">
-        <h1 class="text-5xl">Django + Tailwind = ❤️ buit by Kelly</h1>
-      </section>
-    </div>
+    <script
+      src="{% static 'django-browser-reload/reload-listener.js' %}"
+      data-worker-script-path="{% static 'django-browser-reload/reload-worker.js' %}"
+      data-events-path="{% url 'django_browser_reload:events' %}"
+      defer
+    ></script>
   </body>
 </html>
