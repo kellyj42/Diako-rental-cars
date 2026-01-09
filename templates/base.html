@@ -9,9 +9,8 @@
     {% tailwind_css %}
   </head>
 
-  <body class="bg-gray-50 text-black font-serif leading-normal tracking-normal">
+  <body class="leading-normal tracking-normal">
     {% block content %}{% endblock %}
-
     <script
       src="{% static 'django-browser-reload/reload-listener.js' %}"
       data-worker-script-path="{% static 'django-browser-reload/reload-worker.js' %}"
