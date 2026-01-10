@@ -1,4 +1,4 @@
-{% load static tailwind_tags %}
+{% load static tailwind_tags django_browser_reload %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,14 +8,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     {% tailwind_css %}
   </head>
-
+  <style>
+    nav img {
+      width: 70px;
+    }
+  </style>
   <body class="leading-normal tracking-normal">
-    {% block content %}{% endblock %}
+    {% block content %}{% endblock %} {% django_browser_reload_script %}
     <script
-      src="{% static 'django-browser-reload/reload-listener.js' %}"
-      data-worker-script-path="{% static 'django-browser-reload/reload-worker.js' %}"
-      data-events-path="{% url 'django_browser_reload:events' %}"
-      defer
+      src="https://kit.fontawesome.com/dbc3492b26.js"
+      crossorigin="anonymous"
     ></script>
   </body>
 </html>

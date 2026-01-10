@@ -1,16 +1,103 @@
-<nav class="flex justify-between p-10">
-  <div>
-    <h1>LOGO</h1>
-  </div>
-  <ul class="flex space-x-5">
-    <li><a href="">Home</a></li>
-    <li><a href="">Services</a></li>
-    <li><a href="">Cars</a></li>
-    <li><a href="">Faqs</a></li>
-    <li><a href="">About Us</a></li>
-  </ul>
-  <div>
-    <button>Contact Us</button>
-  </div>
-</nav>
+{% load static %}
+<header class="shadow-lg">
+  <!-- Top Info Bar -->
+  <div class="bg-blue-950 border-b border-blue-900">
+    <div class="flex justify-between items-center px-10 py-3">
+      <ul class="flex space-x-8 text-sm text-gray-200">
+        <li class="flex items-center gap-2">
+          <i class="fa-solid fa-location-arrow text-orange-400"></i>
+          New York, USA
+        </li>
+        <li class="flex items-center gap-2">
+          <i class="fa-solid fa-phone text-orange-400"></i>
+          +1 234 567 890
+        </li>
+        <li class="flex items-center gap-2">
+          <i class="fa-solid fa-envelope text-orange-400"></i>
+          info@email.com
+        </li>
+      </ul>
 
+      <ul class="flex space-x-4 text-orange-300 text-lg">
+        <li
+          class="bg-blue-900 p-2 rounded-full hover:bg-orange-400 hover:text-white transition"
+        >
+          <i class="fa-brands fa-whatsapp"></i>
+        </li>
+        <li
+          class="bg-blue-900 p-2 rounded-full hover:bg-orange-400 hover:text-white transition"
+        >
+          <i class="fa-brands fa-facebook"></i>
+        </li>
+        <li
+          class="bg-blue-900 p-2 rounded-full hover:bg-orange-400 hover:text-white transition"
+        >
+          <i class="fa-brands fa-instagram"></i>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <nav class="bg-white">
+    <div class="flex justify-between items-center p-2">
+      <!-- Logo -->
+      <div class="flex flex-col justify-center items-center">
+        <img src="{% static 'home/logoo.png' %}" alt="Diako Rentals logo" />
+        <h1 class="font-serif text-lg font-bold">Diako Travel Agency</h1>
+        <p class="text-xs text-slate-600">Travel with passion and comfart</p>
+      </div>
+
+      <!-- Navigation Links -->
+      <ul class="flex space-x-8 text-gray-700 font-medium">
+        <li class="relative group">
+          <a href="#" class="transition">
+            Home
+            <span
+              class="absolute left-0 -bottom-1 h-0.5 w-0 bg-orange-400 transition-all group-hover:w-full"
+            ></span>
+          </a>
+        </li>
+        <li class="relative group">
+          <a href="#" class="transition">
+            Services
+            <span
+              class="absolute left-0 -bottom-1 h-0.5 w-0 bg-orange-400 transition-all group-hover:w-full"
+            ></span>
+          </a>
+        </li>
+        <li class="relative group">
+          <a href="#" class="transition">
+            Cars
+            <span
+              class="absolute left-0 -bottom-1 h-0.5 w-0 bg-orange-400 transition-all group-hover:w-full"
+            ></span>
+          </a>
+        </li>
+        <li class="relative group">
+          <a href="#" class="transition">
+            Faqs
+            <span
+              class="absolute left-0 -bottom-1 h-0.5 w-0 bg-orange-400 transition-all group-hover:w-full"
+            ></span>
+          </a>
+        </li>
+        <li class="relative group">
+          <a href="#" class="transition">
+            About Us
+            <span
+              class="absolute left-0 -bottom-1 h-0.5 w-0 bg-orange-400 transition-all group-hover:w-full"
+            ></span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- CTA Button -->
+      <button
+        class="bg-orange-400 hover:bg-orange-500 transition-colors rounded-full text-white px-6 py-2 font-semibold shadow-md"
+      >
+        Contact Us
+      </button>
+    </div>
+  </nav>
+</header>
