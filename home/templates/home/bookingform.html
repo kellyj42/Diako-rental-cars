@@ -1,0 +1,116 @@
+<div
+      class="max-w-xl mx-auto bg-blue-950 backdrop-blur-sm rounded-xl p-6 md:p-8 shadow-2xl"
+    >
+      <h4 class="text-white text-2xl font-bold mb-6">
+        Continue Car Reservation
+      </h4>
+
+      <form class="space-y-6">
+        <!-- Car Type -->
+        <div>
+          <select
+            class="w-full p-3.5 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+          >
+            <option selected disabled>Select your car type</option>
+            <option>VW Golf VII</option>
+            <option>Audi A1 S-Line</option>
+            <option>Toyota Camry</option>
+            <option>BMW 320 ModernLine</option>
+          </select>
+        </div>
+
+        <!-- Pick Up Location -->
+        <div class="flex">
+          <div
+            class="flex items-center bg-gray-100 text-gray-800 rounded-l-lg px-4"
+          >
+            <i class="fas fa-map-marker-alt"></i>
+            <span class="ml-2 font-medium">Pick Up</span>
+          </div>
+          <input
+            type="text"
+            placeholder="City or Airport"
+            class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+          />
+        </div>
+
+        <!-- Drop Off Location -->
+        <div>
+          <a
+            href="#"
+            class="text-yellow-300 hover:text-yellow-200 text-sm font-medium mb-2 inline-block"
+          >
+            Need a different drop-off location?
+          </a>
+          <div class="flex">
+            <div
+              class="flex items-center bg-gray-100 text-gray-800 rounded-l-lg px-4"
+            >
+              <i class="fas fa-map-marker-alt"></i>
+              <span class="ml-2 font-medium">Drop Off</span>
+            </div>
+            <input
+              type="text"
+              placeholder="City or Airport"
+              class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+            />
+          </div>
+        </div>
+
+        <!-- Pick Up Date & Time -->
+        <div class="flex flex-col md:flex-row gap-3">
+          <div class="flex flex-1">
+            <div
+              class="flex items-center bg-gray-100 text-gray-800 rounded-l-lg px-4"
+            >
+              <i class="fas fa-calendar-alt"></i>
+              <span class="ml-2 font-medium">Pick Up</span>
+            </div>
+            <input
+              type="date"
+              class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+            />
+          </div>
+          <select
+            class="p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+          >
+            <option>12:00 AM</option>
+            <option>1:00 AM</option>
+            <option>2:00 AM</option>
+            <option>3:00 AM</option>
+          </select>
+        </div>
+
+        <!-- Drop Off Date & Time -->
+        <div class="flex flex-col md:flex-row gap-3">
+          <div class="flex flex-1">
+            <div
+              class="flex items-center bg-gray-100 text-gray-800 rounded-l-lg px-4"
+            >
+              <i class="fas fa-calendar-alt"></i>
+              <span class="ml-2 font-medium">Drop Off</span>
+            </div>
+            <input
+              type="date"
+              class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+            />
+          </div>
+          <select
+            class="p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+          >
+            <option>12:00 AM</option>
+            <option>1:00 AM</option>
+            <option>2:00 AM</option>
+            <option>3:00 AM</option>
+          </select>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="button"
+          class="w-full bg-white text-gray-800 font-bold py-3.5 rounded-lg hover:bg-gray-100 transition shadow-lg hover:shadow-xl"
+        >
+          Book Now
+        </button>
+      </form>
+    </div>

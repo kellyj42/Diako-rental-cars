@@ -1,6 +1,22 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} 
 
-<!-- nav -->
+{% block content %}
+
+<!-- nav section-->
+
 {% include "home/nav.html"%}
+
+<!-- hero section -->
+
+{% include "home/HeroSection.html"%}
+{% include "home/Features.html"%} 
+{% include "home/about.html"%}
+{% include "home/achievements.html"%}
+{% include "home/services.html"%} 
+{% include "home/carcategories.html"%}
+
+<!-- footer section -->
+
+{% include "home/footer.html"%} 
 
 {% endblock %}
