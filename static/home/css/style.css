@@ -1,5 +1,5 @@
-    nav img {
-      width: 70px;
+    .img {
+      width: 200px;
     }
     .scrollbar-hide::-webkit-scrollbar {
       display: none;

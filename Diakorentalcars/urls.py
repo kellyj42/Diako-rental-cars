@@ -17,10 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from home.views import page_not_found, server_error
+from home.views import indexView as home_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('home.urls')),
+    path('home/', include('home.urls')),
+    path('auth/', include('userAuth.urls')),
+    # path('cars/', include('cars.urls')),
+    path('', home_view, name='home'),
     path("__reload__/", include("django_browser_reload.urls")),
 ]
 

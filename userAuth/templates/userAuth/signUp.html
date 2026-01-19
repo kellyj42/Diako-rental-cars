@@ -1,0 +1,336 @@
+{% extends 'base.html' %} 
+
+{% block title %}Sign Up - Diako Rental Cars{% endblock %}
+
+{% block content %}
+<div class="min-h-[80vh] flex items-center justify-center bg-linear-to-br from-blue-50 via-white to-orange-50 py-8 px-4">
+  <div class="w-full max-w-2xl">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <div class="flex justify-center mb-4">
+        <div class="w-16 h-16 bg-linear-to-r from-orange-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg">
+          <i class="fas fa-user-plus text-white text-2xl"></i>
+        </div>
+      </div>
+      <h1 class="text-3xl font-bold text-gray-900">Create Your Account</h1>
+      <p class="text-gray-600 mt-2">Join thousands of satisfied customers traveling with Diako</p>
+    </div>
+
+    <!-- Two Column Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+      <!-- Left Column: Benefits -->
+      <div class="lg:col-span-2">
+        <div class="bg-linear-to-br from-blue-600 to-blue-700 rounded-2xl shadow-xl p-8 text-white h-full">
+          <h2 class="text-xl font-bold mb-6">Why Join Diako?</h2>
+          
+          <div class="space-y-6">
+            <div class="flex items-start">
+              <div class="bg-blue-500 p-2 rounded-lg mr-4">
+                <i class="fas fa-percentage text-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold">Exclusive Discounts</h3>
+                <p class="text-blue-100 text-sm mt-1">Members get 10% off on first booking</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="bg-blue-500 p-2 rounded-lg mr-4">
+                <i class="fas fa-bolt text-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold">Fast Booking</h3>
+                <p class="text-blue-100 text-sm mt-1">Save your details for quicker reservations</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="bg-blue-500 p-2 rounded-lg mr-4">
+                <i class="fas fa-history text-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold">Booking History</h3>
+                <p class="text-blue-100 text-sm mt-1">Track all your past and upcoming trips</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="bg-blue-500 p-2 rounded-lg mr-4">
+                <i class="fas fa-gift text-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold">Reward Points</h3>
+                <p class="text-blue-100 text-sm mt-1">Earn points with every booking</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-8 pt-6 border-t border-blue-500">
+            <div class="flex items-center justify-center">
+              <i class="fas fa-shield-alt text-xl mr-3"></i>
+              <div>
+                <p class="text-sm font-medium">Secure & Trusted</p>
+                <p class="text-xs text-blue-200">Your data is protected with 256-bit encryption</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Sign Up Form -->
+      <div class="lg:col-span-3">
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <!-- Decorative Header -->
+          <div class="bg-linear-to-r from-orange-400 to-orange-500 h-2"></div>
+          
+          <div class="p-8">
+            <!-- Social Sign Up -->
+            <div class="mb-6">
+              <p class="text-center text-gray-600 text-sm mb-4">Sign up quickly with</p>
+              <div class="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  class="flex items-center justify-center gap-2 border border-gray-300 rounded-xl py-3 hover:bg-gray-50 transition-colors"
+                >
+                  <i class="fab fa-google text-red-500"></i>
+                  <span class="font-medium text-gray-700">Google</span>
+                </button>
+                <button
+                  type="button"
+                  class="flex items-center justify-center gap-2 border border-gray-300 rounded-xl py-3 hover:bg-gray-50 transition-colors"
+                >
+                  <i class="fab fa-facebook text-blue-600"></i>
+                  <span class="font-medium text-gray-700">Facebook</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="flex items-center my-6">
+              <div class="flex-1 border-t border-gray-300"></div>
+              <span class="px-4 text-gray-500 text-sm">Or sign up with email</span>
+              <div class="flex-1 border-t border-gray-300"></div>
+            </div>
+
+            <form method="post" class="space-y-6">
+              {% csrf_token %}
+              
+              <!-- Name Fields -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    First Name
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="text"
+                      name="first_name"
+                      required
+                      class="w-full px-4 py-3 pl-11 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition"
+                      placeholder="John"
+                    />
+                    <i class="fas fa-user absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                  </div>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    Last Name
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="text"
+                      name="last_name"
+                      required
+                      class="w-full px-4 py-3 pl-11 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition"
+                      placeholder="Doe"
+                    />
+                    <i class="fas fa-user absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Email Field -->
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  Email Address
+                </label>
+                <div class="relative">
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    class="w-full px-4 py-3 pl-11 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition"
+                    placeholder="you@example.com"
+                  />
+                  <i class="fas fa-envelope absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+              </div>
+
+              <!-- Phone Field -->
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  Phone Number
+                </label>
+                <div class="relative">
+                  <input
+                    type="tel"
+                    name="phone"
+                    required
+                    class="w-full px-4 py-3 pl-11 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition"
+                    placeholder="+256 123 456 789"
+                  />
+                  <i class="fas fa-phone absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+                <p class="text-xs text-gray-500 mt-2">We'll use this to confirm your bookings</p>
+              </div>
+
+              <!-- Password Field -->
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  Password
+                </label>
+                <div class="relative">
+                  <input
+                    type="password"
+                    name="password1"
+                    id="password1"
+                    required
+                    class="w-full px-4 py-3 pl-11 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition"
+                    placeholder="Create a strong password"
+                    onkeyup="validatePassword()"
+                  />
+                  <i class="fas fa-key absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                  <button
+                    type="button"
+                    onclick="togglePassword('password1', 'toggleIcon1')"
+                    class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  >
+                    <i class="fas fa-eye" id="toggleIcon1"></i>
+                  </button>
+                </div>
+                
+                <!-- Password Strength -->
+                <div class="mt-3">
+                  <div class="flex justify-between items-center mb-1">
+                    <span class="text-xs text-gray-500">Password strength:</span>
+                    <span id="passwordStrength" class="text-xs font-semibold">None</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div id="passwordStrengthBar" class="h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Confirm Password Field -->
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  Confirm Password
+                </label>
+                <div class="relative">
+                  <input
+                    type="password"
+                    name="password2"
+                    id="password2"
+                    required
+                    class="w-full px-4 py-3 pl-11 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition"
+                    placeholder="Re-enter your password"
+                    onkeyup="checkPasswordMatch()"
+                  />
+                  <i class="fas fa-lock absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                  <button
+                    type="button"
+                    onclick="togglePassword('password2', 'toggleIcon2')"
+                    class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  >
+                    <i class="fas fa-eye" id="toggleIcon2"></i>
+                  </button>
+                </div>
+                <div id="passwordMatch" class="mt-2 text-sm">
+                  <!-- Password match status will appear here -->
+                </div>
+              </div>
+
+              <!-- Terms and Conditions -->
+              <div class="flex items-start">
+                <input
+                  type="checkbox"
+                  id="terms"
+                  name="terms"
+                  required
+                  class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500 mt-1 mr-3"
+                />
+                <label for="terms" class="text-sm text-gray-600">
+                  I agree to the
+                  <a href="#" class="text-blue-600 hover:underline font-medium">Terms of Service</a>
+                  and
+                  <a href="#" class="text-blue-600 hover:underline font-medium">Privacy Policy</a>.
+                  I understand that Diako may contact me regarding my account and bookings.
+                </label>
+              </div>
+
+              <!-- Newsletter Opt-in -->
+              <div class="flex items-start">
+                <input
+                  type="checkbox"
+                  id="newsletter"
+                  name="newsletter"
+                  class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500 mt-1 mr-3"
+                />
+                <label for="newsletter" class="text-sm text-gray-600">
+                  Send me travel tips, special offers, and updates from Diako. I can unsubscribe anytime.
+                </label>
+              </div>
+
+              <!-- Form Errors -->
+              {% if form.errors %}
+              <div class="bg-red-50 border border-red-200 rounded-xl p-4">
+                <div class="flex items-center">
+                  <i class="fas fa-exclamation-circle text-red-500 mr-3"></i>
+                  <div class="text-sm">
+                    {% for field in form %}
+                      {% for error in field.errors %}
+                        <p class="text-red-800">{{ error }}</p>
+                      {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                      <p class="text-red-800">{{ error }}</p>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+
+              <!-- Submit Button -->
+              <button
+                type="submit"
+                id="submitBtn"
+                class="w-full bg-linear-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white font-semibold py-3.5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none"
+              >
+                <i class="fas fa-user-plus mr-2"></i>
+                Create My Account
+              </button>
+            </form>
+
+            <!-- Login Link -->
+            <div class="mt-8 pt-6 border-t border-gray-200 text-center">
+              <p class="text-gray-600">
+                Already have an account?
+                <a 
+                  href="#" 
+                  class="text-blue-600 font-semibold hover:text-blue-800 hover:underline ml-1 transition-colors"
+                >
+                  Sign in here
+                  <i class="fas fa-arrow-right ml-1 text-sm"></i>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
