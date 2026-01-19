@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'theme',
     'django_browser_reload',
     'home',
+    "userAuth",
+    "cars"
 ]
 
 MIDDLEWARE = [
