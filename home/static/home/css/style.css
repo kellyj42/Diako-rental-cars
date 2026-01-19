@@ -1,0 +1,40 @@
+    nav img {
+      width: 70px;
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+    .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Custom scrollbar (optional - if you want to show it) */
+    .vehicle-scroll-container {
+      scroll-behavior: smooth;
+      cursor: grab;
+    }
+
+    .vehicle-scroll-container:active {
+      cursor: grabbing;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 640px) {
+      .scroll-btn {
+        display: none; /* Hide buttons on mobile for better touch experience */
+      }
+
+      .vehicle-scroll-container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      .flex-shrink-0 {
+        width: 280px !important; /* Smaller cards on mobile */
+      }
+    }
+    

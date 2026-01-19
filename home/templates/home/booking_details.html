@@ -1,0 +1,368 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Booking Details - Diako Travel Agency{% endblock %}
+
+{% block content %}
+<section class="bg-linear-to-b from-blue-50 to-white py-12 lg:py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Progress Steps -->
+    <div class="mb-10">
+      <div class="flex justify-center">
+        <div class="flex items-center w-full max-w-lg">
+          <div class="flex flex-col items-center">
+            <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">
+              1
+            </div>
+            <span class="mt-2 text-sm font-medium">Select Car</span>
+          </div>
+          <div class="flex-1 h-1 mx-4 bg-blue-600"></div>
+          <div class="flex flex-col items-center">
+            <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">
+              2
+            </div>
+            <span class="mt-2 text-sm font-medium">Booking Details</span>
+          </div>
+          <div class="flex-1 h-1 mx-4 bg-gray-300"></div>
+          <div class="flex flex-col items-center">
+            <div class="w-10 h-10 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center font-bold">
+              3
+            </div>
+            <span class="mt-2 text-sm text-gray-500">Payment</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- LEFT: Order Details -->
+      <div class="lg:col-span-2 space-y-8">
+        
+        <!-- Page Header -->
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+          <h1 class="text-3xl font-bold text-gray-900">Confirm Your Booking</h1>
+          <p class="text-gray-600 mt-2 flex items-center">
+            <i class="fas fa-info-circle text-blue-500 mr-2"></i>
+            Please review your booking details before confirming your reservation
+          </p>
+        </div>
+
+        <!-- Car Summary -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <div class="p-6 border-b">
+            <h2 class="text-xl font-bold text-gray-900 flex items-center">
+              <i class="fas fa-car text-orange-500 mr-3"></i>
+              Selected Vehicle
+            </h2>
+          </div>
+          
+          <div class="p-6 flex flex-col lg:flex-row gap-6">
+            <!-- Car Image -->
+            <div class="lg:w-1/3">
+              <div class="relative rounded-xl overflow-hidden bg-linear-to-br from-gray-50 to-gray-100 p-4">
+                <img
+                  src="{% static 'home/images/car3.jpg' %}"
+                  alt="Toyota Prado"
+                  class="w-full h-48 object-contain transform hover:scale-105 transition-transform duration-300"
+                />
+                <div class="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                  POPULAR
+                </div>
+              </div>
+            </div>
+
+            <!-- Car Details -->
+            <div class="lg:w-2/3">
+              <h3 class="text-2xl font-bold text-gray-900">
+                Toyota Land Cruiser Prado 2022
+              </h3>
+              
+              <div class="flex items-center gap-4 mt-2">
+                <div class="flex items-center">
+                  <div class="flex text-orange-400">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <span class="ml-2 text-sm font-medium text-gray-600">4.5 (128 reviews)</span>
+                </div>
+              </div>
+
+              <p class="text-gray-600 mt-4">
+                Experience comfort and reliability with this spacious 7-seater SUV. Perfect for family trips and off-road adventures.
+              </p>
+
+              <!-- Specs Grid -->
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6">
+                <div class="flex items-center bg-gray-50 p-3 rounded-lg">
+                  <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                    <i class="fa fa-users text-blue-600"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-500">Seats</p>
+                    <p class="font-semibold">7 Passengers</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-center bg-gray-50 p-3 rounded-lg">
+                  <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                    <i class="fa fa-car text-blue-600"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-500">Transmission</p>
+                    <p class="font-semibold">Automatic</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-center bg-gray-50 p-3 rounded-lg">
+                  <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                    <i class="fa fa-gas-pump text-blue-600"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-500">Fuel Type</p>
+                    <p class="font-semibold">Diesel</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-center bg-gray-50 p-3 rounded-lg">
+                  <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                    <i class="fa fa-cogs text-blue-600"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-500">Drive</p>
+                    <p class="font-semibold">4WD</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-center bg-gray-50 p-3 rounded-lg">
+                  <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                    <i class="fa fa-road text-blue-600"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-500">Mileage</p>
+                    <p class="font-semibold">Unlimited</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-center bg-gray-50 p-3 rounded-lg">
+                  <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                    <i class="fa fa-snowflake text-blue-600"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-500">AC</p>
+                    <p class="font-semibold">Dual Zone</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Booking Info -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <div class="p-6 border-b">
+            <h2 class="text-xl font-bold text-gray-900 flex items-center">
+              <i class="far fa-calendar-alt text-orange-500 mr-3"></i>
+              Booking Details
+            </h2>
+          </div>
+          
+          <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Pickup -->
+              <div linear-to-r from-blue-50 to-white p-5 rounded-xl border border-blue-100">
+                <div class="flex items-center mb-3">
+                  <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                    <i class="fas fa-map-marker-alt text-blue-600"></i>
+                  </div>
+                  <h3 class="font-semibold text-gray-900">Pick-up Information</h3>
+                </div>
+                <div class="space-y-2">
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Location</span>
+                    <span class="font-medium">Kampala City Center</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Date</span>
+                    <span class="font-medium">12 Aug 2026</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Time</span>
+                    <span class="font-medium">09:00 AM</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Return -->
+              <div linear-to-r from-green-50 to-white p-5 rounded-xl border border-green-100">
+                <div class="flex items-center mb-3">
+                  <div class="bg-green-100 p-2 rounded-lg mr-3">
+                    <i class="fas fa-flag-checkered text-green-600"></i>
+                  </div>
+                  <h3 class="font-semibold text-gray-900">Return Information</h3>
+                </div>
+                <div class="space-y-2">
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Location</span>
+                    <span class="font-medium">Same as Pick-up</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Date</span>
+                    <span class="font-medium">16 Aug 2026</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Time</span>
+                    <span class="font-medium">05:00 PM</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Service Options -->
+              <div class="md:col-span-2 bg-gray-50 p-5 rounded-xl">
+                <h3 class="font-semibold text-gray-900 mb-4 flex items-center">
+                  <i class="fas fa-user-tie text-orange-500 mr-3"></i>
+                  Service Options
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div class="flex items-center bg-white p-4 rounded-lg border border-gray-200">
+                    <div class="mr-4">
+                      <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                        <i class="fas fa-user text-blue-600"></i>
+                      </div>
+                    </div>
+                    <div class="flex-1">
+                      <p class="font-medium">Driver Option</p>
+                      <p class="text-sm text-gray-600">With Professional Driver</p>
+                    </div>
+                    <span class="text-green-600 font-semibold">Included</span>
+                  </div>
+                  
+                  <div class="flex items-center bg-white p-4 rounded-lg border border-gray-200">
+                    <div class="mr-4">
+                      <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                        <i class="fas fa-shield-alt text-green-600"></i>
+                      </div>
+                    </div>
+                    <div class="flex-1">
+                      <p class="font-medium">Insurance</p>
+                      <p class="text-sm text-gray-600">Full Coverage</p>
+                    </div>
+                    <span class="text-green-600 font-semibold">Included</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Order Summary -->
+      <div class="lg:col-span-1">
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden sticky top-24">
+          <div linear-to-r from-blue-600 to-blue-700 p-6">
+            <h2 class="text-xl font-bold text-white">Order Summary</h2>
+            <p class="text-blue-100 text-sm mt-1">4 days • With driver</p>
+          </div>
+          
+          <div class="p-6">
+            <div class="space-y-4">
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Base Rate (4 days × $120)</span>
+                <span class="font-medium">$480</span>
+              </div>
+              
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Driver Service</span>
+                <span class="font-medium">$50</span>
+              </div>
+              
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Insurance</span>
+                <span class="font-medium text-green-600">Included</span>
+              </div>
+              
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Service Fee</span>
+                <span class="font-medium">$20</span>
+              </div>
+              
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Tax (10%)</span>
+                <span class="font-medium">$53</span>
+              </div>
+              
+              <hr class="my-4 border-gray-200">
+              
+              <div class="flex justify-between items-center text-lg font-bold">
+                <span class="text-gray-900">Total Amount</span>
+                <div class="flex flex-col items-end">
+                  <span class="text-2xl text-blue-700">$603</span>
+                  <span class="text-sm font-normal text-gray-500">USD</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="mt-8 space-y-4">
+              <button
+                class="linear-to-r from-orange-500 to-orange-600 text-white font-semibold py-4 rounded-xl
+                       transition-all hover:from-orange-600 hover:to-orange-700 hover:shadow-lg flex items-center justify-center group"
+              >
+                <span>Proceed to Payment</span>
+                <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+              </button>
+              
+              <button
+                class="w-full border-2 border-gray-300 text-gray-700 font-semibold py-3 rounded-xl
+                       transition-all hover:border-gray-400 hover:bg-gray-50 flex items-center justify-center"
+              >
+                <i class="far fa-edit mr-2"></i>
+                <span>Modify Booking</span>
+              </button>
+              
+              <a 
+                href="#" 
+                class="block text-center text-blue-600 hover:text-blue-800 font-medium text-sm mt-4 transition-colors"
+              >
+                <i class="fas fa-download mr-2"></i>
+                Download Booking Summary (PDF)
+              </a>
+            </div>
+
+            <!-- Important Notes -->
+            <div class="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-100">
+              <h4 class="font-semibold text-blue-900 mb-2 flex items-center">
+                <i class="fas fa-info-circle mr-2"></i>
+                Important Information
+              </h4>
+              <ul class="text-sm text-blue-800 space-y-1">
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
+                  Free cancellation up to 24 hours before pickup
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
+                  Driver available 24/7 during rental period
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
+                  Fuel not included in rental price
+                </li>
+              </ul>
+            </div>
+            
+            <p class="text-xs text-gray-500 text-center mt-6">
+              By confirming, you agree to our
+              <a href="#" class="text-blue-600 hover:underline">Terms & Conditions</a>
+              and
+              <a href="#" class="text-blue-600 hover:underline">Privacy Policy</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Page Not Found - Diako Rental Cars{% endblock %}
+
+{% block content %}
+<section class="bg-linear-to-b from-red-50 to-white min-h-screen flex items-center justify-center py-12 lg:py-20">
+  <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Error Container -->
+    <div class="text-center">
+      
+      <!-- Error Code -->
+      <div class="mb-8">
+        <div class="relative inline-block">
+          <div class="text-9xl font-black text-transparent bg-clip-text bg-linear-to-r from-red-400 to-red-600">
+            404
+          </div>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <i class="fas fa-map-location-dot text-red-500 text-5xl opacity-50"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error Message -->
+      <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+        Page Not Found
+      </h1>
+      <p class="text-xl text-gray-600 max-w-xl mx-auto mb-8">
+        Oops! It looks like you've taken a wrong turn. The page you're looking for doesn't exist or has been moved. Don't worry, we'll help you get back on track!
+      </p>
+
+      <!-- Decorative Car Animation -->
+      <div class="my-12 flex justify-center">
+        <div class="relative w-64 h-32 overflow-hidden rounded-xl bg-linear-to-b from-blue-50 to-blue-100 border-2 border-blue-200">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <i class="fas fa-car text-6xl text-blue-400 opacity-30"></i>
+          </div>
+          <div class="absolute bottom-4 left-4 right-4 h-1 bg-gray-300 rounded-full"></div>
+        </div>
+      </div>
+
+      <!-- Suggestions -->
+      <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+        <h2 class="text-lg font-bold text-gray-900 mb-6">What You Can Do:</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="flex items-start text-left">
+            <div class="shrink-0">
+              <div class="flex items-center justify-center h-10 w-10 rounded-md bg-red-100">
+                <i class="fas fa-check text-red-600"></i>
+              </div>
+            </div>
+            <div class="ml-3">
+              <h3 class="text-sm font-medium text-gray-900">Check the URL</h3>
+              <p class="mt-1 text-sm text-gray-500">Make sure the address is correct</p>
+            </div>
+          </div>
+          <div class="flex items-start text-left">
+            <div class="shrink-0">
+              <div class="flex items-center justify-center h-10 w-10 rounded-md bg-red-100">
+                <i class="fas fa-check text-red-600"></i>
+              </div>
+            </div>
+            <div class="ml-3">
+              <h3 class="text-sm font-medium text-gray-900">Go Back</h3>
+              <p class="mt-1 text-sm text-gray-500">Use your browser's back button</p>
+            </div>
+          </div>
+          <div class="flex items-start text-left">
+            <div class="shrink-0">
+              <div class="flex items-center justify-center h-10 w-10 rounded-md bg-red-100">
+                <i class="fas fa-check text-red-600"></i>
+              </div>
+            </div>
+            <div class="ml-3">
+              <h3 class="text-sm font-medium text-gray-900">Visit Home</h3>
+              <p class="mt-1 text-sm text-gray-500">Return to the main page</p>
+            </div>
+          </div>
+          <div class="flex items-start text-left">
+            <div class="shrink-0">
+              <div class="flex items-center justify-center h-10 w-10 rounded-md bg-red-100">
+                <i class="fas fa-check text-red-600"></i>
+              </div>
+            </div>
+            <div class="ml-3">
+              <h3 class="text-sm font-medium text-gray-900">Contact Support</h3>
+              <p class="mt-1 text-sm text-gray-500">We're here to help 24/7</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-lg shadow-md text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300">
+          <i class="fas fa-home mr-2"></i>
+          Back to Home
+        </a>
+        <button onclick="history.back()" class="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-lg shadow-md text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-300">
+          <i class="fas fa-arrow-left mr-2"></i>
+          Go Back
+        </button>
+        <a href="mailto:support@diako.com" class="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-lg shadow-md text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-300">
+          <i class="fas fa-envelope mr-2"></i>
+          Contact Us
+        </a>
+      </div>
+
+      <!-- Additional Help -->
+      <div class="mt-12 pt-8 border-t border-gray-200">
+        <p class="text-gray-600 mb-4">
+          Need help? Contact our support team:
+        </p>
+        <div class="space-y-2">
+          <p class="text-sm text-gray-500">
+            <a href="tel:+1234567890" class="text-blue-600 font-semibold hover:underline">📞 +1 (234) 567-890</a>
+          </p>
+          <p class="text-sm text-gray-500">
+            <a href="mailto:support@diako.com" class="text-blue-600 font-semibold hover:underline">📧 support@diako.com</a>
+          </p>
+          <p class="text-xs text-gray-400 mt-4">Available 24/7 to assist you</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+{% endblock %}
