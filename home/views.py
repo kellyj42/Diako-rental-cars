@@ -39,3 +39,19 @@ def page_not_found(request, exception):
 @requires_csrf_token
 def server_error(request):
     return render(request, '500.html', status=500)
+
+def admin_dashboard_view(request):
+    return render(request, 'admin_dashboard.html')
+def client_dashboard_view(request):
+    return render(request, 'clients_dashboard.html')
+
+def about_us_view(request):
+    return render(request, 'aboutpage.html',{
+                    "nav_links": nav_links
+             })
+def services_view(request):
+    return render(request, 'servicespage.html',
+                 {
+                    "services": services, 
+                    "nav_links": nav_links
+             })

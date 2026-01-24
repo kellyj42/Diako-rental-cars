@@ -55,7 +55,7 @@
         {% for link in nav_links %}
         <li class="relative group">
           <a
-            href="{{ link.href }}"
+            href="{% url link.url %}"
             class="relative py-3 inline-block transition-colors duration-300 group-hover:text-orange-500"
           >
             {{ link.name }} {% if link.children %}
@@ -73,7 +73,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
               {% for child in link.children %}
               <a
-                href="{{ child.href }}"
+                 href="{% url child.url %}"
                 class="block px-4 py-3 text-gray-700 hover:text-orange-500 hover:bg-orange-50 transition-colors duration-200 rounded-md"
               >
                 {{ child.name }}

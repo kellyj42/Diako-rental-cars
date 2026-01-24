@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django_browser_reload',
     'home',
     "userAuth",
-    "cars"
+    "cars",
+    "bookings",
 ]
 
 MIDDLEWARE = [

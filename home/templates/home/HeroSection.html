@@ -42,5 +42,38 @@
 
     <!-- Booking Form -->
     {% include "home/bookingform.html"%}
+    {% include "home/cars.html"%}
   </div>
 </section>
+<script>
+  const carModal = document.getElementById("carModal");
+  const modalCars = document.querySelectorAll("#modalCars > div");
+
+  function openModal() {
+    carModal.classList.remove("hidden");
+  }
+
+  function closeModal() {
+    carModal.classList.add("hidden");
+  }
+
+  function selectFromModal(name, image) {
+    document.getElementById("selectedCar").innerHTML = `
+      <img src="{% static 'home/images/car.jpg'%}" class="w-16 h-10 rounded object-cover">
+      <span>${name}</span>
+    `;
+    document.getElementById("carInput").value = name;
+    closeModal();
+    document.getElementById("dropdownMenu").classList.add("hidden");
+  }
+
+  function filterCars() {
+    const value = document.getElementById("searchInput").value.toLowerCase();
+
+    modalCars.forEach(car => {
+      const keywords = car.getAttribute("data-search");
+      car.style.display = keywords.includes(value) ? "flex" : "none";
+    });
+  }
+</script>
+

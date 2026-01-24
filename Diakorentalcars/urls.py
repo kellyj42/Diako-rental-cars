@@ -24,6 +24,7 @@ urlpatterns = [
     path('home/', include('home.urls')),
     path('auth/', include('userAuth.urls')),
     # path('cars/', include('cars.urls')),
+    # path('bookings/', include('bookings.urls')),
     path('', home_view, name='home'),
     path("__reload__/", include("django_browser_reload.urls")),
 ]

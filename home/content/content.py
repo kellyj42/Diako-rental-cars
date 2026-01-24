@@ -68,20 +68,17 @@ vehicles = [
         
     ]
 nav_links = [
-    {"name": "Home", "href": "#home"},
-    {"name": "Services", "href": "#services"},
-    {"name": "Cars", "href": "#vehicles"},
+    {"name": "Home", "url": "home:home"},
+    {"name": "Services", "url": "home:services"},
+    # {"name": "Cars", "url": "home:#vehicles"},
     {
         "name": "About Us",
-        "href": "#about",
-        "children": [   
-            {"name": "Our Story", "href": "#our-story"},
-            {"name": "Team", "href": "#team"},
-            {"name": "Careers", "href": "#careers"},
-            {"name": "Our Story", "href": "#our-story"},
-            {"name": "Team", "href": "#team"},
-            {"name": "Careers", "href": "#careers"},
+        "url": "home:about",
+        "children": [
+            # {"name": "Our Story", "url": "home:our_story"},
+            # {"name": "Team", "url": "home:team"},
+            # {"name": "Careers", "url": "home:careers"},
         ]
     },
-    {"name": "Faqs", "href": "#faqs"},
+    # {"name": "FAQs", "url": "home:faqs"},
 ]

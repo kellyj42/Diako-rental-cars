@@ -1,0 +1,453 @@
+{% load static %}
+
+<!-- Modal Overlay -->
+<div
+  id="carModal"
+  class="hidden flex fixed inset-0 z-50 items-center justify-center p-4 bg-black/40 backdrop-blur-sm transition-opacity duration-300"
+  onclick="closeModal(event)"
+>
+  <!-- Modal Container -->
+  <div 
+    class="bg-linear-to-b from-gray-900 to-gray-950 w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-300 scale-95"
+    onclick="event.stopPropagation()"
+  >
+    <!-- Modal Header -->
+    <div class="bg-linear-to-r from-blue-700 to-blue-900 py-2 px-4">
+      <div class="flex justify-between items-center">
+        <div>
+          <h2 class="text-2xl font-bold text-white">Select Your Vehicle</h2>
+          <p class="text-blue-100 mt-1">Choose from our premium fleet</p>
+        </div>
+        <button
+          onclick="closeModal()"
+          class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors group"
+          aria-label="Close modal"
+        >
+          <i class="fas fa-times text-white text-lg group-hover:rotate-90 transition-transform"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="p-4 border-b border-gray-800 bg-gray-900/50">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <!-- Search Input -->
+        <div class="md:col-span-2">
+          <div class="relative">
+            <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            <input
+              type="text"
+              id="searchInput"
+              onkeyup="filterCars()"
+              placeholder="Search by name, category, features..."
+              class="w-full pl-12 pr-4 py-1 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition"
+            />
+          </div>
+        </div>
+
+        <!-- Category Filter -->
+        <div>
+          <select
+            id="categoryFilter"
+            onchange="filterCars()"
+            class="w-full px-4 py-1 rounded-lg bg-gray-800 border border-gray-700 text-white appearance-none focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition"
+          >
+            <option value="">All Categories</option>
+            {% for category in categories %}
+            <option value="{{ category.slug }}">{{ category.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Sort Options -->
+        <div>
+          <select
+            id="sortFilter"
+            onchange="sortCars()"
+            class="w-full px-4 py-1 rounded-lg bg-gray-800 border border-gray-700 text-white appearance-none focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition"
+          >
+            <option value="name">Sort by: Name</option>
+            <option value="category">Sort by: Category</option>
+            <option value="price">Sort by: Price</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Quick Filters -->
+      <div class="flex flex-wrap gap-2 mt-4">
+        <button
+          onclick="setQuickFilter('automatic')"
+          class="px-3 py-1.5 rounded-full bg-gray-800 hover:bg-blue-600 text-gray-300 hover:text-white text-sm font-medium transition-colors flex items-center gap-2"
+        >
+          <i class="fas fa-car"></i>
+          Automatic
+        </button>
+        <button
+          onclick="setQuickFilter('manual')"
+          class="px-3 py-1.5 rounded-full bg-gray-800 hover:bg-blue-600 text-gray-300 hover:text-white text-sm font-medium transition-colors flex items-center gap-2"
+        >
+          <i class="fas fa-cog"></i>
+          Manual
+        </button>
+        <button
+          onclick="setQuickFilter('7-seater')"
+          class="px-3 py-1.5 rounded-full bg-gray-800 hover:bg-blue-500 text-gray-300 hover:text-white text-sm font-medium transition-colors flex items-center gap-2"
+        >
+          <i class="fas fa-users"></i>
+          7+ Seats
+        </button>
+        <button
+          onclick="setQuickFilter('diesel')"
+          class="px-3 py-1.5 rounded-full bg-gray-800 hover:bg-blue-600 text-gray-300 hover:text-white text-sm font-medium transition-colors flex items-center gap-2"
+        >
+          <i class="fas fa-gas-pump"></i>
+          Diesel
+        </button>
+        <button
+          onclick="clearFilters()"
+          class="px-3 py-1.5 rounded-full bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white text-sm font-medium transition-colors flex items-center gap-2"
+        >
+          <i class="fas fa-times"></i>
+          Clear Filters
+        </button>
+      </div>
+    </div>
+
+    <!-- Cars Grid -->
+    <div class="p-2">
+      <!-- Results Count -->
+      <div class="flex justify-between items-center mb-6">
+        <p id="resultsCount" class="text-gray-400">
+          {{ cars|length }} vehicle{{ cars|length|pluralize }} available
+        </p>
+        <div class="flex items-center gap-2 text-sm text-gray-400">
+          <i class="fas fa-car"></i>
+          <span>Tap to select vehicle</span>
+        </div>
+      </div>
+
+      <!-- Cars Grid -->
+      <div
+        id="modalCars"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[50vh] overflow-y-auto pr-2"
+      >
+        {% for car in cars %}
+        <div
+          class="group bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-750 hover:transform hover:-translate-y-1 transition-all duration-300 cursor-pointer border border-gray-700 hover:border-blue-500/30"
+          data-search="{{ car.name|lower }} {{ car.category.name|lower }} {{ car.transmission|lower }} {{ car.fuel_type|lower }} {{ car.features }}"
+          data-category="{{ car.category.slug }}"
+          data-price="{{ car.price_per_day }}"
+          data-name="{{ car.name|lower }}"
+          data-transmission="{{ car.transmission|lower }}"
+          data-seats="{{ car.seats }}"
+          data-fuel="{{ car.fuel_type|lower }}"
+        >
+          <div class="relative">
+            {% if car.image %}
+            <img
+              src="{{ car.image.url }}"
+              alt="{{ car.name }}"
+              class="w-full h-20 object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            {% else %}
+            <div class="w-full h-20 bg-gray-700 flex items-center justify-center">
+              <i class="fas fa-car text-gray-400 text-3xl"></i>
+            </div>
+            {% endif %}
+            <div class="absolute top-3 left-3">
+              <span class="category-badge px-2 py-1 rounded-full text-xs font-semibold {{ car.category.bg_color }}">
+                {{ car.category.name|upper }}
+              </span>
+            </div>
+            <div class="absolute top-3 right-3">
+              {% if car.price_per_day > 100 %}
+              <span class="bg-purple-600 text-white px-2 py-1 rounded text-xs font-semibold">Premium</span>
+              {% elif car.price_per_day > 70 %}
+              <span class="bg-blue-600 text-white px-2 py-1 rounded text-xs font-semibold">Popular</span>
+              {% else %}
+              <span class="bg-green-600 text-white px-2 py-1 rounded text-xs font-semibold">Economy</span>
+              {% endif %}
+            </div>
+          </div>
+          
+          <div class="p-4">
+            <div class="flex justify-between items-start mb-1">
+              <div>
+                <h3 class="font-bold text-white text-lg mb-1">{{ car.name }}</h3>
+                <div class="flex items-center gap-2 text-sm text-gray-400">
+                  <span class="year-badge">{{ car.year }}</span>
+                  <span class="fuel-badge">{{ car.fuel_type }}</span>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-xl font-bold text-white">${{ car.price_per_day }}</div>
+                <div class="text-xs text-gray-400">per day</div>
+              </div>
+            </div>
+            
+            <div class="flex items-center gap-3 text-sm text-gray-400 mb-4">
+              <div class="flex items-center gap-1">
+                <i class="fas fa-users"></i>
+                <span class="seats">{{ car.seats }} Seats</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <i class="fas fa-car"></i>
+                <span class="transmission">{{ car.transmission }}</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <i class="fas fa-gas-pump"></i>
+                <span class="fuel-type">{{ car.fuel_type }}</span>
+              </div>
+            </div>
+            
+            <button
+              onclick="selectFromModal(this)"
+              class="w-full bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-2.5 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 group-hover:shadow-lg"
+              data-car-id="{{ car.id }}"
+              data-car-name="{{ car.name }}"
+              data-car-image="{% if car.image %}{{ car.image.url }}{% endif %}"
+            >
+              <i class="fas fa-check"></i>
+              Select Vehicle
+            </button>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- No Results Message -->
+      <div id="noResults" class="hidden text-center py-12">
+        <div class="w-20 h-20 rounded-full bg-gray-800 flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-car text-gray-400 text-3xl"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-white mb-2">No vehicles found</h3>
+        <p class="text-gray-400 max-w-md mx-auto">
+          Try adjusting your search or filters. We might have what you're looking for!
+        </p>
+      </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="p-4 border-t border-gray-800 bg-gray-900/50">
+      <div class="flex justify-between items-center">
+        <div class="text-sm text-gray-400">
+          <i class="fas fa-info-circle mr-2"></i>
+          All vehicles include insurance and 24/7 roadside assistance
+        </div>
+        <button
+          onclick="closeModal()"
+          class="px-6 py-2 rounded-xl border border-gray-700 text-gray-300 hover:bg-gray-800 hover:text-white transition-colors"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Success Toast -->
+<div id="selectionToast" class="hidden fixed bottom-4 right-4 z-50">
+  <div class="bg-green-500 text-white p-4 rounded-xl shadow-lg animate-slideUp">
+    <div class="flex items-center">
+      <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center mr-3">
+        <i class="fas fa-check"></i>
+      </div>
+      <div>
+        <p class="font-semibold">Vehicle Selected!</p>
+        <p id="selectedCarName" class="text-sm text-green-100"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Filter cars
+  function filterCars() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const categoryFilter = document.getElementById('categoryFilter').value;
+    const cards = document.querySelectorAll('#modalCars > div');
+    let visibleCount = 0;
+    
+    cards.forEach(card => {
+      const searchText = card.getAttribute('data-search').toLowerCase();
+      const category = card.getAttribute('data-category');
+      const name = card.getAttribute('data-name');
+      const transmission = card.getAttribute('data-transmission');
+      const seats = parseInt(card.getAttribute('data-seats'));
+      const fuel = card.getAttribute('data-fuel');
+      
+      const matchesSearch = !searchTerm || 
+        searchText.includes(searchTerm) || 
+        name.includes(searchTerm) ||
+        transmission.includes(searchTerm) ||
+        fuel.includes(searchTerm);
+      
+      const matchesCategory = !categoryFilter || category === categoryFilter;
+      
+      if (matchesSearch && matchesCategory) {
+        card.style.display = 'block';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+    
+    updateResultsCount(visibleCount);
+    
+    // Show/hide no results message
+    const noResults = document.getElementById('noResults');
+    if (visibleCount === 0) {
+      noResults.classList.remove('hidden');
+    } else {
+      noResults.classList.add('hidden');
+    }
+  }
+
+  function sortCars() {
+    const sortBy = document.getElementById('sortFilter').value;
+    const container = document.getElementById('modalCars');
+    const cards = Array.from(container.querySelectorAll('div[data-search]'));
+    
+    cards.sort((a, b) => {
+      if (sortBy === 'name') {
+        return a.getAttribute('data-name').localeCompare(b.getAttribute('data-name'));
+      } else if (sortBy === 'category') {
+        return a.getAttribute('data-category').localeCompare(b.getAttribute('data-category'));
+      } else if (sortBy === 'price') {
+        return parseFloat(a.getAttribute('data-price')) - parseFloat(b.getAttribute('data-price'));
+      }
+      return 0;
+    });
+    
+    // Re-append sorted cards
+    cards.forEach(card => container.appendChild(card));
+  }
+
+  function setQuickFilter(filter) {
+    const searchInput = document.getElementById('searchInput');
+    searchInput.value = filter;
+    filterCars();
+  }
+
+  function clearFilters() {
+    document.getElementById('searchInput').value = '';
+    document.getElementById('categoryFilter').value = '';
+    filterCars();
+  }
+
+  function updateResultsCount(count) {
+    const resultsElement = document.getElementById('resultsCount');
+    resultsElement.textContent = `${count} vehicle${count !== 1 ? 's' : ''} available`;
+  }
+
+  function selectFromModal(button) {
+    const carId = button.getAttribute('data-car-id');
+    const carName = button.getAttribute('data-car-name');
+    const carImage = button.getAttribute('data-car-image');
+    
+    // Update form fields (customize these IDs based on your form)
+    const carIdField = document.querySelector('input[name="car_id"]');
+    const carNameField = document.querySelector('input[name="car_name"]');
+    const carImageField = document.querySelector('input[name="car_image"]');
+    
+    if (carIdField) carIdField.value = carId;
+    if (carNameField) carNameField.value = carName;
+    if (carImageField) carImageField.value = carImage;
+    
+    // Show success toast
+    const toast = document.getElementById('selectionToast');
+    const selectedCarName = document.getElementById('selectedCarName');
+    selectedCarName.textContent = carName;
+    toast.classList.remove('hidden');
+    
+    // Auto-hide toast
+    setTimeout(() => {
+      toast.classList.add('hidden');
+    }, 3000);
+    
+    // Close modal
+    closeModal();
+    
+    // Dispatch event for other components to listen
+    document.dispatchEvent(new CustomEvent('carSelected', {
+      detail: { id: carId, name: carName, image: carImage }
+    }));
+  }
+
+  function openModal() {
+    const modal = document.getElementById('carModal');
+    modal.classList.remove('hidden');
+    modal.querySelector('.scale-95').classList.remove('scale-95');
+    
+    setTimeout(() => {
+      document.getElementById('searchInput').focus();
+    }, 300);
+  }
+
+  function closeModal(event) {
+    if (event && event.target.id !== 'carModal') return;
+    
+    const modal = document.getElementById('carModal');
+    modal.querySelector('.scale-95').classList.add('scale-95');
+
+    setTimeout(() => {
+      modal.classList.add('hidden');
+    }, 200);
+  }
+
+  // Close modal on ESC key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !document.getElementById('carModal').classList.contains('hidden')) {
+      closeModal();
+    }
+  });
+
+  // Initialize filters on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    filterCars(); // Initial filter to show all cars
+  });
+</script>
+
+<style>
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .animate-slideUp {
+    animation: slideUp 0.3s ease-out;
+  }
+  
+  /* Custom scrollbar */
+  #modalCars::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  #modalCars::-webkit-scrollbar-track {
+    background: #1f2937;
+    border-radius: 3px;
+  }
+  
+  #modalCars::-webkit-scrollbar-thumb {
+    background: #4b5563;
+    border-radius: 3px;
+  }
+  
+  #modalCars::-webkit-scrollbar-thumb:hover {
+    background: #6b7280;
+  }
+  
+  /* Category badge colors - these should match your Django category model */
+  .bg-orange-500 { background-color: #f97316; }
+  .bg-blue-500 { background-color: #3b82f6; }
+  .bg-purple-500 { background-color: #8b5cf6; }
+  .bg-green-500 { background-color: #10b981; }
+  .bg-emerald-500 { background-color: #10b981; }
+  .bg-gray-500 { background-color: #6b7280; }
+</style>

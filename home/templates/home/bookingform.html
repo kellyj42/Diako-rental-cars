@@ -1,118 +1,251 @@
-<div
-      class="max-w-xl mx-auto bg-blue-950 backdrop-blur-sm rounded-xl p-6 md:p-8 shadow-2xl"
-    >
-      <h4 class="text-white text-2xl font-bold mb-6">
-        Continue Car Reservation
-      </h4>
-
-      <form class="space-y-6">
-        <!-- Car Type -->
-        <div>
-          <select
-            class="w-full p-3.5 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
-          >
-            <option selected disabled>Select your car type</option>
-            <option>VW Golf VII</option>
-            <option>Audi A1 S-Line</option>
-            <option>Toyota Camry</option>
-            <option>BMW 320 ModernLine</option>
-          </select>
+{% load static %}
+<div class="bg-linear-to-b from-gray-900 to-gray-950 w-full max-w-4xl p-4 rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-300 scale-95">
+<form method="post" action="" class="space-y-6">
+    {% csrf_token %}
+    
+    <!-- Car Type -->
+    <div class="relative w-full">
+        <!-- Hidden inputs for car selection -->
+        <input type="hidden" name="car_id" id="carIdInput" value="{{ selected_car.id|default:'' }}" required />
+        <input type="hidden" name="car_name" id="carNameInput" value="{{ selected_car.display_name|default:'' }}" />
+        
+        <!-- Dropdown Button -->
+        <button
+            type="button"
+            id="dropdownBtn"
+            class="w-full flex items-center justify-between p-3.5 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+        >
+            <span id="selectedCar" class="flex items-center gap-3 text-gray-300">
+                {% if selected_car %}
+                    <img src="{{ selected_car.thumbnail_url }}" 
+                         class="w-8 h-8 rounded-full object-cover" 
+                         alt="{{ selected_car.display_name }}" />
+                    {{ selected_car.display_name }}
+                {% else %}
+                    <i class="fas fa-car text-yellow-400"></i>
+                    Select your car type
+                {% endif %}
+            </span>
+            <span><i class="fas fa-chevron-down"></i></span>
+        </button>
+        
+        <!-- Dropdown Menu -->
+        <div
+            id="dropdownMenu"
+            class="hidden absolute z-20 w-full mt-2 bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-700"
+        >
+            {% for car in featured_cars %}
+            <div
+                onclick="selectCar('{{ car.id }}', '{{ car.display_name }}', '{{ car.thumbnail_url }}')"
+                class="flex items-center gap-3 p-3 hover:bg-gray-700 cursor-pointer border-b border-gray-700 last:border-b-0"
+            >
+                <img src="{{ car.thumbnail_url }}" 
+                     class="w-10 h-10 rounded-full object-cover" 
+                     alt="{{ car.display_name }}" />
+                <div class="flex-1">
+                    <div class="text-white font-medium">{{ car.display_name }}</div>
+                    <div class="text-xs text-gray-400">
+                        {{ car.seats }} seats • {{ car.get_transmission_display }} • ${{ car.price_per_day }}/day
+                    </div>
+                </div>
+                <span class="text-yellow-400 font-bold">${{ car.price_per_day }}</span>
+            </div>
+            {% endfor %}
+            
+            <div
+                onclick="openModal()"
+                class="p-3 text-center text-yellow-400 hover:bg-gray-700 cursor-pointer border-t border-gray-700 bg-gray-900"
+            >
+                <i class="fas fa-search mr-2"></i>
+                Browse all cars <i class="fas fa-arrow-right ml-2"></i>
+            </div>
         </div>
-
-        <!-- Pick Up Location -->
-        <div class="flex">
-          <div
-            class="flex items-center bg-gray-100 text-gray-800 rounded-l-lg px-4"
-          >
+    </div>
+    
+    <!-- Pick Up Location -->
+    <div class="flex">
+        <div class="flex items-center bg-gray-100 text-gray-800 rounded-l-lg px-4">
             <i class="fas fa-map-marker-alt"></i>
             <span class="ml-2 font-medium">Pick Up</span>
-          </div>
-          <input
+        </div>
+        <input
             type="text"
+            name="pick_up_location"
             placeholder="City or Airport"
+            required
             class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
-          />
-        </div>
-
-        <!-- Drop Off Location -->
-        <div>
-          <a
-            href="#"
-            class="text-yellow-300 hover:text-yellow-200 text-sm font-medium mb-2 inline-block"
-          >
-            Need a different drop-off location?
-          </a>
-          <div class="flex">
-            <div
-              class="flex items-center bg-gray-100 text-gray-800 rounded-l-lg px-4"
-            >
-              <i class="fas fa-map-marker-alt"></i>
-              <span class="ml-2 font-medium">Drop Off</span>
-            </div>
-            <input
-              type="text"
-              placeholder="City or Airport"
-              class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
-            />
-          </div>
-        </div>
-
-        <!-- Pick Up Date & Time -->
-        <div class="flex flex-col md:flex-row gap-3">
-          <div class="flex flex-1">
-            <div
-              class="flex items-center bg-gray-100 text-gray-800 rounded-l-lg px-4"
-            >
-              <i class="fas fa-calendar-alt"></i>
-              <span class="ml-2 font-medium">Pick Up</span>
-            </div>
-            <input
-              type="date"
-              class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
-            />
-          </div>
-          <select
-            class="p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
-          >
-            <option>12:00 AM</option>
-            <option>1:00 AM</option>
-            <option>2:00 AM</option>
-            <option>3:00 AM</option>
-          </select>
-        </div>
-
-        <!-- Drop Off Date & Time -->
-        <div class="flex flex-col md:flex-row gap-3">
-          <div class="flex flex-1">
-            <div
-              class="flex items-center bg-gray-100 text-gray-800 rounded-l-lg px-4"
-            >
-              <i class="fas fa-calendar-alt"></i>
-              <span class="ml-2 font-medium">Drop Off</span>
-            </div>
-            <input
-              type="date"
-              class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
-            />
-          </div>
-          <select
-            class="p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
-          >
-            <option>12:00 AM</option>
-            <option>1:00 AM</option>
-            <option>2:00 AM</option>
-            <option>3:00 AM</option>
-          </select>
-        </div>
-
-        <!-- Submit Button -->
-        <a href="{% url 'home:details' %}">
-          <button
-            type="button"
-            class="w-full bg-white text-gray-800 font-bold py-3.5 rounded-lg hover:bg-gray-100 transition shadow-lg hover:shadow-xl"
-          >
-            Book Now
-          </button>
-        </a>
-      </form>
+        />
     </div>
+    
+    <!-- Drop Off Location -->
+    <div>
+        <a href="#" class="text-yellow-300 hover:text-yellow-200 text-sm font-medium mb-2 inline-block">
+            Need a different drop-off location?
+        </a>
+        <div class="flex">
+            <div class="flex items-center bg-gray-100 text-gray-800 rounded-l-lg px-4">
+                <i class="fas fa-map-marker-alt"></i>
+                <span class="ml-2 font-medium">Drop Off</span>
+            </div>
+            <input
+                type="text"
+                name="drop_off_location"
+                placeholder="City or Airport"
+                required
+                class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+            />
+        </div>
+    </div>
+    
+    <!-- Pick Up Date & Time -->
+    <div class="flex flex-col md:flex-row gap-3">
+        <div class="flex flex-1">
+            <div class="flex items-center bg-gray-100 text-gray-800 rounded-l-lg px-4">
+                <i class="fas fa-calendar-alt"></i>
+                <span class="ml-2 font-medium">Pick Up</span>
+            </div>
+            <input
+                type="date"
+                name="pick_up_date"
+                required
+                min="{% now 'Y-m-d' %}"
+                class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+            />
+        </div>
+        <select
+            name="pick_up_time"
+            required
+            class="p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+        >
+            {% for hour in '01234567891011121314151617181920212223'|make_list %}
+                <option value="{{ hour|add:'0' }}:00">{{ hour|add:'0' }}:00 AM</option>
+                <option value="{{ hour|add:'0' }}:30">{{ hour|add:'0' }}:30 AM</option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <!-- Drop Off Date & Time -->
+    <div class="flex flex-col md:flex-row gap-3">
+        <div class="flex flex-1">
+            <div class="flex items-center bg-gray-100 text-gray-800 rounded-l-lg px-4">
+                <i class="fas fa-calendar-alt"></i>
+                <span class="ml-2 font-medium">Drop Off</span>
+            </div>
+            <input
+                type="date"
+                name="drop_off_date"
+                required
+                min="{% now 'Y-m-d' %}"
+                class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+            />
+        </div>
+        <select
+            name="drop_off_time"
+            required
+            class="p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+        >
+            {% for hour in '01234567891011121314151617181920212223'|make_list %}
+                <option value="{{ hour|add:'0' }}:00">{{ hour|add:'0' }}:00 AM</option>
+                <option value="{{ hour|add:'0' }}:30">{{ hour|add:'0' }}:30 AM</option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <!-- Customer Details -->
+    
+    
+    <!-- Additional Notes -->
+    <div>
+        <label class="block text-sm font-medium text-gray-300 mb-2">
+            Additional Notes / Special Requests
+        </label>
+        <textarea
+            name="additional_notes"
+            rows="4"
+            placeholder="Tell us anything special you need (extra luggage space, child seat, long trip, etc.)"
+            class="w-full p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 resize-none"
+        ></textarea>
+    </div>
+    
+    <!-- Terms Agreement -->
+    <div class="flex items-start">
+        <input
+            type="checkbox"
+            name="agree_terms"
+            id="agreeTerms"
+            required
+            class="mt-1 mr-2"
+        />
+        <label for="agreeTerms" class="text-sm text-gray-300">
+            I agree to the <a href="#" class="text-yellow-400 hover:text-yellow-300">Terms & Conditions</a> and 
+            <a href="#" class="text-yellow-400 hover:text-yellow-300">Privacy Policy</a>
+        </label>
+    </div>
+    
+    <!-- Submit Button -->
+    <a
+        href="{% url 'home:details' %}"
+        type="submit"
+        class="w-full bg-yellow-400 text-gray-900 font-bold py-3.5 rounded-lg hover:bg-yellow-500 transition shadow-lg hover:shadow-xl"
+    >
+        <i class="fas fa-calendar-check mr-2"></i>
+        Book Now
+    </a>
+</form>
+</div>
+<!-- JavaScript for dropdown and car selection -->
+<script>
+function selectCar(carId, carName, carImage) {
+    // Update hidden inputs
+    document.getElementById('carIdInput').value = carId;
+    document.getElementById('carNameInput').value = carName;
+    
+    // Update displayed selection
+    const selectedCarSpan = document.getElementById('selectedCar');
+    selectedCarSpan.innerHTML = `
+        <img src="${carImage}" class="w-8 h-8 rounded-full object-cover" alt="${carName}" />
+        ${carName}
+    `;
+    
+    // Close dropdown
+    document.getElementById('dropdownMenu').classList.add('hidden');
+    
+    // Show success toast
+    showToast(`${carName} selected!`);
+}
+
+function showToast(message) {
+    // Create toast if doesn't exist
+    if (!document.getElementById('toast')) {
+        const toast = document.createElement('div');
+        toast.id = 'toast';
+        toast.className = 'fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded-lg shadow-lg z-50 animate-slideUp';
+        document.body.appendChild(toast);
+    }
+    
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.remove('hidden');
+    
+    // Auto-hide
+    setTimeout(() => {
+        toast.classList.add('hidden');
+    }, 3000);
+}
+
+// Toggle dropdown
+document.getElementById('dropdownBtn').addEventListener('click', function() {
+    const dropdown = document.getElementById('dropdownMenu');
+    dropdown.classList.toggle('hidden');
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(event) {
+    const dropdown = document.getElementById('dropdownMenu');
+    const button = document.getElementById('dropdownBtn');
+    
+    if (!dropdown.contains(event.target) && !button.contains(event.target)) {
+        dropdown.classList.add('hidden');
+    }
+});
+</script>
