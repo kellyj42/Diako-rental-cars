@@ -1,0 +1,29 @@
+{% if user.is_authenticated %}
+<div class="mt-5 w-full">
+  <a
+    href="{% url 'bookings:confirm_booking' booking.id %}"
+    class="mx-auto px-4 sm:px-6 lg:px-8"
+  >
+    <button
+      class="w-full bg-linear-to-r from-blue-600 to-blue-800 text-white text-xl font-bold py-4 rounded-2xl shadow-xl hover:from-blue-700 hover:to-blue-900 transition-all duration-300 flex items-center justify-center gap-3"
+    >
+      <i class="fas fa-check-circle text-2xl"></i>
+      Confirm Order
+    </button>
+  </a>
+</div>
+{% else %}
+<div class="mt-5 w-full">
+  <a
+    href="{% url 'userAuth:login' %}?next={% url 'bookings:confirm_booking' booking.id %}"
+    class="mx-auto px-4 sm:px-6 lg:px-8"
+  >
+    <button
+      class="w-full bg-linear-to-r from-blue-600 to-blue-800 text-white text-xl font-bold py-4 rounded-2xl shadow-xl hover:from-blue-700 hover:to-blue-900 transition-all duration-300 flex items-center justify-center gap-3"
+    >
+      <i class="fas fa-check-circle text-2xl"></i>
+      Sign In to Confirm Order
+    </button>
+  </a>
+</div>
+{% endif %}

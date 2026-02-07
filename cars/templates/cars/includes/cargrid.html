@@ -1,0 +1,115 @@
+<div class="p-1">
+  <!-- Results Count -->
+  <div class="flex justify-between items-center mb-2">
+    <p id="resultsCount" class="text-gray-400">
+      {{ cars|length }} vehicle{{ cars|length|pluralize }}
+    </p>
+    <div class="flex items-center gap-2 text-sm text-gray-400">
+      <i class="fas fa-car"></i>
+      <span>Tap to select vehicle</span>
+    </div>
+  </div>
+
+  <!-- Cars Grid -->
+  <div
+    id="modalCars"
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-h-[40vh] overflow-y-auto pr-2"
+  >
+    {% for car in cars %}
+    <div
+      class="group bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-750 hover:transform hover:-translate-y-1 transition-all duration-300 cursor-pointer border border-gray-700 hover:border-blue-500/30"
+      data-search="{{ car.name|lower }} {{ car.category.name|lower }} {{ car.transmission|lower }} {{ car.fuel_type|lower }} {{ car.features }}"
+      data-category="{{ car.category.slug }}"
+      data-price="{{ car.price_per_day }}"
+      data-name="{{ car.name|lower }}"
+      data-transmission="{{ car.transmission|lower }}"
+      data-seats="{{ car.seats }}"
+      data-fuel="{{ car.fuel_type|lower }}"
+    >
+      <div class="relative">
+        <img
+          src="{{ car.thumbnail_url }}"
+          alt="{{ car.display_name }}"
+          class="w-full h-48 object-fit  bg-gray-700"
+        />
+
+        <div class="absolute top-3 left-3">
+          <span
+            class="category-badge px-2 py-1 rounded-full text-xs font-semibold {{ car.category.bg_color }}"
+          >
+            {{ car.category.name|upper }}
+          </span>
+        </div>
+        
+        <div class="absolute top-3 right-3">
+          {% if car.price_per_day > 100 %}
+          <span
+            class="bg-purple-600 text-white px-2 py-1 rounded text-xs font-semibold"
+            >Premium</span
+          >
+          {% elif car.price_per_day > 70 %}
+          <span
+            class="bg-blue-600 text-white px-2 py-1 rounded text-xs font-semibold"
+            >Popular</span
+          >
+          {% else %}
+          <span
+            class="bg-green-600 text-white px-2 py-1 rounded text-xs font-semibold"
+            >Economy</span
+          >
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="p-4">
+        <div class="flex justify-between items-start mb-1">
+          <div>
+            <h3 class="font-bold text-white text-lg mb-1">{{ car.name }}</h3>
+            <div class="flex items-center gap-2 text-sm text-gray-400">
+              <span class="year-badge">{{ car.year }}</span>
+              <span class="fuel-badge">{{ car.fuel_type }}</span>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="text-xl font-bold text-white">
+              ${{ car.price_per_day }}
+            </div>
+            <div class="text-xs text-gray-400">per day</div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 text-sm text-gray-400 mb-4">
+          <div class="flex items-center gap-1">
+            <i class="fas fa-users"></i>
+            <span class="seats">{{ car.seats }} Seats</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <i class="fas fa-car"></i>
+            <span class="transmission">{{ car.transmission }}</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <i class="fas fa-gas-pump"></i>
+            <span class="fuel-type">{{ car.fuel_type }}</span>
+          </div>
+        </div>
+
+        <form method="post" action="{% url 'bookings:car' %}">
+          {% csrf_token %}
+          <input type="hidden" name="car_id" value="{{ car.id }}" />
+
+          <button
+            type="submit"
+            class="w-full bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-2.5 rounded-lg transition-all duration-300"
+          >
+            <i class="fas fa-check"></i>
+            Select Vehicle
+          </button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- No Results Message -->
+  {% include "cars/includes/novehicles.html" %}
+</div>

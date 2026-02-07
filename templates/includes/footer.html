@@ -1,0 +1,90 @@
+{% load static %}
+<footer class=" bg-blue-950 text-gray-300">
+  <div class="px-10 py-14 grid grid-cols-1 md:grid-cols-4 gap-10">
+    <!-- Logo & About -->
+    <div>
+      <div class="">
+        <img
+          src="{% static 'home/images/image.png' %}"
+          alt="Diako Rentals logo"
+          
+        />
+        
+      </div>
+      <p class="text-sm leading-relaxed">
+        Diako Rental Cars provides reliable, affordable, and premium vehicles
+        for your personal and business needs.
+      </p>
+    </div>
+
+    <!-- Quick Links -->
+    <div>
+      <h3 class="text-white font-semibold mb-4">Quick Links</h3>
+      <ul class="space-y-2 text-sm">
+        <li class="hover:text-orange-400 transition"><a href="#">Home</a></li>
+        <li class="hover:text-orange-400 transition">
+          <a href="#">Services</a>
+        </li>
+        <li class="hover:text-orange-400 transition"><a href="#">Cars</a></li>
+        <li class="hover:text-orange-400 transition"><a href="#">FAQs</a></li>
+        <li class="hover:text-orange-400 transition">
+          <a href="#">About Us</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Contact Info -->
+    <div>
+      <h3 class="text-white font-semibold mb-4">Contact</h3>
+      <ul class="space-y-3 text-sm">
+        <li class="flex items-center gap-3">
+          <i class="fa-solid fa-location-dot text-orange-400"></i>
+          New York, USA
+        </li>
+        <li class="flex items-center gap-3">
+          <i class="fa-solid fa-phone text-orange-400"></i>
+          +1 234 567 890
+        </li>
+        <li class="flex items-center gap-3">
+          <i class="fa-solid fa-envelope text-orange-400"></i>
+          info@email.com
+        </li>
+      </ul>
+    </div>
+
+    <!-- Social Media -->
+    <div>
+      <h3 class="text-white font-semibold mb-4">Follow Us</h3>
+      <div class="flex gap-4 text-lg">
+        <a
+          href="#"
+          class="bg-blue-900 p-3 rounded-full hover:bg-orange-400 hover:text-white transition"
+        >
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+        <a
+          href="#"
+          class="bg-blue-900 p-3 rounded-full hover:bg-orange-400 hover:text-white transition"
+        >
+          <i class="fa-brands fa-facebook"></i>
+        </a>
+        <a
+          href="#"
+          class="bg-blue-900 p-3 rounded-full hover:bg-orange-400 hover:text-white transition"
+        >
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="border-t border-blue-900">
+    <div
+      class="px-10 py-4 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400"
+    >
+      <p>© 2026 Diako Rental Cars. All rights reserved.</p>
+      <p>Designed with <span class="text-orange-400">❤</span> by Diako</p>
+    </div>
+  </div>
+</footer>

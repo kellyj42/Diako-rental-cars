@@ -1,0 +1,49 @@
+{% load static %}
+<section class="relative bg-gray-900 text-white">
+  <!-- Background Image -->
+  <div class="absolute inset-0">
+    <img
+      src="{% static 'home/images/car.jpg' %}"
+      alt="Car Rental"
+      class="w-full h-full object-cover opacity-40"
+    />
+  </div>
+
+  <!-- Content -->
+  <div class="flex items-center max-w-7xl mx-auto px-6 py-24">
+    <div class="max-w-3xl">
+      <h1 class="text-4xl md:text-5xl font-bold leading-tight">
+        Reliable Car Rentals<br />
+        <span class="text-yellow-400">Anytime, Anywhere</span>
+      </h1>
+
+      <p class="mt-6 text-lg text-gray-200">
+        Choose from a wide range of well-maintained vehicles for business,
+        travel, or everyday use. Simple booking. Transparent pricing. No stress.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a
+          href=""
+          class="bg-yellow-400 text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition"
+        >
+          Book a Car
+        </a>
+
+        <a
+          href=""
+          class="border border-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-gray-900 transition"
+        >
+          Learn More
+        </a>
+      </div>
+    </div>
+
+    <!-- Booking Form -->
+    {% include "bookings/bookingform.html"%}
+    
+  </div>
+</section>
+
+

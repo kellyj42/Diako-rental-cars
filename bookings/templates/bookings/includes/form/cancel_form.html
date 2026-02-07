@@ -1,0 +1,9 @@
+<form
+  id="cancelSelectionForm"
+  method="post"
+  action="{% url 'bookings:cancel_car' %}"
+  style="display: none"
+>
+  {% csrf_token %}
+  <input type="hidden" name="car_id" id="cancelCarId" value="" />
+</form>

@@ -1,0 +1,90 @@
+    
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+    .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Custom scrollbar (optional - if you want to show it) */
+    .vehicle-scroll-container {
+      scroll-behavior: smooth;
+      cursor: grab;
+    }
+
+    .vehicle-scroll-container:active {
+      cursor: grabbing;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 640px) {
+      .scroll-btn {
+        display: none; /* Hide buttons on mobile for better touch experience */
+      }
+
+      .vehicle-scroll-container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      .flex-shrink-0 {
+        width: 280px !important; /* Smaller cards on mobile */
+      }
+    }
+    @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-slideUp {
+    animation: slideUp 0.3s ease-out;
+  }
+
+  /* Custom scrollbar */
+  #modalCars::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #modalCars::-webkit-scrollbar-track {
+    background: #1f2937;
+    border-radius: 3px;
+  }
+
+  #modalCars::-webkit-scrollbar-thumb {
+    background: #4b5563;
+    border-radius: 3px;
+  }
+
+  #modalCars::-webkit-scrollbar-thumb:hover {
+    background: #6b7280;
+  }
+
+  /* Category badge colors - these should match your Django category model */
+  .bg-orange-500 {
+    background-color: #f97316;
+  }
+  .bg-blue-500 {
+    background-color: #3b82f6;
+  }
+  .bg-purple-500 {
+    background-color: #8b5cf6;
+  }
+  .bg-green-500 {
+    background-color: #10b981;
+  }
+  .bg-emerald-500 {
+    background-color: #10b981;
+  }
+  .bg-gray-500 {
+    background-color: #6b7280;
+  }

@@ -1,0 +1,121 @@
+{% load static %}
+<section class="bg-white py-16 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-2 gap-12 items-center">
+      <!-- Left Column -->
+      <div class="wow fadeInLeft" data-wow-delay="0.2s">
+        <!-- Heading -->
+        <div class="pb-8">
+          <h1 class="text-4xl md:text-5xl font-bold text-blue-950 mb-4">
+            Central <span class="text-orange-400">About</span>
+          </h1>
+          <p class="text-gray-600 text-base md:text-lg">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut amet
+            nemo expedita asperiores commodi accusantium at cum harum.
+          </p>
+        </div>
+
+        <!-- Vision & Mission Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div
+            class="bg-white rounded-xl p-6 text-center shadow-lg border border-gray-200"
+          >
+            <div class="mb-4">
+              <i class="fa-solid fa-user-astronaut text-4xl text-blue-950"></i>
+            </div>
+            <h5 class="text-gray-900 font-semibold mb-2">Our Vision</h5>
+            <p class="text-gray-600 text-sm md:text-base">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </p>
+          </div>
+
+          <div
+            class="bg-white rounded-xl p-6 text-center shadow-lg border border-gray-200"
+          >
+            <div class="mb-4">
+              <i class="fa-solid fa-hand-fist text-orange-400 text-4xl"></i>
+            </div>
+            <h5 class="text-gray-900 font-semibold mb-2">Our Mission</h5>
+            <p class="text-gray-600 text-sm md:text-base">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </p>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <p class="text-gray-600 mb-6">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae,
+          aliquam ipsum. Sed suscipit dolorem libero sequi aut natus debitis
+          reprehenderit.
+        </p>
+
+        <!-- Stats & List -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center mb-6">
+          <!-- Years of Experience -->
+          <div
+            class="bg-white rounded-xl text-center py-6 shadow-lg border border-gray-200"
+          >
+            <h1 class="text-4xl font-bold text-gray-900">17</h1>
+            <h5 class="text-gray-600">Years Of Experience</h5>
+          </div>
+
+          <!-- Features List -->
+          <div class="space-y-2 text-gray-700">
+            <p class="flex items-center">
+              <i class="fa-solid fa-check-circle text-orange-400 mr-2"></i>
+              Morbi tristique senectus
+            </p>
+            <p class="flex items-center">
+              <i class="fa-solid fa-check-circle text-orange-400 mr-2"></i>
+              A scelerisque purus
+            </p>
+            <p class="flex items-center">
+              <i class="fa-solid fa-check-circle text-orange-400 mr-2"></i>
+              Dictumst vestibulum
+            </p>
+            <p class="flex items-center">
+              <i class="fa-solid fa-check-circle text-orange-400 mr-2"></i>
+              Dio aenean sed adipiscing
+            </p>
+          </div>
+        </div>
+
+        <!-- Button & Founder -->
+        <div class="flex flex-col md:flex-row md:items-center gap-6">
+          <a
+            href="#"
+            class="bg-orange-400 hover:bg-orange-500 text-white font-semibold py-3 px-6 rounded-xl shadow-lg transition"
+          >
+            More About Us
+          </a>
+
+          <div class="flex items-center gap-4">
+            <img
+              src="{% static 'home/Founder.jpg' %}"
+              alt="Founder"
+              class="w-20 h-20 rounded-full border-4 border-gray-200"
+            />
+            <div>
+              <h4 class="text-gray-900 font-semibold">William Burgess</h4>
+              <p class="text-gray-600 text-sm">Carveo Founder</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column Images -->
+      <div class="wow fadeInRight flex flex-col gap-4" data-wow-delay="0.2s">
+        <img
+          src="{% static 'home/car.jpg' %}"
+          alt="About Image"
+          class="rounded-xl w-full h-64 object-cover shadow-xl"
+        />
+        <img
+          src="{% static 'home/car3.jpg' %}"
+          alt="About Image 2"
+          class="rounded-xl w-full h-64 object-cover shadow-xl"
+        />
+      </div>
+    </div>
+  </div>
+</section>

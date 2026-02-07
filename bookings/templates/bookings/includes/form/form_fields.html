@@ -1,0 +1,107 @@
+<!-- Pick Up Location -->
+<div class="flex">
+  <div class="flex items-center bg-gray-100 text-gray-800 rounded-l-lg px-4">
+    <i class="fas fa-map-marker-alt"></i>
+    <span class="ml-2 font-medium">Pick Up</span>
+  </div>
+  <input type="text" name="pick_up_location" placeholder="City or Airport" required value="{{ form.pick_up_location.value|default:'' }}" class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" />
+  {% if form and form.errors.pick_up_location %}
+  <p class="text-xs text-red-400 mt-1">{{ form.errors.pick_up_location.0 }}</p>
+  {% endif %}
+</div>
+
+<!-- Drop Off Location -->
+<div>
+  <a href="#" class="text-yellow-300 hover:text-yellow-200 text-sm font-medium mb-2 inline-block">Need a different drop-off location?</a>
+  <div class="flex">
+    <div class="flex items-center bg-gray-100 text-gray-800 rounded-l-lg px-4">
+      <i class="fas fa-map-marker-alt"></i>
+      <span class="ml-2 font-medium">Drop Off</span>
+    </div>
+    <input type="text" name="drop_off_location" placeholder="City or Airport" required value="{{ form.drop_off_location.value|default:'' }}" class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" />
+    {% if form and form.errors.drop_off_location %}
+    <p class="text-xs text-red-400 mt-1">{{ form.errors.drop_off_location.0 }}</p>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Pick Up Date & Time -->
+<div class="flex flex-col md:flex-row gap-3">
+  <div class="flex flex-1">
+    <div class="flex items-center bg-gray-100 text-gray-800 rounded-l-lg px-4">
+      <i class="fas fa-calendar-alt"></i>
+      <span class="ml-2 font-medium">Pick Up</span>
+    </div>
+    <input type="date" name="pick_up_date" required min="{% now 'Y-m-d' %}" value="{{ form.pick_up_date.value|default:'' }}" class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" />
+    {% if form and form.errors.pick_up_date %}
+    <p class="text-xs text-red-400 mt-1">{{ form.errors.pick_up_date.0 }}</p>
+    {% endif %}
+  </div>
+
+  <select name="pick_up_time" required class="p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400">
+    {% for hour in '01234567891011121314151617181920212223'|make_list %}
+    {% with hh=hour|add:'0' %}
+    <option value="{{ hh }}:00" {% if form and form.pick_up_time.value == hh|stringformat:':00' %}selected{% endif %}>{{ hh }}:00</option>
+    <option value="{{ hh }}:30" {% if form and form.pick_up_time.value == hh|stringformat:':30' %}selected{% endif %}>{{ hh }}:30</option>
+    {% endwith %}
+    {% endfor %}
+  </select>
+  {% if form and form.errors.pick_up_time %}
+  <p class="text-xs text-red-400 mt-1">{{ form.errors.pick_up_time.0 }}</p>
+  {% endif %}
+</div>
+
+<!-- Drop Off Date & Time -->
+<div class="flex flex-col md:flex-row gap-3">
+  <div class="flex flex-1">
+    <div class="flex items-center bg-gray-100 text-gray-800 rounded-l-lg px-4">
+      <i class="fas fa-calendar-alt"></i>
+      <span class="ml-2 font-medium">Drop Off</span>
+    </div>
+    <input type="date" name="drop_off_date" required min="{% now 'Y-m-d' %}" value="{{ form.drop_off_date.value|default:'' }}" class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" />
+    {% if form and form.errors.drop_off_date %}
+    <p class="text-xs text-red-400 mt-1">{{ form.errors.drop_off_date.0 }}</p>
+    {% endif %}
+  </div>
+
+  <select name="drop_off_time" required class="p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400">
+    {% for hour in '01234567891011121314151617181920212223'|make_list %}
+    {% with hh=hour|add:'0' %}
+    <option value="{{ hh }}:00" {% if form and form.drop_off_time.value == hh|stringformat:':00' %}selected{% endif %}>{{ hh }}:00</option>
+    <option value="{{ hh }}:30" {% if form and form.drop_off_time.value == hh|stringformat:':30' %}selected{% endif %}>{{ hh }}:30</option>
+    {% endwith %}
+    {% endfor %}
+  </select>
+  {% if form and form.errors.drop_off_time %}
+  <p class="text-xs text-red-400 mt-1">{{ form.errors.drop_off_time.0 }}</p>
+  {% endif %}
+</div>
+
+<!-- Additional Notes -->
+<div>
+  <label class="block text-sm font-medium text-gray-300 mb-2">Additional Notes / Special Requests</label>
+  <textarea name="additional_notes" rows="4" placeholder="Tell us anything special you need (extra luggage space, child seat, long trip, etc.)" class="w-full p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 resize-none">{{ form.additional_notes.value|default:'' }}</textarea>
+  {% if form and form.errors.additional_notes %}
+  <p class="text-xs text-red-400 mt-1">{{ form.errors.additional_notes.0 }}</p>
+  {% endif %}
+</div>
+
+<!-- Terms Agreement -->
+<div class="flex items-start">
+  <input type="checkbox" name="agree_terms" id="agreeTerms" required class="mt-1 mr-2" {% if form and form.agree_terms.value %}checked{% endif %} />
+  {% if form and form.errors.agree_terms %}
+  <p class="text-xs text-red-400 mt-1">{{ form.errors.agree_terms.0 }}</p>
+  {% endif %}
+  <label for="agreeTerms" class="text-sm text-gray-300">
+    I agree to the
+    <a href="#" class="text-yellow-400 hover:text-yellow-300">Terms & Conditions</a>
+    and
+    <a href="#" class="text-yellow-400 hover:text-yellow-300">Privacy Policy</a>
+  </label>
+</div>
+
+<!-- Submit Button -->
+<button type="submit" class="w-full bg-yellow-400 text-gray-900 font-bold py-3.5 rounded-lg hover:bg-yellow-500 transition shadow-lg hover:shadow-xl">
+  <i class="fas fa-calendar-check mr-2"></i>
+  Book Now
+</button>

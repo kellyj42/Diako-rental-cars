@@ -1,0 +1,119 @@
+<div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <div class="p-6 border-b">
+            <h2 class="text-xl font-bold text-gray-900 flex items-center">
+              <i class="fas fa-car text-orange-500 mr-3"></i>
+              Selected Vehicle
+            </h2>
+          </div>
+
+          <div class="p-6 flex flex-col lg:flex-row gap-6">
+            <!-- Car Image -->
+            <div class="lg:w-1/3">
+              <div
+                class="relative rounded-xl overflow-hidden bg-linear-to-br from-gray-50 to-gray-100 p-4"
+              >
+                <img
+                  src="{{ car.thumbnail_url }}"
+                  alt="{{ car.name }}"
+                  class="w-full h-48 object-contain transform hover:scale-105 transition-transform duration-300"
+                />
+                <div
+                  class="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full"
+                >
+                  POPULAR
+                </div>
+              </div>
+            </div>
+
+            <!-- Car Details -->
+            <div class="lg:w-2/3">
+              <h3 class="text-2xl font-bold text-gray-900">{{ car.name }}</h3>
+
+              <div class="flex items-center gap-4 mt-2">
+                <div class="flex items-center">
+                  <div class="flex text-orange-400">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <span class="ml-2 text-sm font-medium text-gray-600"
+                    >4.5 (128 reviews)</span
+                  >
+                </div>
+              </div>
+
+
+
+              <!-- Specs Grid -->
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6">
+                <div class="flex items-center bg-gray-50 p-3 rounded-lg">
+                  <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                    <i class="fa fa-users text-blue-600"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-500">Seats</p>
+                    <p class="font-semibold">{{ car.seats }} Passengers</p>
+                  </div>
+                </div>
+
+                <div class="flex items-center bg-gray-50 p-3 rounded-lg">
+                  <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                    <i class="fa fa-car text-blue-600"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-500">Transmission</p>
+                    <p class="font-semibold">{{ car.transmission }}</p>
+                  </div>
+                </div>
+
+                <div class="flex items-center bg-gray-50 p-3 rounded-lg">
+                  <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                    <i class="fa fa-gas-pump text-blue-600"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-500">Fuel Type</p>
+                    <p class="font-semibold">
+                      {{ car.fuel_type|default:"Petrol" }}
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex items-center bg-gray-50 p-3 rounded-lg">
+                  <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                    <i class="fa fa-cogs text-blue-600"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-500">Drive</p>
+                    <p class="font-semibold">
+                      {{ car.drive_type|default:"FWD" }}
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex items-center bg-gray-50 p-3 rounded-lg">
+                  <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                    <i class="fa fa-road text-blue-600"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-500">Mileage</p>
+                    <p class="font-semibold">Unlimited</p>
+                  </div>
+                </div>
+
+                <div class="flex items-center bg-gray-50 p-3 rounded-lg">
+                  <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                    <i class="fa fa-snowflake text-blue-600"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-500">AC</p>
+                    <p class="font-semibold">
+                      {{ car.ac_type|default:"Dual Zone" }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>

@@ -1,0 +1,29 @@
+<div class="lg:col-span-2">
+  <div
+    class="bg-linear-to-br from-blue-600 to-blue-700 rounded-2xl shadow-xl p-8 text-white h-full"
+  >
+    <h2 class="text-xl font-bold mb-6">Why Join Diako?</h2>
+
+    <div class="space-y-6">
+
+      {% include "userAuth/includes/signup/_benefit_item.html" with icon="fa-percentage" title="Exclusive Discounts" text="Members get 10% off on first booking" %} 
+
+      {%include "userAuth/includes/signup/_benefit_item.html" with icon="fa-bolt" title="Fast Booking" text="Save your details for quicker reservations" %}
+
+      {% include "userAuth/includes/signup/_benefit_item.html" with icon="fa-history" title="Booking History" text="Track all your trips" %}
+
+      {% include "userAuth/includes/signup/_benefit_item.html" with icon="fa-gift" title="Reward Points" text="Earn points with every booking"%}
+      
+    </div>
+
+    <div
+      class="mt-8 pt-6 border-t border-blue-500 flex items-center justify-center"
+    >
+      <i class="fas fa-shield-alt text-xl mr-3"></i>
+      <div>
+        <p class="text-sm font-medium">Secure & Trusted</p>
+        <p class="text-xs text-blue-200">256-bit encryption</p>
+      </div>
+    </div>
+  </div>
+</div>

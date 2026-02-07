@@ -1,0 +1,28 @@
+{% load static tailwind_tags django_browser_reload %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Django Tailwind</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    {% tailwind_css %}
+    <link rel="stylesheet" href="{% static 'home/css/style.css' %}" />
+  </head>
+  <body class="leading-normal tracking-normal">
+    {% block content %}{% endblock %} {% django_browser_reload_script %}
+    <script
+      src="https://kit.fontawesome.com/dbc3492b26.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="{% static 'home/js/achievements.js' %}"></script>
+    <script src="{% static 'home/js/vehicleScroll.js' %}"></script>
+    <script src="{% static 'home/js/password.js' %}"></script>
+    <script src="{% static 'home/js/carModal.js' %}"></script>
+    <script src="{% static 'home/js/bookingValidation.js' %}"></script>
+    <script src="{% static 'home/js/cancelCar.js' %}"></script>
+    <script src="{% static 'home/js/signup.js' %}"></script>
+    <script src="{% static 'home/js/_passwordCheck.js' %}"></script>
+     <script src="{% static 'home/js/liveClock.js' %}"></script>
+  </body>
+</html>

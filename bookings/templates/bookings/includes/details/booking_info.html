@@ -1,0 +1,117 @@
+<div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <div class="p-6 border-b">
+            <h2 class="text-xl font-bold text-gray-900 flex items-center">
+              <i class="far fa-calendar-alt text-orange-500 mr-3"></i>
+              Booking Details
+            </h2>
+          </div>
+
+          <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Pickup -->
+              <div class="bg-blue-50 p-5 rounded-xl border border-blue-100">
+                <div class="flex items-center mb-3">
+                  <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                    <i class="fas fa-map-marker-alt text-blue-600"></i>
+                  </div>
+                  <h3 class="font-semibold text-gray-900">
+                    Pick-up Information
+                  </h3>
+                </div>
+                <div class="space-y-2">
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Location</span>
+                    <span class="font-medium"
+                      >{{ booking.pick_up_location }}</span
+                    >
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Date</span>
+                    <span class="font-medium"
+                      >{{ booking.pick_up_date|date:"d M Y" }}</span
+                    >
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Time</span>
+                    <span class="font-medium">{{ booking.pick_up_time }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Return -->
+              <div class="bg-green-50 p-5 rounded-xl border border-green-100">
+                <div class="flex items-center mb-3">
+                  <div class="bg-green-100 p-2 rounded-lg mr-3">
+                    <i class="fas fa-flag-checkered text-green-600"></i>
+                  </div>
+                  <h3 class="font-semibold text-gray-900">
+                    Return Information
+                  </h3>
+                </div>
+                <div class="space-y-2">
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Location</span>
+                    <span class="font-medium"
+                      >{{ booking.drop_off_location }}</span
+                    >
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Date</span>
+                    <span class="font-medium"
+                      >{{ booking.drop_off_date|date:"d M Y" }}</span
+                    >
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Time</span>
+                    <span class="font-medium">{{ booking.drop_off_time }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Service Options -->
+              <div class="md:col-span-2 bg-gray-50 p-5 rounded-xl">
+                <h3 class="font-semibold text-gray-900 mb-4 flex items-center">
+                  <i class="fas fa-user-tie text-orange-500 mr-3"></i>
+                  Service Options
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div
+                    class="flex items-center bg-white p-4 rounded-lg border border-gray-200"
+                  >
+                    <div class="mr-4">
+                      <div
+                        class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center"
+                      >
+                        <i class="fas fa-user text-blue-600"></i>
+                      </div>
+                    </div>
+                    <div class="flex-1">
+                      <p class="font-medium">Driver Option</p>
+                      <p class="text-sm text-gray-600">
+                        With Professional Driver
+                      </p>
+                    </div>
+                    <span class="text-green-600 font-semibold">Included</span>
+                  </div>
+
+                  <div
+                    class="flex items-center bg-white p-4 rounded-lg border border-gray-200"
+                  >
+                    <div class="mr-4">
+                      <div
+                        class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center"
+                      >
+                        <i class="fas fa-shield-alt text-green-600"></i>
+                      </div>
+                    </div>
+                    <div class="flex-1">
+                      <p class="font-medium">Insurance</p>
+                      <p class="text-sm text-gray-600">Full Coverage</p>
+                    </div>
+                    <span class="text-green-600 font-semibold">Included</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>

@@ -1,0 +1,96 @@
+{% load static %}
+
+<div
+  class="bg-linear-to-b from-gray-900 to-gray-950 w-full max-w-4xl p-4 rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-300 scale-95"
+>
+  <form
+    method="post"
+    action="{% url 'bookings:booking_form' %}"
+    class="space-y-6"
+  >
+    {% csrf_token %} {# show server-side validation errors if present #} 
+    {% if form and form.non_field_errors %}
+    <div class="bg-red-50 border border-red-200 text-red-700 p-3 rounded mb-3">
+      {{ form.non_field_errors }}
+    </div>
+    {% endif %}
+
+    <!-- Error box -->
+    <div
+      id="jsErrorBox"
+      class="hidden bg-red-600/10 border border-red-500 text-red-200 p-4 rounded-lg mb-4"
+    >
+      <div class="flex items-center gap-2 mb-2 font-semibold">
+        <i class="fas fa-triangle-exclamation"></i>
+        Please fix the following
+      </div>
+      <ul id="jsErrorList" class="list-disc list-inside text-sm space-y-1"></ul>
+    </div>
+
+    <!-- selected car / browse link -->
+    {% include 'bookings/includes/form/selected_car.html' %}
+
+    <!-- form fields (pick up / drop off / notes / terms / submit) -->
+    {% include 'bookings/includes/form/form_fields.html' %}
+  </form>
+
+  <!-- hidden cancel POST form -->
+  {% include 'bookings/includes/form/cancel_form.html' %}
+
+  <!-- Inline JS: submit hidden cancel form without confirmation -->
+ <script>
+  const cancelBtn = document.getElementById("cancelCarBtn");
+
+  if (cancelBtn) {
+    cancelBtn.addEventListener("click", () => {
+    
+
+      fetch("{% url 'bookings:cancel_car' %}", {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": "{{ csrf_token }}",
+        },
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          // remove selected car block only
+          cancelBtn.closest(".relative").innerHTML = `
+            <a href="{% url 'cars:car_list' %}"
+              class="w-full flex items-center justify-between p-3.5 bg-gray-700 text-white rounded-lg border border-gray-600 hover:bg-gray-600 transition">
+              <span class="flex items-center gap-3 text-gray-300">
+                <i class="fas fa-car text-yellow-400"></i>
+                Browse all available cars
+              </span>
+              <span class="text-yellow-400 font-semibold">View Cars →</span>
+            </a>
+          `;
+        }
+      });
+    });
+  }
+</script>
+<script>
+const changeBtn = document.getElementById("changeCarBtn");
+
+if (changeBtn) {
+  changeBtn.addEventListener("click", () => {
+    const form = document.querySelector("form");
+
+    const formData = new FormData(form);
+
+    fetch("{% url 'bookings:save_draft' %}", {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": "{{ csrf_token }}"
+      },
+      body: formData
+    })
+    .then(() => {
+      // only navigate AFTER saving draft
+      window.location.href = "{% url 'cars:car_list' %}";
+    });
+  });
+}
+</script>
+</div>

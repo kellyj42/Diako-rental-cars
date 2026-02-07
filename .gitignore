@@ -1,0 +1,94 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+dist/
+downloads/
+eggs/
+.eggs/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+pip-wheel-metadata/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+.hypothesis/
+.pytest_cache/
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+.env
+.env.*
+
+# Virtual environments
+venv/
+ENV/
+env/
+myenv/
+.venv/
+venv.bak/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Backup and temp files
+*~
+*.swp
+*.swo
+
+# Python packaging
+*.egg
+*.egg-info/
+pip-log.txt
+
+# Wheel build output
+dist/
+build/
+
+# Local environment files
+coverage.xml
+htmlcov/
+.ropeproject/
+
+# Tailwind / theme app
+# Ignore node modules used for building Tailwind
+theme/static_src/node_modules/
+# Ignore compiled/built CSS from the theme app if you build during development
+theme/static/css/dist/

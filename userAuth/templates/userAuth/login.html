@@ -1,0 +1,209 @@
+{% extends 'base.html' %} {% block content %}
+<div class="min-h-[80vh] flex items-center justify-center bg-blue-50 py-8 px-4">
+  <div class="">
+    <!-- Logo/Brand Header -->
+    <div class="text-center mb-8">
+      <div class="flex justify-center mb-4">
+        <div
+          class="w-16 h-16 bg-linear-to-r from-orange-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg"
+        >
+          <i class="fas fa-car text-white text-2xl"></i>
+        </div>
+      </div>
+      <h1 class="text-3xl font-bold text-gray-900">Welcome Back</h1>
+      <p class="text-gray-600 mt-2">Sign in to your Diako Travel account</p>
+      <div class="bg-blue-50 rounded-xl p-4 mt-2">
+        <div class="flex items-start">
+          <i class="fas fa-info-circle text-blue-500 mr-3"></i>
+          <div>
+            <p class="text-sm text-blue-800">
+              <strong>New customer?</strong> Create an account to save your
+              preferences, view booking history, and get exclusive offers.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Login Card -->
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+      <!-- Decorative Header -->
+      <div class="bg-linear-to-r from-blue-600 to-blue-700 h-2"></div>
+
+      <div class="p-8">
+      
+
+        <!-- Divider -->
+        <div class="flex items-center my-8">
+          <div class="flex-1 border-t border-gray-300"></div>
+          <span class="px-4 text-xl font-bold text-blue-600">
+            Sign in with email</span
+          >
+          <div class="flex-1 border-t border-gray-300"></div>
+        </div>
+{% if messages %}
+  <div class="mb-6 space-y-3">
+    {% for message in messages %}
+      <div
+        class="p-4 rounded-xl border flex items-start gap-3
+        {% if message.tags == 'error' %}
+          bg-red-50 border-red-300 text-red-700
+        {% elif message.tags == 'success' %}
+          bg-green-50 border-green-300 text-green-700
+        {% elif message.tags == 'warning' %}
+          bg-yellow-50 border-yellow-300 text-yellow-700
+        {% else %}
+          bg-blue-50 border-blue-300 text-blue-700
+        {% endif %}"
+      >
+        <i
+          class="fas
+          {% if message.tags == 'error' %} fa-times-circle
+          {% elif message.tags == 'success' %} fa-check-circle
+          {% elif message.tags == 'warning' %} fa-exclamation-triangle
+          {% else %} fa-info-circle
+          {% endif %} mt-1"
+        ></i>
+        <span class="text-sm font-medium">
+          {{ message }}
+        </span>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+        <!-- Login Form -->
+        <form method="post" class="space-y-6">
+          {% csrf_token %}
+
+          <!-- Email Field -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">
+              <i class="fas fa-envelope text-gray-400 mr-2"></i>
+              Email Address
+            </label>
+            <div class="relative">
+              <input
+                type="email"
+                name="username"
+                required
+                class="w-full px-4 py-3 pl-11 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition"
+                placeholder="you@example.com"
+              />
+              <i
+                class="fas fa-user absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+              ></i>
+            </div>
+            <p class="text-xs text-gray-500 mt-2">
+              Enter the email associated with your account
+            </p>
+          </div>
+
+          <!-- Password Field -->
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <label class="block text-sm font-semibold text-gray-700">
+                <i class="fas fa-lock text-gray-400 mr-2"></i>
+                Password
+              </label>
+              <a
+                href="{% url 'userAuth:password_reset_link' %}"
+                class="text-sm text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+              >
+                Forgot password?
+              </a>
+            </div>
+            <div class="relative">
+              <input
+                type="password"
+                name="password"
+                required
+                class="w-full px-4 py-3 pl-11 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition"
+                placeholder="Enter your password"
+                id="passwordInput"
+              />
+              <i
+                class="fas fa-key absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+              ></i>
+              <button
+                type="button"
+                onclick="togglePassword()"
+                class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              >
+                <i class="fas fa-eye" id="toggleIcon"></i>
+              </button>
+            </div>
+            <div class="flex items-center justify-between mt-4">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                  id="rememberMe"
+                />
+                <span class="text-sm text-gray-600"
+                  >Remember me for 30 days</span
+                >
+              </label>
+              <span class="text-xs text-gray-500">
+                <i class="fas fa-shield-alt mr-1"></i>
+                Secure login
+              </span>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="w-full bg-linear-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white font-semibold py-3.5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5"
+          >
+            <i class="fas fa-sign-in-alt mr-2"></i>
+            Sign In to Account
+          </button>
+        </form>
+
+        <!-- Sign Up Link -->
+        <div class="mt-8 pt-6 border-t border-gray-200">
+          <p class="text-center text-gray-600">
+            Don't have an account?
+            <a
+              href="{% url 'userAuth:signup' %}"
+              class="text-blue-600 font-semibold hover:text-blue-800 hover:underline ml-1 transition-colors"
+            >
+              Create an account
+              <i class="fas fa-arrow-right ml-1 text-sm"></i>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional Info -->
+    <div class="mt-8 text-center space-y-4">
+      <div class="flex items-center justify-center gap-6 text-sm text-gray-500">
+        <a
+          href="#"
+          class="hover:text-blue-600 hover:underline transition-colors"
+        >
+          <i class="fas fa-question-circle mr-1"></i>
+          Help Center
+        </a>
+        <a
+          href="#"
+          class="hover:text-blue-600 hover:underline transition-colors"
+        >
+          <i class="fas fa-shield-alt mr-1"></i>
+          Privacy Policy
+        </a>
+        <a
+          href="#"
+          class="hover:text-blue-600 hover:underline transition-colors"
+        >
+          <i class="fas fa-file-contract mr-1"></i>
+          Terms of Service
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

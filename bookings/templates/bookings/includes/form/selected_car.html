@@ -1,0 +1,59 @@
+<div class="relative w-full">
+  {% if selected_car %}
+  <div
+    class="w-full flex items-center justify-between p-3.5 bg-green-700/30 border border-green-600 rounded-lg"
+  >
+    <div class="flex items-center gap-3 text-white">
+      <img
+        src="{{ selected_car.thumbnail_url }}"
+        alt="{{ selected_car.name }}"
+        class="w-14 h-14 rounded-full object-cover"
+      />
+      
+      <div>
+        <div class="font-semibold">{{ selected_car.name }}</div>
+        <div class="text-sm text-gray-300">
+          {{ selected_car.seats }} seats • {{ selected_car.transmission }} •
+          ${{selected_car.price_per_day }}/day
+        </div>
+      </div>
+    </div>
+
+    <div class="flex gap-4 items-center">
+      <button
+        type="button"
+        id="changeCarBtn"
+        class="text-yellow-400 hover:text-yellow-300 text-sm"
+      >
+        Change
+      </button>
+
+      <!-- use immediate submit (no alert) -->
+      <button
+        type="button"
+        id="cancelCarBtn"
+        class="text-red-600 hover:text-white text-sm"
+      >
+      
+        Cancel Selection
+        <span>
+        <i class="fas fa-times"></i>
+      </span>
+      </button>
+    </div>
+  </div>
+
+  <input type="hidden" name="car_id" value="{{ selected_car.id }}" />
+  {% else %}
+  <a
+    href="{% url 'cars:car_list' %}"
+    class="w-full flex items-center justify-between p-3.5 bg-gray-700 text-white rounded-lg border border-gray-600 hover:bg-gray-600 transition"
+  >
+    <span class="flex items-center gap-3 text-gray-300">
+      <i class="fas fa-car text-yellow-400"></i>
+      Browse all available cars
+    </span>
+    <span class="text-yellow-400 font-semibold">View Cars <i class="fas fa-arrow-right"></i></span>
+  </a>
+  {% endif %}
+</div>

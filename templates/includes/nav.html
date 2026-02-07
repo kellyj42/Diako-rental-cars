@@ -1,0 +1,164 @@
+{% load static %}
+
+<header class="shadow-lg relative z-50">
+  <!-- Top Info Bar -->
+  <div class="bg-blue-950 border-b border-blue-900">
+    <div class="flex justify-between items-center px-10 py-3">
+      <ul class="flex space-x-8 text-sm text-gray-200">
+        <li class="flex items-center gap-2">
+          <i class="fa-solid fa-location-arrow text-orange-400"></i>
+          New York, USA
+        </li>
+
+        <li class="flex items-center gap-2">
+          <i class="fa-solid fa-phone text-orange-400"></i>
+          +1 234 567 890
+        </li>
+
+        <li class="flex items-center gap-2">
+          <i class="fa-solid fa-envelope text-orange-400"></i>
+          info@email.com
+        </li>
+
+        <!-- Live Clock -->
+        <li class="flex items-center gap-2">
+          <i class="fa-solid fa-clock text-orange-400"></i>
+          <span id="live-clock"></span>
+        </li>
+      </ul>
+
+      <ul class="flex space-x-4 text-orange-300 text-lg">
+        <li
+          class="bg-blue-900 p-2 rounded-full hover:bg-orange-400 hover:text-white transition"
+        >
+          <i class="fa-brands fa-whatsapp"></i>
+        </li>
+        <li
+          class="bg-blue-900 p-2 rounded-full hover:bg-orange-400 hover:text-white transition"
+        >
+          <i class="fa-brands fa-facebook"></i>
+        </li>
+        <li
+          class="bg-blue-900 p-2 rounded-full hover:bg-orange-400 hover:text-white transition"
+        >
+          <i class="fa-brands fa-instagram"></i>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <nav class="bg-white">
+    <div class="flex justify-between items-center p-2">
+      <!-- Logo -->
+      <div class="">
+        <img
+          src="{% static 'home/images/image.png' %}"
+          alt="Diako Rentals logo"
+          style="width: 150px"
+        />
+      </div>
+
+      <!-- Navigation Links -->
+      <ul class="flex space-x-8 text-gray-700 font-medium">
+        {% for link in nav_links %}
+        <li class="relative group">
+          <a
+            href="{% url link.url %}"
+            class="relative py-3 inline-block transition-colors duration-300 group-hover:text-orange-500"
+          >
+            {{ link.name }} {% if link.children %}
+            <span
+              class="absolute -bottom-1 left-0 w-full h-0.5 bg-orange-500 transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"
+            ></span>
+            {% endif %}
+          </a>
+
+          <!-- Simple Dropdown -->
+          {% if link.children %}
+          <div
+            class="absolute left-0 top-full mt-2 w-96 bg-white shadow-2xl rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-gray-100 p-4"
+          >
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+              {% for child in link.children %}
+              <a
+                href="{% url child.url %}"
+                class="block px-4 py-3 text-gray-700 hover:text-orange-500 hover:bg-orange-50 transition-colors duration-200 rounded-md"
+              >
+                {{ child.name }}
+              </a>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+
+      <!-- CTA Button -->
+      <!-- Auth Area -->
+      <div class="flex items-center gap-4">
+        {% if user.is_authenticated %}
+        <!-- User Dropdown -->
+        <div class="relative group">
+          <button class="flex items-center gap-2 text-gray-700 font-semibold">
+            <i class="fas fa-user-circle text-xl text-orange-500"></i>
+            {{ user.first_name|default:user.username }}
+            <i class="fas fa-chevron-down text-xs"></i>
+          </button>
+
+          <!-- Dropdown Menu -->
+          <div
+            class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50"
+          >
+            <a
+              href="{% url 'bookings:booking_history' %}"
+              class="block px-4 py-3 text-gray-700 hover:bg-orange-50 hover:text-orange-500"
+            >
+              My Bookings
+            </a>
+            <a
+              href="{% url 'userAuth:profile' %}"
+              class="block px-4 py-3 text-gray-700 hover:bg-orange-50 hover:text-orange-500"
+            >
+              Profiles
+            </a>
+
+            <form method="post" action="{% url 'userAuth:logout' %}">
+              {% csrf_token %}
+              <button
+                type="submit"
+                class="w-full text-left px-4 py-3 text-red-600 hover:bg-red-50"
+              >
+                Logout
+              </button>
+            </form>
+          </div>
+        </div>
+        {% if user.is_staff %}
+        <a
+          href="{% url 'dashboard:home' %}"
+          class="text-orange-500 font-semibold"
+        >
+          Admin Dashboard
+        </a>
+        {% endif %} {% else %}
+        <!-- Guest Links -->
+        <a
+          href="{% url 'userAuth:login' %}"
+          class="text-gray-700 font-medium hover:text-orange-500"
+        >
+          Login
+        </a>
+
+        <a
+          href="{% url 'userAuth:signup' %}"
+          class="bg-orange-400 hover:bg-orange-500 transition-colors rounded-full text-white px-6 py-2 font-semibold shadow-md"
+        >
+          Sign Up
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+</header>

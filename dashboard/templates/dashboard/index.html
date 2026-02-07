@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diako Rentals Admin</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --sidebar-width: 260px;
+            --sidebar-bg: #1e293b;
+            --sidebar-active: #3b82f6;
+            --primary-color: #3b82f6;
+            --secondary-color: #8b5cf6;
+        }
+        
+        * {
+            transition: all 0.2s ease;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a1a1a1;
+        }
+        
+        /* Sidebar Animation */
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        
+        /* Pulse Animation */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Glow Effect */
+        .glow {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        
+        /* Data Grid Hover Effect */
+        .data-row:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Notification Badge */
+        .notification-badge {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Chart Animation */
+        .chart-bar {
+            transition: height 0.8s ease-out;
+        }
+        
+        /* Dark Mode Support */
+        .dark-mode {
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        
+        .dark-sidebar {
+            background-color: #0f172a;
+            color: #cbd5e1;
+        }
+        
+        /* Loading Skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        /* Toggle Switch */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #3b82f6;
+        }
+        
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Main Container -->
+    <div class="flex min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="dark-sidebar fixed inset-y-0 left-0 z-50 w-64 transform -translate-x-64 lg:translate-x-0 transition-transform duration-300 ease-in-out shadow-2xl">
+            <div class="flex flex-col h-full">
+                <!-- Logo -->
+                <div class="flex items-center justify-center h-20 px-4 border-b border-gray-700">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                            <i class="fas fa-car text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-white">Diako Rentals</h1>
+                            <p class="text-xs text-gray-400">Admin Dashboard</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- User Profile -->
+                <div class="p-6 border-b border-gray-700">
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <img src="https://ui-avatars.com/api/?name=Admin+User&background=3b82f6&color=fff&size=128" 
+                                 alt="Admin User" 
+                                 class="w-12 h-12 rounded-full border-2 border-blue-500">
+                            <div class="absolute bottom-0 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-gray-800"></div>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-white">John Doe</h3>
+                            <p class="text-sm text-gray-400">Super Admin</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Menu -->
+                <nav class="flex-1 p-4 overflow-y-auto">
+                    <div class="space-y-1">
+                        <a href="#" data-section="dashboard" class="nav-item active">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        
+                        <a href="#" data-section="bookings" class="nav-item">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Bookings</span>
+                            <span class="ml-auto bg-blue-500 text-white text-xs px-2 py-1 rounded-full">24</span>
+                        </a>
+                        
+                        <a href="#" data-section="cars" class="nav-item">
+                            <i class="fas fa-car"></i>
+                            <span>Cars</span>
+                        </a>
+                        
+                        <a href="#" data-section="customers" class="nav-item">
+                            <i class="fas fa-users"></i>
+                            <span>Customers</span>
+                            <span class="ml-auto bg-green-500 text-white text-xs px-2 py-1 rounded-full">+12</span>
+                        </a>
+                        
+                        <a href="#" data-section="reports" class="nav-item">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Reports</span>
+                        </a>
+                        
+                        <a href="#" data-section="revenue" class="nav-item">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span>Revenue</span>
+                        </a>
+                        
+                        <a href="#" data-section="locations" class="nav-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Locations</span>
+                        </a>
+                    </div>
+                    
+                    <!-- System Section -->
+                    <div class="mt-8">
+                        <h4 class="text-xs uppercase text-gray-500 font-semibold tracking-wider px-4 mb-4">System</h4>
+                        <div class="space-y-1">
+                            <a href="#" data-section="settings" class="nav-item">
+                                <i class="fas fa-cog"></i>
+                                <span>Settings</span>
+                            </a>
+                            
+                            <a href="#" data-section="support" class="nav-item">
+                                <i class="fas fa-headset"></i>
+                                <span>Support</span>
+                            </a>
+                            
+                            <a href="#" data-section="logs" class="nav-item">
+                                <i class="fas fa-clipboard-list"></i>
+                                <span>Activity Logs</span>
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+                
+                <!-- Sidebar Footer -->
+                <div class="p-4 border-t border-gray-700">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
+                            <span class="text-sm text-gray-400">System Online</span>
+                        </div>
+                        <button id="sidebarToggle" class="text-gray-400 hover:text-white lg:hidden">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content Area -->
+        <div class="flex-1 lg:ml-64">
+            <!-- Top Navigation Bar -->
+            <header class="sticky top-0 z-40 bg-white shadow-md">
+                <div class="flex items-center justify-between px-6 py-4">
+                    <!-- Left Side: Menu Toggle & Search -->
+                    <div class="flex items-center space-x-4">
+                        <button id="mobileMenuToggle" class="text-gray-700 hover:text-blue-600 lg:hidden">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        
+                        <div class="relative hidden md:block">
+                            <input type="text" 
+                                   placeholder="Search bookings, customers, cars..." 
+                                   class="pl-10 pr-4 py-2 w-80 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Side: Notifications & User Menu -->
+                    <div class="flex items-center space-x-6">
+                        <!-- Dark Mode Toggle -->
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-moon text-gray-600"></i>
+                            <div class="relative">
+                                <input type="checkbox" id="darkModeToggle" class="toggle-checkbox hidden">
+                                <label for="darkModeToggle" class="toggle-label block w-12 h-6 bg-gray-300 rounded-full cursor-pointer"></label>
+                                <div class="toggle-dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+                            </div>
+                            <i class="fas fa-sun text-gray-600"></i>
+                        </div>
+                        
+                        <!-- Notifications -->
+                        <div class="relative">
+                            <button id="notificationBtn" class="relative text-gray-700 hover:text-blue-600">
+                                <i class="fas fa-bell text-xl"></i>
+                                <span class="notification-badge absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">5</span>
+                            </button>
+                            
+                            <!-- Notification Dropdown -->
+                            <div id="notificationDropdown" class="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-gray-200 hidden">
+                                <div class="p-4 border-b">
+                                    <h3 class="font-bold text-gray-900">Notifications</h3>
+                                    <p class="text-sm text-gray-600">You have 5 unread notifications</p>
+                                </div>
+                                <div class="max-h-96 overflow-y-auto">
+                                    <div class="p-4 border-b hover:bg-gray-50">
+                                        <div class="flex items-start">
+                                            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                                                <i class="fas fa-calendar-check text-blue-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-gray-900">New booking confirmed</p>
+                                                <p class="text-sm text-gray-600">Booking #ORD-78945 for Toyota Camry</p>
+                                                <p class="text-xs text-gray-400 mt-1">2 minutes ago</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 border-b hover:bg-gray-50">
+                                        <div class="flex items-start">
+                                            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
+                                                <i class="fas fa-user-plus text-green-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-gray-900">New customer registered</p>
+                                                <p class="text-sm text-gray-600">Sarah Johnson joined Diako Rentals</p>
+                                                <p class="text-xs text-gray-400 mt-1">1 hour ago</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 border-b hover:bg-gray-50">
+                                        <div class="flex items-start">
+                                            <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center mr-3">
+                                                <i class="fas fa-exclamation-triangle text-yellow-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-gray-900">Car maintenance due</p>
+                                                <p class="text-sm text-gray-600">BMW X5 requires scheduled maintenance</p>
+                                                <p class="text-xs text-gray-400 mt-1">5 hours ago</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-4 text-center border-t">
+                                    <a href="#" class="text-blue-600 font-medium hover:text-blue-800">View all notifications</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- User Menu -->
+                        <div class="relative">
+                            <button id="userMenuBtn" class="flex items-center space-x-3">
+                                <img src="https://ui-avatars.com/api/?name=Admin+User&background=3b82f6&color=fff&size=64" 
+                                     alt="Admin User" 
+                                     class="w-10 h-10 rounded-full">
+                                <div class="hidden md:block text-left">
+                                    <p class="font-medium text-gray-900">John Doe</p>
+                                    <p class="text-sm text-gray-600">Super Admin</p>
+                                </div>
+                                <i class="fas fa-chevron-down text-gray-600"></i>
+                            </button>
+                            
+                            <!-- User Dropdown -->
+                            <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border border-gray-200 hidden">
+                                <div class="p-4 border-b">
+                                    <p class="font-medium text-gray-900">John Doe</p>
+                                    <p class="text-sm text-gray-600">admin@diakorentals.com</p>
+                                </div>
+                                <div class="p-2">
+                                    <a href="#" class="flex items-center px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                        <i class="fas fa-user-circle mr-3 text-gray-500"></i>
+                                        <span>My Profile</span>
+                                    </a>
+                                    <a href="#" class="flex items-center px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                        <i class="fas fa-cog mr-3 text-gray-500"></i>
+                                        <span>Account Settings</span>
+                                    </a>
+                                    <a href="#" class="flex items-center px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                        <i class="fas fa-question-circle mr-3 text-gray-500"></i>
+                                        <span>Help & Support</span>
+                                    </a>
+                                </div>
+                                <div class="p-2 border-t">
+                                    <button id="logoutBtn" class="flex items-center w-full px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg">
+                                        <i class="fas fa-sign-out-alt mr-3"></i>
+                                        <span>Logout</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Main Content -->
+            <main class="p-6">
+                <!-- Dashboard Content (Default Section) -->
+                <section id="dashboard" class="dashboard-section active">
+                    <!-- Dashboard Header -->
+                    <div class="mb-8">
+                        <h1 class="text-3xl font-bold text-gray-900">Dashboard Overview</h1>
+                        <p class="text-gray-600 mt-2">Welcome back, John. Here's what's happening with Diako Rentals today.</p>
+                    </div>
+                    
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-blue-500">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="text-gray-500 text-sm">Total Bookings</p>
+                                    <h3 class="text-3xl font-bold text-gray-900 mt-2">1,247</h3>
+                                    <p class="text-green-600 text-sm mt-2">
+                                        <i class="fas fa-arrow-up mr-1"></i>
+                                        12% from last month
+                                    </p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
+                                    <i class="fas fa-calendar-check text-blue-600 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-green-500">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="text-gray-500 text-sm">Total Revenue</p>
+                                    <h3 class="text-3xl font-bold text-gray-900 mt-2">$124,580</h3>
+                                    <p class="text-green-600 text-sm mt-2">
+                                        <i class="fas fa-arrow-up mr-1"></i>
+                                        8% from last month
+                                    </p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center">
+                                    <i class="fas fa-dollar-sign text-green-600 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-purple-500">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="text-gray-500 text-sm">Active Customers</p>
+                                    <h3 class="text-3xl font-bold text-gray-900 mt-2">428</h3>
+                                    <p class="text-green-600 text-sm mt-2">
+                                        <i class="fas fa-arrow-up mr-1"></i>
+                                        5% from last month
+                                    </p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-purple-100 flex items-center justify-center">
+                                    <i class="fas fa-users text-purple-600 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-orange-500">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="text-gray-500 text-sm">Available Cars</p>
+                                    <h3 class="text-3xl font-bold text-gray-900 mt-2">47</h3>
+                                    <p class="text-red-600 text-sm mt-2">
+                                        <i class="fas fa-arrow-down mr-1"></i>
+                                        3% from last week
+                                    </p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-orange-100 flex items-center justify-center">
+                                    <i class="fas fa-car text-orange-600 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Charts and Tables -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Revenue Chart -->
+                        <div class="bg-white rounded-2xl shadow-lg p-6">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-xl font-bold text-gray-900">Revenue Overview</h3>
+                                <select class="border border-gray-300 rounded-lg px-3 py-1 text-sm">
+                                    <option>Last 7 days</option>
+                                    <option selected>Last 30 days</option>
+                                    <option>Last 90 days</option>
+                                </select>
+                            </div>
+                            <div class="h-64">
+                                <!-- Chart Placeholder -->
+                                <div class="flex items-end h-48 space-x-2 mt-4">
+                                    <div class="chart-bar flex-1 bg-gradient-to-t from-blue-500 to-blue-300 rounded-t-lg" style="height: 40%;" title="$4,200"></div>
+                                    <div class="chart-bar flex-1 bg-gradient-to-t from-blue-500 to-blue-300 rounded-t-lg" style="height: 60%;" title="$6,300"></div>
+                                    <div class="chart-bar flex-1 bg-gradient-to-t from-blue-500 to-blue-300 rounded-t-lg" style="height: 85%;" title="$8,900"></div>
+                                    <div class="chart-bar flex-1 bg-gradient-to-t from-blue-500 to-blue-300 rounded-t-lg" style="height: 70%;" title="$7,400"></div>
+                                    <div class="chart-bar flex-1 bg-gradient-to-t from-blue-500 to-blue-300 rounded-t-lg" style="height: 95%;" title="$9,500"></div>
+                                    <div class="chart-bar flex-1 bg-gradient-to-t from-blue-500 to-blue-300 rounded-t-lg" style="height: 50%;" title="$5,100"></div>
+                                    <div class="chart-bar flex-1 bg-gradient-to-t from-blue-500 to-blue-300 rounded-t-lg" style="height: 35%;" title="$3,800"></div>
+                                </div>
+                                <div class="flex justify-between text-sm text-gray-500 mt-4">
+                                    <span>Mon</span>
+                                    <span>Tue</span>
+                                    <span>Wed</span>
+                                    <span>Thu</span>
+                                    <span>Fri</span>
+                                    <span>Sat</span>
+                                    <span>Sun</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Bookings -->
+                        <div class="bg-white rounded-2xl shadow-lg p-6">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-xl font-bold text-gray-900">Recent Bookings</h3>
+                                <a href="#" class="text-blue-600 hover:text-blue-800 text-sm font-medium">View All</a>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="data-row flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-blue-50">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center mr-4">
+                                            <i class="fas fa-car text-blue-600"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-gray-900">Toyota Camry</h4>
+                                            <p class="text-sm text-gray-600">Michael Chen • Today, 10:30 AM</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-bold text-gray-900">$245</p>
+                                        <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-700">Confirmed</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="data-row flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-blue-50">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center mr-4">
+                                            <i class="fas fa-car text-green-600"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-gray-900">BMW X5</h4>
+                                            <p class="text-sm text-gray-600">Robert Johnson • Yesterday</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-bold text-gray-900">$420</p>
+                                        <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-700">Pending</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="data-row flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-blue-50">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 rounded-lg bg-red-100 flex items-center justify-center mr-4">
+                                            <i class="fas fa-car text-red-600"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-gray-900">Tesla Model 3</h4>
+                                            <p class="text-sm text-gray-600">David Lee • Nov 14</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-bold text-gray-900">$310</p>
+                                        <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-700">Cancelled</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Stats -->
+                    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl shadow-lg p-6 text-white">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-blue-100">Avg. Booking Value</p>
+                                    <h3 class="text-3xl font-bold mt-2">$216</h3>
+                                </div>
+                                <i class="fas fa-chart-line text-4xl opacity-75"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl shadow-lg p-6 text-white">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-purple-100">Cars Rented Today</p>
+                                    <h3 class="text-3xl font-bold mt-2">18</h3>
+                                </div>
+                                <i class="fas fa-car text-4xl opacity-75"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-2xl shadow-lg p-6 text-white">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-green-100">Customer Satisfaction</p>
+                                    <h3 class="text-3xl font-bold mt-2">4.8</h3>
+                                    <p class="text-green-100 mt-1">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </p>
+                                </div>
+                                <i class="fas fa-smile text-4xl opacity-75"></i>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Bookings Section (Hidden by Default) -->
+                <section id="bookings" class="dashboard-section hidden">
+                    <!-- Bookings section content would go here -->
+                    <div class="text-center py-12">
+                        <i class="fas fa-calendar-check text-6xl text-blue-500 mb-6"></i>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-4">Bookings Management</h2>
+                        <p class="text-gray-600 max-w-lg mx-auto">This section would display all bookings with filtering, sorting, and management options. All data is static for demonstration.</p>
+                    </div>
+                </section>
+                
+                <!-- Cars Section (Hidden by Default) -->
+                <section id="cars" class="dashboard-section hidden">
+                    <!-- Cars section content would go here -->
+                    <div class="text-center py-12">
+                        <i class="fas fa-car text-6xl text-green-500 mb-6"></i>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-4">Cars Management</h2>
+                        <p class="text-gray-600 max-w-lg mx-auto">This section would display all cars in the fleet with details, availability status, and management options.</p>
+                    </div>
+                </section>
+                
+                <!-- Other sections would follow the same pattern -->
+            </main>
+            
+            <!-- Footer -->
+            <footer class="bg-white border-t border-gray-200 p-6 mt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-4 md:mb-0">
+                        <p class="text-gray-600">© 2023 Diako Rentals. All rights reserved.</p>
+                        <p class="text-sm text-gray-500 mt-1">Admin Dashboard v2.1 • Last updated: Today, 10:45 AM</p>
+                    </div>
+                    <div class="flex items-center space-x-6">
+                        <a href="#" class="text-gray-600 hover:text-blue-600">Privacy Policy</a>
+                        <a href="#" class="text-gray-600 hover:text-blue-600">Terms of Service</a>
+                        <a href="#" class="text-gray-600 hover:text-blue-600">Help Center</a>
+                        <button id="refreshData" class="flex items-center text-blue-600 hover:text-blue-800">
+                            <i class="fas fa-sync-alt mr-2"></i>
+                            Refresh Data
+                        </button>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile sidebar toggle
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.querySelector('aside');
+            
+            mobileMenuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('-translate-x-64');
+            });
+            
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('-translate-x-64');
+            });
+            
+            // Navigation between sections
+            const navItems = document.querySelectorAll('.nav-item');
+            const sections = document.querySelectorAll('.dashboard-section');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all nav items
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    
+                    // Add active class to clicked nav item
+                    this.classList.add('active');
+                    
+                    // Hide all sections
+                    sections.forEach(section => section.classList.add('hidden'));
+                    
+                    // Show the selected section
+                    const sectionId = this.getAttribute('data-section');
+                    const activeSection = document.getElementById(sectionId);
+                    activeSection.classList.remove('hidden');
+                    
+                    // Close sidebar on mobile after selection
+                    if (window.innerWidth < 1024) {
+                        sidebar.classList.add('-translate-x-64');
+                    }
+                });
+            });
+            
+            // Notification dropdown
+            const notificationBtn = document.getElementById('notificationBtn');
+            const notificationDropdown = document.getElementById('notificationDropdown');
+            
+            notificationBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                notificationDropdown.classList.toggle('hidden');
+                userDropdown.classList.add('hidden');
+            });
+            
+            // User dropdown
+            const userMenuBtn = document.getElementById('userMenuBtn');
+            const userDropdown = document.getElementById('userDropdown');
+            
+            userMenuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                userDropdown.classList.toggle('hidden');
+                notificationDropdown.classList.add('hidden');
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function() {
+                notificationDropdown.classList.add('hidden');
+                userDropdown.classList.add('hidden');
+            });
+            
+            // Logout button
+            const logoutBtn = document.getElementById('logoutBtn');
+            
+            logoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('Are you sure you want to logout?')) {
+                    alert('You have been logged out. This is a demo, so no actual logout occurs.');
+                }
+            });
+            
+            // Dark mode toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const toggleDot = document.querySelector('.toggle-dot');
+            
+            darkModeToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    document.body.classList.add('dark-mode');
+                    document.querySelector('aside').classList.add('dark-sidebar');
+                    toggleDot.style.transform = 'translateX(1.5rem)';
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    document.querySelector('aside').classList.remove('dark-sidebar');
+                    toggleDot.style.transform = 'translateX(0)';
+                }
+            });
+            
+            // Refresh data button
+            const refreshBtn = document.getElementById('refreshData');
+            
+            refreshBtn.addEventListener('click', function() {
+                // Simulate loading
+                this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Refreshing...';
+                this.disabled = true;
+                
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-sync-alt mr-2"></i> Refresh Data';
+                    this.disabled = false;
+                    
+                    // Show success notification
+                    showNotification('Dashboard data refreshed successfully!', 'success');
+                    
+                    // Animate some stats
+                    animateStats();
+                }, 1500);
+            });
+            
+            // Show notification function
+            function showNotification(message, type = 'info') {
+                // Create notification element
+                const notification = document.createElement('div');
+                notification.className = `fixed top-6 right-6 z-50 px-6 py-4 rounded-xl shadow-xl flex items-center space-x-4 ${
+                    type === 'success' ? 'bg-green-500 text-white' :
+                    type === 'error' ? 'bg-red-500 text-white' :
+                    'bg-blue-500 text-white'
+                }`;
+                
+                const icon = type === 'success' ? 'fa-check-circle' : 
+                            type === 'error' ? 'fa-exclamation-circle' : 
+                            'fa-info-circle';
+                
+                notification.innerHTML = `
+                    <i class="fas ${icon} text-xl"></i>
+                    <span>${message}</span>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Animate in
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(0)';
+                }, 10);
+                
+                // Remove after 3 seconds
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 300);
+                }, 3000);
+            }
+            
+            // Animate stats function
+            function animateStats() {
+                const stats = document.querySelectorAll('.text-3xl.font-bold');
+                stats.forEach(stat => {
+                    const originalValue = stat.textContent;
+                    stat.classList.add('scale-110', 'text-blue-600');
+                    
+                    setTimeout(() => {
+                        stat.classList.remove('scale-110', 'text-blue-600');
+                    }, 500);
+                });
+            }
+            
+            // Animate chart bars on load
+            setTimeout(() => {
+                const chartBars = document.querySelectorAll('.chart-bar');
+                chartBars.forEach(bar => {
+                    const originalHeight = bar.style.height;
+                    bar.style.height = '0%';
+                    
+                    setTimeout(() => {
+                        bar.style.height = originalHeight;
+                    }, 100);
+                });
+            }, 500);
+            
+            // Simulate real-time updates
+            setInterval(() => {
+                // Update the clock in the sidebar if needed
+                const now = new Date();
+                const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                
+                // Randomly update a stat (for demo purposes)
+                if (Math.random() > 0.7) {
+                    const bookingStat = document.querySelector('.bg-white.rounded-2xl:nth-child(1) h3');
+                    if (bookingStat) {
+                        const current = parseInt(bookingStat.textContent.replace(/,/g, ''));
+                        if (!isNaN(current)) {
+                            const newValue = current + Math.floor(Math.random() * 3);
+                            bookingStat.textContent = newValue.toLocaleString();
+                            bookingStat.classList.add('pulse-once');
+                            setTimeout(() => bookingStat.classList.remove('pulse-once'), 1000);
+                        }
+                    }
+                }
+            }, 10000);
+            
+            // Initialize tooltips
+            const chartBars = document.querySelectorAll('.chart-bar');
+            chartBars.forEach(bar => {
+                const title = bar.getAttribute('title');
+                bar.addEventListener('mouseenter', function(e) {
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'absolute bg-gray-900 text-white px-3 py-2 rounded-lg text-sm';
+                    tooltip.textContent = title;
+                    tooltip.style.top = (e.clientY - 40) + 'px';
+                    tooltip.style.left = (e.clientX - 30) + 'px';
+                    tooltip.id = 'tooltip';
+                    document.body.appendChild(tooltip);
+                });
+                
+                bar.addEventListener('mouseleave', function() {
+                    const tooltip = document.getElementById('tooltip');
+                    if (tooltip) tooltip.remove();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

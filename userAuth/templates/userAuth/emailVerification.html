@@ -1,0 +1,337 @@
+{% extends 'base.html' %} {% block title %}Email Verification - Diako Rental
+Cars{% endblock %} {% block content %}
+<div
+  class="min-h-[80vh] flex items-center justify-center bg-linear-to-br from-blue-50 via-white to-orange-50 py-8 px-4"
+>
+  <div class="w-full max-w-lg">
+    <!-- Verification Card -->
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+      <!-- Decorative Header -->
+      <div class="bg-linear-to-r from-blue-600 to-blue-700 h-2"></div>
+
+      <div class="p-8 text-center">
+        <!-- Icon Animation -->
+        <div class="flex justify-center mb-6">
+          <div class="relative">
+            <div
+              class="w-24 h-24 rounded-full bg-blue-100 flex items-center justify-center animate-pulse"
+            >
+              <i class="fas fa-envelope text-blue-600 text-4xl"></i>
+            </div>
+            <div
+              class="absolute -top-2 -right-2 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center animate-bounce"
+            >
+              <i class="fas fa-check text-white text-sm"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Title -->
+        <h1 class="text-3xl font-bold text-gray-900 mb-3">Verify Your Email</h1>
+
+        <!-- Subtitle -->
+        <p class="text-gray-600 mb-2">We've sent a verification link to:</p>
+        <div class="bg-blue-50 inline-block px-4 py-2 rounded-lg mb-6">
+          <p class="text-blue-700 font-medium">
+            <i class="fas fa-envelope-open-text mr-2"></i>
+            {{ email }}
+          </p>
+        </div>
+
+        <!-- Instructions -->
+        <div class="bg-gray-50 rounded-xl p-6 text-left mb-8">
+          <h3 class="font-semibold text-gray-900 mb-3 flex items-center">
+            <i class="fas fa-info-circle text-blue-500 mr-2"></i>
+            Next Steps:
+          </h3>
+          <ul class="space-y-3 text-gray-600">
+            <li class="flex items-start">
+              <div class="bg-blue-100 rounded-full p-1 mr-3 mt-0.5">
+                <span class="text-blue-600 text-xs font-bold">1</span>
+              </div>
+              <span>Check your email inbox (and spam folder)</span>
+            </li>
+            <li class="flex items-start">
+              <div class="bg-blue-100 rounded-full p-1 mr-3 mt-0.5">
+                <span class="text-blue-600 text-xs font-bold">2</span>
+              </div>
+              <span>Click the verification link in the email</span>
+            </li>
+            <li class="flex items-start">
+              <div class="bg-blue-100 rounded-full p-1 mr-3 mt-0.5">
+                <span class="text-blue-600 text-xs font-bold">3</span>
+              </div>
+              <span>You'll be redirected to complete your account setup</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Timer & Resend -->
+        <div class="space-y-6">
+          <!-- Countdown Timer -->
+          <div class="bg-yellow-50 border border-yellow-100 rounded-xl p-4">
+            <div class="flex items-center justify-center gap-4">
+              <i class="fas fa-clock text-yellow-500 text-xl"></i>
+              <div>
+                <p class="text-yellow-800 font-medium">
+                  Link expires in:
+                  <span id="countdown" class="text-red-600 font-bold"
+                    >05:00</span
+                  >
+                </p>
+                <p class="text-xs text-yellow-600 mt-1">
+                  Request a new link if it expires
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <form
+              
+              method="post"
+              action="{% url 'userAuth:resend_verification' %}"
+            >
+              {% csrf_token %}
+              <button
+                id="resendBtn"
+                onclick="resendVerification()"
+                class="bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold p-3.5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 flex items-center justify-center"
+              >
+                <i class="fas fa-redo mr-2"></i>
+                Resend Email
+              </button>
+            </form>
+
+            <a
+              href="mailto:"
+              class="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold py-3.5 rounded-xl transition-colors flex items-center justify-center"
+            >
+              <i class="fas fa-external-link-alt mr-2"></i>
+              Open Email App
+            </a>
+          </div>
+
+          <!-- Manual Verification Option -->
+          <div class="pt-6 border-t border-gray-200">
+            <button
+              onclick="toggleManualVerification()"
+              class="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
+            >
+              <i class="fas fa-code mr-1"></i>
+              Enter verification code manually
+              <i id="chevronIcon" class="fas fa-chevron-down ml-2"></i>
+            </button>
+
+            <!-- Manual Verification Form (Hidden by default) -->
+            <div id="manualVerification" class="hidden mt-4">
+              <div class="bg-gray-50 p-4 rounded-xl">
+                <p class="text-sm text-gray-600 mb-3">
+                  Enter the 6-digit code from your verification email:
+                </p>
+                <div class="flex gap-2 justify-center mb-3">
+                  <input
+                    type="text"
+                    maxlength="1"
+                    class="w-12 h-12 text-center text-xl font-bold border-2 border-blue-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                  />
+                  <input
+                    type="text"
+                    maxlength="1"
+                    class="w-12 h-12 text-center text-xl font-bold border-2 border-blue-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                  />
+                  <input
+                    type="text"
+                    maxlength="1"
+                    class="w-12 h-12 text-center text-xl font-bold border-2 border-blue-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                  />
+                  <input
+                    type="text"
+                    maxlength="1"
+                    class="w-12 h-12 text-center text-xl font-bold border-2 border-blue-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                  />
+                  <input
+                    type="text"
+                    maxlength="1"
+                    class="w-12 h-12 text-center text-xl font-bold border-2 border-blue-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                  />
+                  <input
+                    type="text"
+                    maxlength="1"
+                    class="w-12 h-12 text-center text-xl font-bold border-2 border-blue-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                  />
+                </div>
+                <button
+                  class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition-colors"
+                >
+                  Verify Code
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trouble Section -->
+        <div class="mt-8 pt-6 border-t border-gray-200">
+          <div class="bg-red-50 rounded-xl p-4 mb-4">
+            <h4 class="font-semibold text-red-900 mb-2 flex items-center">
+              <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>
+              Didn't receive the email?
+            </h4>
+            <ul class="text-sm text-red-700 space-y-1">
+              <li>• Check your spam or junk folder</li>
+              <li>• Ensure you entered the correct email address</li>
+              <li>• Wait a few minutes and try again</li>
+              <li>• Contact support if the problem persists</li>
+            </ul>
+          </div>
+
+          <!-- Support Contact -->
+          <div class="flex items-center justify-center gap-4">
+            <a
+              href="{% url 'userAuth:login' %}"
+              class="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
+            >
+              <i class="fas fa-sign-in-alt mr-1"></i>
+              Back to Login
+            </a>
+            <span class="text-gray-300">|</span>
+            <a
+              href="mailto:support@diakotravel.com"
+              class="text-gray-600 hover:text-gray-800 font-medium text-sm transition-colors"
+            >
+              <i class="fas fa-headset mr-1"></i>
+              Contact Support
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Notification (Hidden by default) -->
+    <div
+      id="successToast"
+      class="hidden fixed top-4 right-4 bg-green-500 text-white p-4 rounded-xl shadow-lg z-50 animate-slideIn"
+    >
+      <div class="flex items-center">
+        <i class="fas fa-check-circle text-xl mr-3"></i>
+        <div>
+          <p class="font-semibold">Email sent!</p>
+          <p class="text-sm text-green-100">
+            New verification link has been sent to your email.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Countdown Timer and Interaction Script -->
+<script>
+  // Countdown Timer (5 minutes)
+  let timeLeft = 5 * 60; // 5 minutes in seconds
+  const countdownElement = document.getElementById("countdown");
+  const resendBtn = document.getElementById("resendBtn");
+
+  function updateCountdown() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+
+    countdownElement.textContent = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
+    if (timeLeft > 0) {
+      timeLeft--;
+      setTimeout(updateCountdown, 1000);
+    } else {
+      countdownElement.textContent = "Expired!";
+      countdownElement.className = "text-red-600 font-bold animate-pulse";
+      resendBtn.disabled = false;
+    }
+  }
+
+  // Start countdown on page load
+  updateCountdown();
+
+  // Manual Verification Toggle
+  function toggleManualVerification() {
+    const manualVerification = document.getElementById("manualVerification");
+    const chevronIcon = document.getElementById("chevronIcon");
+
+    if (manualVerification.classList.contains("hidden")) {
+      manualVerification.classList.remove("hidden");
+      chevronIcon.classList.remove("fa-chevron-down");
+      chevronIcon.classList.add("fa-chevron-up");
+    } else {
+      manualVerification.classList.add("hidden");
+      chevronIcon.classList.remove("fa-chevron-up");
+      chevronIcon.classList.add("fa-chevron-down");
+    }
+  }
+
+  // Resend Verification Email
+  function resendVerification() {
+    // Disable button temporarily
+    resendBtn.disabled = true;
+    resendBtn.innerHTML =
+      '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+
+    // Simulate API call delay
+    setTimeout(() => {
+      // Reset timer
+      timeLeft = 5 * 60;
+      updateCountdown();
+
+      // Show success toast
+      const successToast = document.getElementById("successToast");
+      successToast.classList.remove("hidden");
+
+      // Reset button after delay
+      setTimeout(() => {
+        resendBtn.disabled = false;
+        resendBtn.innerHTML = '<i class="fas fa-redo mr-2"></i>Resend Email';
+      }, 2000);
+
+      // Hide toast after 3 seconds
+      setTimeout(() => {
+        successToast.classList.add("hidden");
+      }, 3000);
+    }, 1500);
+  }
+
+  // Auto-focus next input in code verification
+  document
+    .querySelectorAll("#manualVerification input")
+    .forEach((input, index, inputs) => {
+      input.addEventListener("input", (e) => {
+        if (e.target.value.length === 1 && index < inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
+      });
+
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Backspace" && e.target.value === "" && index > 0) {
+          inputs[index - 1].focus();
+        }
+      });
+    });
+</script>
+
+<!-- Animation Style -->
+<style>
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-slideIn {
+    animation: slideIn 0.3s ease-out;
+  }
+</style>
+{% endblock %}
