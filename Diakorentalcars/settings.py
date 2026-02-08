@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,12 +21,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-9skewqghma(6m(mi$tobf0-q68^1c12602s*5mw7d!jrcog&w('
+SECRET_KEY = os.getenv(
+    "SECRET_KEY",
+    "django-insecure-9skewqghma(6m(mi$tobf0-q68^1c12602s*5mw7d!jrcog&w(",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "0").lower() in {"1", "true", "yes", "on"}
 
-ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.getenv("ALLOWED_HOSTS", "*").split(",")
+    if host.strip()
+]
 
 
 # Application definition
@@ -70,8 +78,10 @@ if DEBUG:
 
 TAILWIND_APP_NAME = "theme"
 
-if DEBUG:
-    NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
+NPM_BIN_PATH = os.getenv(
+    "NPM_BIN_PATH",
+    r"C:\Program Files\nodejs\npm.cmd" if DEBUG else "/usr/bin/npm",
+)
 
 ROOT_URLCONF = 'Diakorentalcars.urls'
 
