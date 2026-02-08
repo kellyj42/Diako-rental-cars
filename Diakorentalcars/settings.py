@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-9skewqghma(6m(mi$tobf0-q68^1c12602s*5mw7d!jrcog&w('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1']
 
@@ -37,20 +37,26 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Tailwind
     'tailwind',
     'theme',
-    'django_browser_reload',
+
+    # Your apps
     'home',
-   "userAuth.apps.UserauthConfig",
+    "userAuth.apps.UserauthConfig",
     "cars",
     "bookings",
     "about",
     "dashboard",
 ]
 
+if DEBUG:
+    INSTALLED_APPS += ['django_browser_reload']
+
 MIDDLEWARE = [
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -59,9 +65,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+if DEBUG:
+    MIDDLEWARE.insert(0, "django_browser_reload.middleware.BrowserReloadMiddleware")
+
 TAILWIND_APP_NAME = "theme"
 
-NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
+if DEBUG:
+    NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 
 ROOT_URLCONF = 'Diakorentalcars.urls'
 
@@ -141,3 +151,4 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
