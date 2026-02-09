@@ -1,0 +1,10 @@
+{
+  "name": "diakorentalcars",
+  "private": true,
+  "scripts": {
+    "build:css": "python manage.py tailwind build"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}

@@ -1,1 +1,1 @@
-web: sh -c "if command -v npm >/dev/null 2>&1; then python manage.py tailwind build; else echo 'npm not found: skipping tailwind build'; fi; python manage.py collectstatic --noinput && gunicorn Diakorentalcars.wsgi"
+web: gunicorn Diakorentalcars.wsgi:application
