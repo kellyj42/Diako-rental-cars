@@ -6,8 +6,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    {% tailwind_css %}
-    <link rel="stylesheet" href="{% static 'home/css/style.css' %}" />
+    {% tailwind_css %} {% load static %}
+    <link rel="stylesheet" href="{% static 'theme/css/dist/styles.css' %}" />
   </head>
   <body class="leading-normal tracking-normal">
     {% block content %}{% endblock %} {% django_browser_reload_script %}
@@ -23,6 +23,6 @@
     <script src="{% static 'home/js/cancelCar.js' %}"></script>
     <script src="{% static 'home/js/signup.js' %}"></script>
     <script src="{% static 'home/js/_passwordCheck.js' %}"></script>
-     <script src="{% static 'home/js/liveClock.js' %}"></script>
+    <script src="{% static 'home/js/liveClock.js' %}"></script>
   </body>
 </html>
