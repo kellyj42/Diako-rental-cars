@@ -64,7 +64,7 @@ def signup_view(request):
             profile.save()
             request.session["verify_user_id"] = user.id
             request.session["verify_email"] = user.email
-            send_verification_email(request, user)
+            # send_verification_email(request, user)
             return redirect("userAuth:email_verification")  
 
     else:
