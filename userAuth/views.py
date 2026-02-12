@@ -30,7 +30,7 @@ def login_view(request):
         if user:
             if not user.profile.is_verified:
                 messages.warning(request, "Please verify your email before logging in.")
-                send_verification_email(request, user)
+                # send_verification_email(request, user)
                 return redirect("userAuth:email_verification")
             
             if user.is_staff:
