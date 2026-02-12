@@ -192,5 +192,5 @@ if os.getenv("CREATE_SUPERUSER") == "True":
         User.objects.create_superuser(
             username="admin",
             email="kellyjnambale@gmail.com",
-            password="Admin123"
+            password="Admin123."
         )
