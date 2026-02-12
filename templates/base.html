@@ -11,8 +11,8 @@
     {% load static tailwind_tags %} {% tailwind_css %}
   </head>
   <body class="leading-normal tracking-normal">
-    {% block content %}{% endblock %}
-    
+    {% block content %}{% endblock %}{% if debug %}
+    {%django_browser_reload_script %} {% endif %}
 
     <script
       src="https://kit.fontawesome.com/dbc3492b26.js"
