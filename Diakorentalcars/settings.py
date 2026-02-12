@@ -184,13 +184,3 @@ DEFAULT_FROM_EMAIL = "kellyjnambale@gmail.com"
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-from django.contrib.auth import get_user_model
-
-if os.getenv("CREATE_SUPERUSER") == "True":
-    User = get_user_model()
-    if not User.objects.filter(username="admin").exists():
-        User.objects.create_superuser(
-            username="admin",
-            email="kellyjnambale@gmail.com",
-            password="Admin1234"
-        )
