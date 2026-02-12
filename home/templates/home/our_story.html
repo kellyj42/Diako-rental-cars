@@ -1,0 +1,82 @@
+{% extends 'base.html' %} {% load static %} {% block content %} 
+{% include "includes/nav.html" %}
+
+<section class="bg-gradient-to-b from-blue-950 to-blue-900 text-white">
+  <div class="max-w-7xl mx-auto px-6 py-16 md:py-24">
+    <div class="grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <p class="text-orange-300 font-semibold tracking-wide">Our Story</p>
+        <h1 class="text-4xl md:text-5xl font-bold mt-2">
+          Driven by service, built on trust.
+        </h1>
+        <p class="mt-4 text-blue-100">
+          Diako Rental Cars started with a single fleet and a simple promise:
+          make every journey feel effortless. Today we help thousands of
+          travelers drive with confidence across the city and beyond.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <div class="bg-white/10 rounded-xl px-5 py-4">
+            <p class="text-2xl font-bold">10+</p>
+            <p class="text-sm text-blue-200">Years of service</p>
+          </div>
+          <div class="bg-white/10 rounded-xl px-5 py-4">
+            <p class="text-2xl font-bold">56</p>
+            <p class="text-sm text-blue-200">Cars available</p>
+          </div>
+          <div class="bg-white/10 rounded-xl px-5 py-4">
+            <p class="text-2xl font-bold">4.8★</p>
+            <p class="text-sm text-blue-200">Average rating</p>
+          </div>
+        </div>
+      </div>
+      <div class="relative">
+        <img
+          src="{% static 'home/images/car3.jpg' %}"
+          alt="Fleet on the road"
+          class="rounded-2xl shadow-2xl w-full h-80 object-cover"
+        />
+        <div
+          class="absolute -bottom-6 -left-6 bg-white text-blue-950 rounded-xl p-5 shadow-xl"
+        >
+          <p class="text-sm font-semibold text-orange-500">Since 2014</p>
+          <p class="text-lg font-bold">We’ve completed 5,000+ trips</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-white">
+  <div class="max-w-7xl mx-auto px-6 py-16">
+    <h2 class="text-3xl font-bold text-blue-950">Milestones</h2>
+    <p class="text-gray-600 mt-2">A quick look at how we’ve grown.</p>
+
+    <div class="mt-10 grid md:grid-cols-3 gap-6">
+      <div class="rounded-2xl border border-gray-200 p-6 shadow-sm">
+        <p class="text-orange-500 font-semibold">2014</p>
+        <h3 class="text-xl font-bold text-blue-950 mt-2">
+          First garage opened
+        </h3>
+        <p class="text-gray-600 mt-2">
+          Launched with 6 vehicles and a 24/7 phone line.
+        </p>
+      </div>
+      <div class="rounded-2xl border border-gray-200 p-6 shadow-sm">
+        <p class="text-orange-500 font-semibold">2018</p>
+        <h3 class="text-xl font-bold text-blue-950 mt-2">Citywide expansion</h3>
+        <p class="text-gray-600 mt-2">
+          Added airport pickups and weekend discounts.
+        </p>
+      </div>
+      <div class="rounded-2xl border border-gray-200 p-6 shadow-sm">
+        <p class="text-orange-500 font-semibold">2023</p>
+        <h3 class="text-xl font-bold text-blue-950 mt-2">Smart booking</h3>
+        <p class="text-gray-600 mt-2">
+          Introduced online booking with real-time availability.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include "includes/footer.html" %} {% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'base.html' %} {% load static %} {% block content %} {% include
+"includes/nav.html" %}
+
+<section class="bg-white">
+  <div class="max-w-7xl mx-auto px-6 py-16">
+    <div class="grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <p class="text-orange-500 font-semibold">Careers</p>
+        <h1 class="text-4xl font-bold text-blue-950 mt-2">
+          Build the future of mobility
+        </h1>
+        <p class="text-gray-600 mt-3">
+          Join a mission-driven team that puts people first. We offer flexible
+          schedules, growth pathways, and a culture of respect.
+        </p>
+        <div class="mt-6 flex gap-4">
+          <a
+            href="{% url 'home:contact' %}"
+            class="bg-orange-500 text-white px-6 py-3 rounded-full shadow hover:bg-orange-400"
+          >
+            Apply now
+          </a>
+          <a
+            href="{% url 'home:faqs' %}"
+            class="border border-gray-300 px-6 py-3 rounded-full text-gray-700 hover:border-blue-950"
+          >
+            Learn more
+          </a>
+        </div>
+      </div>
+      <div class="rounded-2xl bg-blue-950 text-white p-8">
+        <h3 class="text-xl font-semibold">Why work with us?</h3>
+        <ul class="mt-4 space-y-3 text-blue-100">
+          <li class="flex gap-3">
+            <span class="text-orange-300">●</span> Training and certification
+            support
+          </li>
+          <li class="flex gap-3">
+            <span class="text-orange-300">●</span> Health & travel benefits
+          </li>
+          <li class="flex gap-3">
+            <span class="text-orange-300">●</span> Performance bonuses
+          </li>
+          <li class="flex gap-3">
+            <span class="text-orange-300">●</span> Flexible scheduling
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-12 grid md:grid-cols-2 gap-6">
+      <div class="border border-gray-200 rounded-2xl p-6 shadow-sm">
+        <h3 class="text-xl font-bold text-blue-950">
+          Customer Support Specialist
+        </h3>
+        <p class="text-gray-600 mt-2">Remote · Full-time</p>
+        <p class="text-gray-600 mt-4">
+          Help customers with bookings, upgrades, and vehicle questions.
+        </p>
+      </div>
+      <div class="border border-gray-200 rounded-2xl p-6 shadow-sm">
+        <h3 class="text-xl font-bold text-blue-950">Fleet Operations Lead</h3>
+        <p class="text-gray-600 mt-2">New York · Full-time</p>
+        <p class="text-gray-600 mt-4">
+          Coordinate maintenance and ensure vehicle readiness.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include "includes/footer.html" %} {% endblock %}

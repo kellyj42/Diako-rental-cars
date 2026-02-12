@@ -63,12 +63,37 @@ def orderSuccessView(request, booking_id=None):
     return render(request, "home/order_success.html", context)
 
 def about_us_view(request):
-    return render(request, 'aboutpage.html',{
+    return render(request, 'home/aboutpage.html',{
                     "nav_links": nav_links
              })
 def services_view(request):
-    return render(request, 'home/includes/servicespage.html',
+    return render(request, 'home/servicespage.html',
                  {
                     "services": services, 
                     "nav_links": nav_links
              })
+
+def our_story_view(request):
+    return render(request, 'home/our_story.html', {
+        "nav_links": nav_links,
+    })
+
+def team_view(request):
+    return render(request, 'home/team.html', {
+        "nav_links": nav_links,
+    })
+
+def careers_view(request):
+    return render(request, 'home/careers.html', {
+        "nav_links": nav_links,
+    })
+
+def faqs_view(request):
+    return render(request, 'home/faqs.html', {
+        "nav_links": nav_links,
+    })
+
+def contact_view(request):
+    return render(request, 'home/contact.html', {
+        "nav_links": nav_links,
+    })

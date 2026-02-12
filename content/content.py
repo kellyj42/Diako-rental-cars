@@ -32,53 +32,61 @@ services = [
         ]
 achievements = [
         {
-            "icon": "fa-thumbs-up",
+            "icon": "car",
             "count": 829,
             "label": "Happy Clients",
         },
         {
-            "icon": "fa-car",
+            "icon": "bus",
             "count": 56,
             "label": "Cars Available",
         },
         {
-            "icon": "fa-building",
+            "icon": "car-front",
             "count": 127,
             "label": "Service Centers",
         },
         {
-            "icon": "fa-clock",
+            "icon": "truck",
             "count": 589,
             "label": "Total Trips Completed",
         },
     ]
 vehicles = [
         {
-            "image": "home/images/car3.jpg",
-            "name": "Mercedes Benz R3",
-            "price": 99,
-            "rating": 4.5,
-            "seats": 4,
-            "transmission": "AT/MT",
-            "fuel": "Petrol",
-            "year": 2015,
-            "gear": "AUTO",
-            "mileage": "27K",
+            "icon": "fa-car-side",
+            "name": "Saloon",
+            
+        },
+        {
+            "icon": "fa-van-shuttle",
+            "name": "Vans",
+           
+        },
+        {
+            "icon": "fa-car",
+            "name": "Sedans",
+           
+        },
+        {
+            "icon": "fa-truck-monster",
+            "name": "SUVs",
+            
         },
         
     ]
 nav_links = [
     {"name": "Home", "url": "home:home"},
     {"name": "Services", "url": "home:services"},
-    # {"name": "Contact Us", "url": "home:#vehicles"},
+    {"name": "Contact Us", "url": "home:contact"},
     {
         "name": "About Us",
         "url": "home:about",
         "children": [
-            # {"name": "Our Story", "url": "home:our_story"},
-            # {"name": "Team", "url": "home:team"},
-            # {"name": "Careers", "url": "home:careers"},
+            {"name": "Our Story", "url": "home:our_story"},
+            {"name": "Team", "url": "home:team"},
+            {"name": "Careers", "url": "home:careers"},
         ]
     },
-    # {"name": "FAQs", "url": "home:faqs"},
+    {"name": "FAQs", "url": "home:faqs"},
 ]

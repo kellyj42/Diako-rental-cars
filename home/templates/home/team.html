@@ -1,0 +1,78 @@
+{% extends 'base.html' %} {% load static %} 
+{% block content %}  
+{% include "includes/nav.html" %}
+
+<section class="bg-gray-50">
+  <div class="max-w-7xl mx-auto px-6 py-16">
+    <div
+      class="flex flex-col md:flex-row md:items-end md:justify-between gap-6"
+    >
+      <div>
+        <p class="text-orange-500 font-semibold">Our Team</p>
+        <h1 class="text-4xl font-bold text-blue-950 mt-2">
+          People who keep you moving
+        </h1>
+        <p class="text-gray-600 mt-3 max-w-2xl">
+          From fleet experts to customer care, our team is built around
+          reliability and warmth.
+        </p>
+      </div>
+      <a
+        href="{% url 'home:contact' %}"
+        class="bg-blue-950 text-white px-6 py-3 rounded-full shadow hover:bg-blue-900"
+      >
+        Talk to us
+      </a>
+    </div>
+
+    <div class="mt-10 grid md:grid-cols-3 gap-6">
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <div class="flex items-center gap-4">
+          <img
+            src="{% static 'home/images/Founder.jpg' %}"
+            alt="Founder"
+            class="w-16 h-16 rounded-full object-cover"
+          />
+          <div>
+            <h3 class="font-bold text-blue-950">William Burgess</h3>
+            <p class="text-sm text-gray-500">Founder & CEO</p>
+          </div>
+        </div>
+        <p class="text-gray-600 mt-4">
+          Leads our vision for safer, simpler mobility.
+        </p>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <div class="flex items-center gap-4">
+          <div
+            class="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center text-orange-500 text-xl font-bold"
+          >
+            AR
+          </div>
+          <div>
+            <h3 class="font-bold text-blue-950">Ava Reed</h3>
+            <p class="text-sm text-gray-500">Customer Experience</p>
+          </div>
+        </div>
+        <p class="text-gray-600 mt-4">Ensures every booking is stress-free.</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <div class="flex items-center gap-4">
+          <div
+            class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xl font-bold"
+          >
+            JM
+          </div>
+          <div>
+            <h3 class="font-bold text-blue-950">Jonah Miles</h3>
+            <p class="text-sm text-gray-500">Fleet Manager</p>
+          </div>
+        </div>
+        <p class="text-gray-600 mt-4">Keeps our cars in peak condition.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include "includes/footer.html" %}
+ {% endblock %}
