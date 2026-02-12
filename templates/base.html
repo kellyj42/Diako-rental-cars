@@ -1,4 +1,5 @@
-{% load static django_browser_reload %}
+{% load static tailwind_tags %}
+
 
 <!doctype html>
 <html lang="en">
@@ -10,8 +11,8 @@
     {% load static tailwind_tags %} {% tailwind_css %}
   </head>
   <body class="leading-normal tracking-normal">
-    {% block content %}{% endblock %}{% if debug %}
-    {%django_browser_reload_script %} {% endif %}
+    {% block content %}{% endblock %}
+    
 
     <script
       src="https://kit.fontawesome.com/dbc3492b26.js"
