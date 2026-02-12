@@ -6,8 +6,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    {% tailwind_css %} {% load static %}
-    <link rel="stylesheet" href="{% static 'theme/css/dist/styles.css' %}" />
+    {% tailwind_css %}
   </head>
   <body class="leading-normal tracking-normal">
     {% block content %}{% endblock %} {% django_browser_reload_script %}
