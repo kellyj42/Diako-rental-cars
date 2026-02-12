@@ -1,0 +1,131 @@
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-40 bg-white shadow-md">
+  <div class="flex items-center justify-between px-6 py-4">
+    <!-- Left Side: Menu Toggle & Search -->
+    <div class="flex items-center space-x-4">
+      <button
+        id="mobileMenuToggle"
+        class="text-gray-700 hover:text-blue-600 lg:hidden"
+      >
+        <i class="fas fa-bars text-xl"></i>
+      </button>
+
+      <div class="relative hidden md:block">
+        <input
+          type="text"
+          placeholder="Search bookings, customers, cars..."
+          class="pl-10 pr-4 py-2 w-80 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        />
+        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+      </div>
+    </div>
+
+    <!-- Right Side: Notifications & User Menu -->
+    <div class="flex items-center space-x-6">
+      <!-- Dark Mode Toggle -->
+      <div class="flex items-center space-x-2">
+        <i class="fas fa-moon text-gray-600"></i>
+        <div class="relative">
+          <input
+            type="checkbox"
+            id="darkModeToggle"
+            class="toggle-checkbox hidden"
+          />
+          <label
+            for="darkModeToggle"
+            class="toggle-label block w-12 h-6 bg-gray-300 rounded-full cursor-pointer"
+          ></label>
+          <div
+            class="toggle-dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"
+          ></div>
+        </div>
+        <i class="fas fa-sun text-gray-600"></i>
+      </div>
+
+      <!-- Notifications -->
+      <div class="relative">
+        <button
+          id="notificationBtn"
+          class="relative text-gray-700 hover:text-blue-600"
+        >
+          <i class="fas fa-bell text-xl"></i>
+          <span
+            class="notification-badge absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
+            >5</span
+          >
+        </button>
+
+        <!-- Notification Dropdown -->
+        <div
+          id="notificationDropdown"
+          class="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-gray-200 hidden"
+        >
+          <div class="p-4 border-b">
+            <h3 class="font-bold text-gray-900">Notifications</h3>
+            <p class="text-sm text-gray-600">You have 5 unread notifications</p>
+          </div>
+          <div class="max-h-96 overflow-y-auto">
+            <div class="p-4 border-b hover:bg-gray-50">
+              <div class="flex items-start">
+                <div
+                  class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3"
+                >
+                  <i class="fas fa-calendar-check text-blue-600"></i>
+                </div>
+                <div>
+                  <p class="font-medium text-gray-900">New booking confirmed</p>
+                  <p class="text-sm text-gray-600">
+                    Booking #ORD-78945 for Toyota Camry
+                  </p>
+                  <p class="text-xs text-gray-400 mt-1">2 minutes ago</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-4 border-b hover:bg-gray-50">
+              <div class="flex items-start">
+                <div
+                  class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3"
+                >
+                  <i class="fas fa-user-plus text-green-600"></i>
+                </div>
+                <div>
+                  <p class="font-medium text-gray-900">
+                    New customer registered
+                  </p>
+                  <p class="text-sm text-gray-600">
+                    Sarah Johnson joined Diako Rentals
+                  </p>
+                  <p class="text-xs text-gray-400 mt-1">1 hour ago</p>
+                </div>
+              </div>
+            </div>
+           
+          </div>
+          <div class="p-4 text-center border-t">
+            <a href="#" class="text-blue-600 font-medium hover:text-blue-800"
+              >View all notifications</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- User Menu -->
+      <div class="relative">
+        <button id="userMenuBtn" class="flex items-center space-x-3">
+          <div class="hidden md:block text-left">
+            <p class="font-medium text-gray-900">
+              {{ request.user.get_full_name|default:request.user.email }}
+            </p>
+            <p class="text-sm text-gray-600">
+              {% if user.is_superuser %}Super Admin{% else %}Staff{% endif %}
+            </p>
+          </div>
+          
+        </button>
+
+        <!-- User Dropdown -->
+        
+      </div>
+    </div>
+  </div>
+</header>

@@ -27,7 +27,8 @@ SECRET_KEY = os.getenv(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False") == "True"
+
 
 ALLOWED_HOSTS = [
     host.strip()
@@ -98,6 +99,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'bookings.context_processors.pending_bookings_count',
             ],
         },
     },
@@ -134,6 +136,11 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+# Auth redirects
+LOGIN_URL = "userAuth:login"
+LOGIN_REDIRECT_URL = "dashboard:home"
 
 
 # Internationalization

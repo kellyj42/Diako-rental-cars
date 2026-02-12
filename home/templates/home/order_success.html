@@ -111,7 +111,8 @@ Confirmed-Diako Travel Agency{% endblock %} {% block content %}
             </h2>
             <p class="text-blue-100 mt-1">
               Booking Reference:
-              <span class="font-mono font-bold">{{ booking_reference }}</span>
+              <span class="font-mono font-bold">
+                {{ booking_reference }}</span>
             </p>
           </div>
 
@@ -134,8 +135,9 @@ Confirmed-Diako Travel Agency{% endblock %} {% block content %}
                 </div>
                 <div class="md:w-2/3">
                   <h4 class="text-xl font-bold text-gray-900">
-                    {{ car.display_name }}{% if car.year %} {{ car.year }}{%
-                    endif %}
+                    {{ car.display_name }} {% if car.year %} 
+                    {{ car.year }} 
+                    {% endif %}
                   </h4>
                   <div class="flex items-center mt-2 mb-4">
                     <div class="flex text-orange-400">
@@ -215,7 +217,8 @@ Confirmed-Diako Travel Agency{% endblock %} {% block content %}
                     {{booking.drop_off_time|time:"g:i A" }}
                   </p>
                   <p class="text-sm text-gray-500 mt-1">
-                    Total: {{ rental_days }} day {{ rental_days|pluralize }}
+                    Total: {{ rental_days }} day
+                     {{ rental_days|pluralize }}
                   </p>
                 </div>
               </div>
@@ -233,15 +236,13 @@ Confirmed-Diako Travel Agency{% endblock %} {% block content %}
                 <div>
                   <p class="text-sm text-gray-500">Name</p>
                   <p class="font-medium">
-                    {{ booking.user.get_full_name|default:booking.user.email }}
+                    {{ booking.user.get_full_name|  default:booking.user.email }}
                   </p>
                 </div>
                 <div>
                   <p class="text-sm text-gray-500">Phone</p>
                   <p class="font-medium">
-                    {% if booking.user.profile.phone_number %} {{
-                    booking.user.profile.phone_number }} {% else %} Not provided
-                    {% endif %}
+                    {% if phone %} {{ phone }} {% else %} Not provided {% endif%}
                   </p>
                 </div>
                 <div>
@@ -347,8 +348,8 @@ Confirmed-Diako Travel Agency{% endblock %} {% block content %}
           <div class="space-y-3">
             <div class="flex justify-between">
               <span class="text-gray-600"
-                >Daily Rate ({{ rental_days }} day{{
-                rental_days|pluralize}})</span
+                >Daily Rate ({{ rental_days }} 
+                day{{rental_days|pluralize}})</span
               >
               <span class="font-medium"> ${{ daily_rate|floatformat:2 }}</span>
             </div>

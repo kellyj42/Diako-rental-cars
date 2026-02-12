@@ -89,7 +89,6 @@ Cars{% endblock %} {% block content %}
           <!-- Action Buttons -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <form
-              
               method="post"
               action="{% url 'userAuth:resend_verification' %}"
             >
@@ -190,7 +189,7 @@ Cars{% endblock %} {% block content %}
           <!-- Support Contact -->
           <div class="flex items-center justify-center gap-4">
             <a
-              href="{% url 'userAuth:login' %}"
+              href="{% url 'userAuth:login' %}{% if next %}?next={{ next|urlencode }}{% endif %}"
               class="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
             >
               <i class="fas fa-sign-in-alt mr-1"></i>

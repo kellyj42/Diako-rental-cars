@@ -31,8 +31,6 @@
       <div class="bg-linear-to-r from-blue-600 to-blue-700 h-2"></div>
 
       <div class="p-8">
-      
-
         <!-- Divider -->
         <div class="flex items-center my-8">
           <div class="flex-1 border-t border-gray-300"></div>
@@ -41,40 +39,26 @@
           >
           <div class="flex-1 border-t border-gray-300"></div>
         </div>
-{% if messages %}
-  <div class="mb-6 space-y-3">
-    {% for message in messages %}
-      <div
-        class="p-4 rounded-xl border flex items-start gap-3
-        {% if message.tags == 'error' %}
-          bg-red-50 border-red-300 text-red-700
-        {% elif message.tags == 'success' %}
-          bg-green-50 border-green-300 text-green-700
-        {% elif message.tags == 'warning' %}
-          bg-yellow-50 border-yellow-300 text-yellow-700
-        {% else %}
-          bg-blue-50 border-blue-300 text-blue-700
-        {% endif %}"
-      >
-        <i
-          class="fas
-          {% if message.tags == 'error' %} fa-times-circle
-          {% elif message.tags == 'success' %} fa-check-circle
-          {% elif message.tags == 'warning' %} fa-exclamation-triangle
-          {% else %} fa-info-circle
-          {% endif %} mt-1"
-        ></i>
-        <span class="text-sm font-medium">
-          {{ message }}
-        </span>
-      </div>
-    {% endfor %}
-  </div>
-{% endif %}
+        {% if messages %}
+        <div class="mb-6 space-y-3">
+          {% for message in messages %}
+          <div
+            class="p-4 rounded-xl border flex items-start gap-3 {% if message.tags == 'error' %} bg-red-50 border-red-300 text-red-700 {% elif message.tags == 'success' %} bg-green-50 border-green-300 text-green-700 {% elif message.tags == 'warning' %} bg-yellow-50 border-yellow-300 text-yellow-700 {% else %} bg-blue-50 border-blue-300 text-blue-700 {% endif %}"
+          >
+            <i
+              class="fas {% if message.tags == 'error' %} fa-times-circle {% elif message.tags == 'success' %} fa-check-circle {% elif message.tags == 'warning' %} fa-exclamation-triangle {% else %} fa-info-circle {% endif %} mt-1"
+            ></i>
+            <span class="text-sm font-medium"> {{ message }} </span>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
 
         <!-- Login Form -->
         <form method="post" class="space-y-6">
-          {% csrf_token %}
+          {% csrf_token %} {% if next %}
+          <input type="hidden" name="next" value="{{ next|urlencode }}" />
+          {% endif %}
 
           <!-- Email Field -->
           <div>
@@ -166,7 +150,7 @@
           <p class="text-center text-gray-600">
             Don't have an account?
             <a
-              href="{% url 'userAuth:signup' %}"
+              href="{% url 'userAuth:signup' %}{% if next %}?next={{ next|urlencode }}{% endif %}"
               class="text-blue-600 font-semibold hover:text-blue-800 hover:underline ml-1 transition-colors"
             >
               Create an account

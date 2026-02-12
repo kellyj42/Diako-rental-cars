@@ -123,7 +123,6 @@
             >
               Profiles
             </a>
-
             <form method="post" action="{% url 'userAuth:logout' %}">
               {% csrf_token %}
               <button
@@ -138,11 +137,27 @@
         {% if user.is_staff %}
         <a
           href="{% url 'dashboard:home' %}"
-          class="text-orange-500 font-semibold"
+          class="relative font-semibold {% if '/dashboard/' in request.path or '/bookings/manage' in request.path or '/cars/manage' in request.path or '/auth/manage' in request.path %}text-orange-500{% else %}text-gray-700 hover:text-orange-500{% endif %}"
         >
-          Admin Dashboard
+          Admin Dashboard {% if pending_bookings %}
+          <span
+            class="absolute -top-2 right-1 bg-red-500 text-white text-xs rounded-full px-2 py-0.5"
+          >
+            {{ pending_bookings }}
+          </span>
+          {% endif %}
         </a>
-        {% endif %} {% else %}
+        {% endif %}
+        <form method="post" action="{% url 'userAuth:logout' %}">
+          {% csrf_token %}
+          <button
+            type="submit"
+            class="text-red-600 font-semibold hover:text-red-700"
+          >
+            Logout
+          </button>
+        </form>
+        {% else %}
         <!-- Guest Links -->
         <a
           href="{% url 'userAuth:login' %}"

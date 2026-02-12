@@ -1,11 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from datetime import datetime
 from cars.models import Car
+from bookings.models import Booking
 from content.content import services,achievements,vehicles,nav_links
 
-# Create your views here.
 
 def indexView(request):
-    # Check session for a selected car (set by bookings.selectedVehicle)
     selected_car = None
     selected_car_id = request.session.get('selected_car_id')
 
@@ -27,22 +28,39 @@ def indexView(request):
 def bookingDetailsView(request):
     return render(request, 'home/booking_details.html')
 
-def orderSuccessView(request):
-    # You can pass order details here from session, database, or URL parameters
+@login_required
+def orderSuccessView(request, booking_id=None):
+    if not booking_id:
+        return redirect("home:home")
+
+    if request.user.is_staff:
+        booking = get_object_or_404(Booking, id=booking_id)
+    else:
+        booking = get_object_or_404(Booking, id=booking_id, user=request.user)
+
+    if booking.status != "confirmed" and not request.user.is_staff:
+        return redirect("bookings:booking_details", booking_id=booking.id)
+
+    rental_days = (booking.drop_off_date - booking.pick_up_date).days
+    rental_days = rental_days if rental_days > 0 else 1
+
+    daily_rate = booking.car.price_per_day or 0
+    estimate_total = daily_rate * rental_days
+    phone = ""
+    if hasattr(booking.user, "profile"):
+        phone = booking.user.profile.phone_number
+
     context = {
-        'confirmation_number': 'ORD-2025-001234',
-        'pickup_date': 'January 25, 2025 - 10:00 AM',
-        'dropoff_date': 'January 30, 2025 - 10:00 AM',
-        'duration': '5 Days',
-        'vehicle_name': 'Toyota Land Cruiser Prado 2022',
-        'vehicle_type': '7-Seater SUV',
-        'license_plate': 'DRC-2024-001',
-        'customer_name': 'John Doe',
-        'customer_email': 'john.doe@example.com',
-        'customer_phone': '+1 (555) 123-4567',
-        'pickup_location': 'Downtown Office',
+        "booking": booking,
+        "phone": phone,
+        "car": booking.car,
+        "rental_days": rental_days,
+        "daily_rate": daily_rate,
+        "estimate_total": estimate_total,
+        "booking_reference": f"DRC-{booking.id:06d}",
     }
-    return render(request, 'home/order_success.html', context)
+
+    return render(request, "home/order_success.html", context)
 
 def about_us_view(request):
     return render(request, 'aboutpage.html',{

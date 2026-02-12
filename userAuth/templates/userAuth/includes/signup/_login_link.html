@@ -2,7 +2,7 @@
   <p class="text-gray-600">
     Already have an account?
     <a
-      href="{% url 'userAuth:login'%}"
+      href="{% url 'userAuth:login'%}{% if next %}?next={{ next|urlencode }}{% endif %}"
       class="text-blue-600 font-semibold hover:text-blue-800 hover:underline ml-1 transition-colors"
     >
       Sign in here

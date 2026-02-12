@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .models import Booking
+from dashboard.decorators import admin_required
 
 from .models import Booking
 # =========================
@@ -105,7 +106,7 @@ def confirm_booking(request, booking_id):
     booking.status = "confirmed"
     booking.save()
 
-    return redirect("home:order_success")
+    return redirect("home:order_success_detail", booking_id=booking.id)
 
 @login_required
 def booking_history_view(request):
@@ -119,3 +120,40 @@ def booking_history_view(request):
     return render(request, "bookings/booking_history.html", {
         "bookings": bookings
     })
+
+
+@admin_required
+def booking_manage_list_view(request):
+    bookings = (
+        Booking.objects
+        .select_related("car", "user")
+        .order_by("-created_at")
+    )
+    if hasattr(request.user, "profile"):
+        request.user.profile.last_seen_bookings_at = timezone.now()
+        request.user.profile.save(update_fields=["last_seen_bookings_at"])
+    return render(request, "bookings/booking_manage_list.html", {"bookings": bookings})
+
+
+@admin_required
+def booking_update_status_view(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id)
+
+    if request.method == "POST":
+        new_status = request.POST.get("status")
+        if new_status in dict(Booking.STATUS_CHOICES):
+            booking.status = new_status
+            booking.save()
+
+    return redirect("bookings:booking_manage_list")
+
+
+@admin_required
+def booking_delete_view(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id)
+
+    if request.method == "POST":
+        booking.delete()
+        return redirect("bookings:booking_manage_list")
+
+    return render(request, "bookings/booking_confirm_delete.html", {"booking": booking})

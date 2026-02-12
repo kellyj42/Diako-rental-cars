@@ -1,0 +1,183 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diako Rentals Admin</title>
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+
+  <style>
+    :root {
+      --sidebar-width: 260px;
+      --sidebar-bg: #1e293b;
+      --sidebar-active: #3b82f6;
+      --primary-color: #3b82f6;
+      --secondary-color: #8b5cf6;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      font-size: 0.875rem;
+      color: #cbd5e1;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item:hover {
+      background: #0f172a;
+      color: #ffffff;
+    }
+
+    .nav-item i {
+      width: 1.25rem;
+      color: #94a3b8;
+    }
+
+    .nav-item--active {
+      background: #0f172a;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .nav-item--active i {
+      color: #fb923c;
+    }
+
+    .nav-item--active::before {
+      content: "";
+      position: absolute;
+      left: 0.5rem;
+      width: 3px;
+      height: 60%;
+      background: #fb923c;
+      border-radius: 999px;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+    }
+
+    .badge-orange {
+      background: #f97316;
+      color: #ffffff;
+    }
+
+    * {
+      transition: all 0.2s ease;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #a1a1a1;
+    }
+
+    /* Sidebar Animation */
+    @keyframes slideIn {
+      from {
+        transform: translateX(-100%);
+      }
+      to {
+        transform: translateX(0);
+      }
+    }
+
+    /* Pulse Animation */
+    @keyframes pulse {
+      0%,
+      100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    /* Glow Effect */
+    .glow {
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+    }
+
+    /* Data Grid Hover Effect */
+    .data-row:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Notification Badge */
+    .notification-badge {
+      animation: pulse 2s infinite;
+    }
+
+    /* Chart Animation */
+    .chart-bar {
+      transition: height 0.8s ease-out;
+    }
+
+    /* Dark Mode Support */
+    .dark-mode {
+      background-color: #0f172a;
+      color: #f8fafc;
+    }
+
+    .dark-sidebar {
+      background-color: #0f172a;
+      color: #cbd5e1;
+    }
+
+    /* Loading Skeleton */
+    .skeleton {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0;
+      }
+      100% {
+        background-position: 200% 0;
+      }
+    }
+
+    /* Toggle Switch */
+    .toggle-checkbox:checked {
+      right: 0;
+      border-color: #3b82f6;
+    }
+
+    .toggle-checkbox:checked + .toggle-label {
+      background-color: #3b82f6;
+    }
+  </style>
+</head>

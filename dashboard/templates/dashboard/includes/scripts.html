@@ -1,0 +1,237 @@
+<!-- JavaScript -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Mobile sidebar toggle
+    const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+    const sidebarToggle = document.getElementById("sidebarToggle");
+    const sidebar = document.querySelector("aside");
+
+    mobileMenuToggle.addEventListener("click", function () {
+      sidebar.classList.toggle("-translate-x-64");
+    });
+
+    sidebarToggle.addEventListener("click", function () {
+      sidebar.classList.toggle("-translate-x-64");
+    });
+
+    // Navigation between sections
+    const navItems = document.querySelectorAll(".nav-item");
+    const sections = document.querySelectorAll(".dashboard-section");
+
+    navItems.forEach((item) => {
+      item.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        // Remove active class from all nav items
+        navItems.forEach((nav) => nav.classList.remove("active"));
+
+        // Add active class to clicked nav item
+        this.classList.add("active");
+
+        // Hide all sections
+        sections.forEach((section) => section.classList.add("hidden"));
+
+        // Show the selected section
+        const sectionId = this.getAttribute("data-section");
+        const activeSection = document.getElementById(sectionId);
+        activeSection.classList.remove("hidden");
+
+        // Close sidebar on mobile after selection
+        if (window.innerWidth < 1024) {
+          sidebar.classList.add("-translate-x-64");
+        }
+      });
+    });
+
+    // Notification dropdown
+    const notificationBtn = document.getElementById("notificationBtn");
+    const notificationDropdown = document.getElementById(
+      "notificationDropdown",
+    );
+
+    notificationBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      notificationDropdown.classList.toggle("hidden");
+      userDropdown.classList.add("hidden");
+    });
+
+    // User dropdown
+    const userMenuBtn = document.getElementById("userMenuBtn");
+    const userDropdown = document.getElementById("userDropdown");
+
+    userMenuBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      userDropdown.classList.toggle("hidden");
+      notificationDropdown.classList.add("hidden");
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener("click", function () {
+      notificationDropdown.classList.add("hidden");
+      userDropdown.classList.add("hidden");
+    });
+
+    // Logout button
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    logoutBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      if (confirm("Are you sure you want to logout?")) {
+        alert(
+          "You have been logged out. This is a demo, so no actual logout occurs.",
+        );
+      }
+    });
+
+    // Dark mode toggle
+    const darkModeToggle = document.getElementById("darkModeToggle");
+    const toggleDot = document.querySelector(".toggle-dot");
+
+    darkModeToggle.addEventListener("change", function () {
+      if (this.checked) {
+        document.body.classList.add("dark-mode");
+        document.querySelector("aside").classList.add("dark-sidebar");
+        toggleDot.style.transform = "translateX(1.5rem)";
+      } else {
+        document.body.classList.remove("dark-mode");
+        document.querySelector("aside").classList.remove("dark-sidebar");
+        toggleDot.style.transform = "translateX(0)";
+      }
+    });
+
+    // Refresh data button
+    const refreshBtn = document.getElementById("refreshData");
+
+    refreshBtn.addEventListener("click", function () {
+      // Simulate loading
+      this.innerHTML =
+        '<i class="fas fa-spinner fa-spin mr-2"></i> Refreshing...';
+      this.disabled = true;
+
+      setTimeout(() => {
+        this.innerHTML = '<i class="fas fa-sync-alt mr-2"></i> Refresh Data';
+        this.disabled = false;
+
+        // Show success notification
+        showNotification("Dashboard data refreshed successfully!", "success");
+
+        // Animate some stats
+        animateStats();
+      }, 1500);
+    });
+
+    // Show notification function
+    function showNotification(message, type = "info") {
+      // Create notification element
+      const notification = document.createElement("div");
+      notification.className = `fixed top-6 right-6 z-50 px-6 py-4 rounded-xl shadow-xl flex items-center space-x-4 ${
+        type === "success"
+          ? "bg-green-500 text-white"
+          : type === "error"
+            ? "bg-red-500 text-white"
+            : "bg-blue-500 text-white"
+      }`;
+
+      const icon =
+        type === "success"
+          ? "fa-check-circle"
+          : type === "error"
+            ? "fa-exclamation-circle"
+            : "fa-info-circle";
+
+      notification.innerHTML = `
+                <i class="fas ${icon} text-xl"></i>
+                <span>${message}</span>
+            `;
+
+      document.body.appendChild(notification);
+
+      // Animate in
+      setTimeout(() => {
+        notification.style.transform = "translateX(0)";
+      }, 10);
+
+      // Remove after 3 seconds
+      setTimeout(() => {
+        notification.style.opacity = "0";
+        notification.style.transform = "translateX(100%)";
+        setTimeout(() => {
+          notification.remove();
+        }, 300);
+      }, 3000);
+    }
+
+    // Animate stats function
+    function animateStats() {
+      const stats = document.querySelectorAll(".text-3xl.font-bold");
+      stats.forEach((stat) => {
+        const originalValue = stat.textContent;
+        stat.classList.add("scale-110", "text-blue-600");
+
+        setTimeout(() => {
+          stat.classList.remove("scale-110", "text-blue-600");
+        }, 500);
+      });
+    }
+
+    // Animate chart bars on load
+    setTimeout(() => {
+      const chartBars = document.querySelectorAll(".chart-bar");
+      chartBars.forEach((bar) => {
+        const originalHeight = bar.style.height;
+        bar.style.height = "0%";
+
+        setTimeout(() => {
+          bar.style.height = originalHeight;
+        }, 100);
+      });
+    }, 500);
+
+    // Simulate real-time updates
+    setInterval(() => {
+      // Update the clock in the sidebar if needed
+      const now = new Date();
+      const timeString = now.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+
+      // Randomly update a stat (for demo purposes)
+      if (Math.random() > 0.7) {
+        const bookingStat = document.querySelector(
+          ".bg-white.rounded-2xl:nth-child(1) h3",
+        );
+        if (bookingStat) {
+          const current = parseInt(bookingStat.textContent.replace(/,/g, ""));
+          if (!isNaN(current)) {
+            const newValue = current + Math.floor(Math.random() * 3);
+            bookingStat.textContent = newValue.toLocaleString();
+            bookingStat.classList.add("pulse-once");
+            setTimeout(() => bookingStat.classList.remove("pulse-once"), 1000);
+          }
+        }
+      }
+    }, 10000);
+
+    // Initialize tooltips
+    const chartBars = document.querySelectorAll(".chart-bar");
+    chartBars.forEach((bar) => {
+      const title = bar.getAttribute("title");
+      bar.addEventListener("mouseenter", function (e) {
+        const tooltip = document.createElement("div");
+        tooltip.className =
+          "absolute bg-gray-900 text-white px-3 py-2 rounded-lg text-sm";
+        tooltip.textContent = title;
+        tooltip.style.top = e.clientY - 40 + "px";
+        tooltip.style.left = e.clientX - 30 + "px";
+        tooltip.id = "tooltip";
+        document.body.appendChild(tooltip);
+      });
+
+      bar.addEventListener("mouseleave", function () {
+        const tooltip = document.getElementById("tooltip");
+        if (tooltip) tooltip.remove();
+      });
+    });
+  });
+</script>
