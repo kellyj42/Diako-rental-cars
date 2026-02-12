@@ -91,4 +91,4 @@ htmlcov/
 # Ignore node modules used for building Tailwind
 theme/static_src/node_modules/
 # Ignore compiled/built CSS from the theme app if you build during development
-theme/static/css/dist/
+# (Removed to allow deployment of built Tailwind CSS)
