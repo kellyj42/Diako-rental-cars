@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
 # DEBUG = True
-ALLOWED_HOSTS = ["diakorentalcars-production.up.railway.app",]
+ALLOWED_HOSTS = ["*"]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://diakorentalcars-production.up.railway.app",
