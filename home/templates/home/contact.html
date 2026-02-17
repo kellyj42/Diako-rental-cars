@@ -1,160 +1,181 @@
-{% extends 'base.html' %} {% load static %} {% block content %} {% include "includes/nav.html" %}
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% include "includes/nav.html" %}
 
+<!-- HERO -->
+<section class="bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 py-20">
+  <div class="max-w-6xl mx-auto px-6 text-center text-white">
+    <p class="text-orange-400 font-semibold uppercase tracking-wider text-sm">
+      Contact Daiko Travel
+    </p>
+
+    <h1 class="text-4xl md:text-5xl font-bold mt-4 leading-tight">
+      We're Here to Help You Travel Better
+    </h1>
+
+    <p class="text-blue-100 mt-6 max-w-2xl mx-auto text-lg">
+      Whether you need booking assistance, fleet information, or partnership
+      inquiries — our team is ready to assist you.
+    </p>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
 <section class="bg-slate-50 py-20">
   <div class="max-w-6xl mx-auto px-6">
-    <div class="grid lg:grid-cols-2 gap-12 items-start">
+    <div class="grid lg:grid-cols-2 gap-16">
+
       <!-- LEFT SIDE -->
       <div>
-        <p
-          class="text-orange-500 font-semibold uppercase tracking-wide text-sm"
-        >
-          Contact Us
-        </p>
 
-        <h1 class="text-4xl font-bold text-blue-950 mt-3 leading-tight">
-          We’re here to help
-        </h1>
+        <!-- Contact Cards -->
+        <div class="space-y-6">
 
-        <p class="text-gray-600 mt-5 leading-relaxed">
-          Reach out for booking support, fleet questions, or partnership
-          opportunities.
-        </p>
-
-        <div class="mt-8 space-y-4">
-          <div
-            class="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
-          >
-            <div
-              class="w-11 h-11 flex items-center justify-center bg-orange-100 text-orange-500 rounded-full"
-            >
+          <div class="flex items-start gap-5 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+            <div class="w-12 h-12 flex items-center justify-center bg-orange-100 text-orange-500 rounded-xl text-lg">
               <i class="fa-solid fa-phone"></i>
             </div>
             <div>
-              <p class="text-sm font-semibold text-slate-700">Phone</p>
-              <p class="text-slate-600">{{ contact_info.phone.header }}</p>
+              <p class="font-semibold text-blue-950">Call Us</p>
+              <p class="text-slate-600 mt-1">{{ contact_info.phone.header }}</p>
+              <p class="text-xs text-slate-400 mt-1">Quick booking assistance</p>
             </div>
           </div>
 
-          <div
-            class="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
-          >
-            <div
-              class="w-11 h-11 flex items-center justify-center bg-orange-100 text-orange-500 rounded-full"
-            >
+          <div class="flex items-start gap-5 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+            <div class="w-12 h-12 flex items-center justify-center bg-orange-100 text-orange-500 rounded-xl text-lg">
               <i class="fa-solid fa-envelope"></i>
             </div>
             <div>
-              <p class="text-sm font-semibold text-slate-700">Email</p>
-              <p class="text-slate-600">{{ contact_info.email.contact }}</p>
+              <p class="font-semibold text-blue-950">Email Support</p>
+              <p class="text-slate-600 mt-1">{{ contact_info.email.contact }}</p>
+              <p class="text-xs text-slate-400 mt-1">Response within 24 hours</p>
             </div>
           </div>
 
-          <div
-            class="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
-          >
-            <div
-              class="w-11 h-11 flex items-center justify-center bg-orange-100 text-orange-500 rounded-full"
-            >
+          <div class="flex items-start gap-5 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+            <div class="w-12 h-12 flex items-center justify-center bg-orange-100 text-orange-500 rounded-xl text-lg">
               <i class="fa-solid fa-location-dot"></i>
             </div>
             <div>
-              <p class="text-sm font-semibold text-slate-700">Location</p>
-              <p class="text-slate-600">{{ contact_info.location.contact }}</p>
+              <p class="font-semibold text-blue-950">Our Office</p>
+              <p class="text-slate-600 mt-1">{{ contact_info.location.contact }}</p>
+              <p class="text-xs text-slate-400 mt-1">Visit during office hours</p>
             </div>
           </div>
+
         </div>
 
-        <div
-          class="mt-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
-        >
-          <p class="text-sm font-semibold text-slate-700">Office hours</p>
-          <p class="text-slate-600">Mon – Sat: 8:00 AM – 7:00 PM</p>
-          <p class="text-slate-600">Sunday: 10:00 AM – 4:00 PM</p>
+        <!-- Office Hours -->
+        <div class="mt-10 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+          <p class="font-semibold text-blue-950 mb-4">Office Hours</p>
+          <div class="space-y-2 text-slate-600">
+            <p>Monday – Saturday: 8:00 AM – 7:00 PM</p>
+            <p>Sunday: 10:00 AM – 4:00 PM</p>
+          </div>
         </div>
 
-        <div class="mt-8 rounded-2xl overflow-hidden shadow-md">
+        <!-- Decorative Image -->
+        <div class="mt-10 rounded-2xl overflow-hidden shadow-lg">
           <img
             src="{% static 'home/images/car2.png' %}"
-            alt="Customer care"
-            class="w-full h-56 object-cover"
+            alt="Diako Travel Customer Support"
+            class="w-full h-64 object-cover hover:scale-105 transition duration-500"
           />
         </div>
+
       </div>
 
-      <!-- RIGHT SIDE -->
-      <form class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
-        <h3 class="text-xl font-bold text-blue-950 mb-2">Send a message</h3>
-        <p class="text-sm text-slate-500 mb-6">
-          Tell us what you need and we’ll respond within 24 hours.
+      <!-- RIGHT SIDE FORM -->
+      <div class="bg-white rounded-3xl p-10 shadow-2xl border border-slate-200">
+
+        <h3 class="text-2xl font-bold text-blue-950 mb-3">
+          Send Us a Message
+        </h3>
+        <p class="text-slate-500 text-sm mb-8">
+          Fill out the form below and our team will respond shortly.
         </p>
 
-        <div class="space-y-5">
-          <div>
-            <label
-              for="contact-name"
-              class="text-sm font-semibold text-slate-700"
-              >Full name</label
-            >
-            <input
-              id="contact-name"
-              type="text"
-              placeholder="e.g. Jane Doe"
-              class="mt-2 w-full rounded-xl border-slate-200 focus:border-orange-500 focus:ring-orange-500"
-            />
+        <form method="POST" class="space-y-6">
+          {% csrf_token %}
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-2">
+                Full Name
+              </label>
+              <input type="text"
+                class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 transition outline-none"
+                placeholder="Jane Doe"
+                required>
+            </div>
+
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-2">
+                Email Address
+              </label>
+              <input type="email"
+                class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 transition outline-none"
+                placeholder="you@example.com"
+                required>
+            </div>
+
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-2">
+                Phone Number
+              </label>
+              <input type="tel"
+                class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 transition outline-none"
+                placeholder="+256 7XX XXX XXX">
+            </div>
+
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-2">
+                Subject
+              </label>
+              <select
+                class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 transition outline-none bg-white">
+                <option>Booking Inquiry</option>
+                <option>Vehicle Availability</option>
+                <option>Pricing Question</option>
+                <option>Partnership</option>
+                <option>Other</option>
+              </select>
+            </div>
           </div>
 
           <div>
-            <label
-              for="contact-email"
-              class="text-sm font-semibold text-slate-700"
-              >Email address</label
-            >
-            <input
-              id="contact-email"
-              type="email"
-              placeholder="you@example.com"
-              class="mt-2 w-full rounded-xl border-slate-200 focus:border-orange-500 focus:ring-orange-500"
-            />
+            <label class="block text-sm font-semibold text-slate-700 mb-2">
+              Message
+            </label>
+            <textarea rows="5"
+              class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 transition outline-none resize-none"
+              placeholder="Tell us how we can assist you..."
+              required></textarea>
           </div>
 
-          <div>
-            <label
-              for="contact-subject"
-              class="text-sm font-semibold text-slate-700"
-              >Subject</label
-            >
-            <input
-              id="contact-subject"
-              type="text"
-              placeholder="Booking support"
-              class="mt-2 w-full rounded-xl border-slate-200 focus:border-orange-500 focus:ring-orange-500"
-            />
+          <div class="flex items-start gap-3">
+            <input type="checkbox" class="mt-1 rounded border-slate-300" required>
+            <p class="text-sm text-slate-500">
+              I agree to the
+              <a href="#" class="text-blue-950 font-medium hover:underline">
+                Privacy Policy
+              </a>.
+            </p>
           </div>
 
-          <div>
-            <label
-              for="contact-message"
-              class="text-sm font-semibold text-slate-700"
-              >Message</label
-            >
-            <textarea
-              id="contact-message"
-              rows="5"
-              placeholder="Tell us how we can help"
-              class="mt-2 w-full rounded-xl border-slate-200 focus:border-orange-500 focus:ring-orange-500"
-            ></textarea>
-          </div>
-        </div>
+          <button type="submit"
+            class="w-full bg-gradient-to-r from-blue-950 to-blue-800 text-white py-3.5 rounded-xl font-semibold hover:shadow-lg hover:scale-[1.02] transition duration-200">
+            Send Message
+          </button>
 
-        <button
-          type="submit"
-          class="mt-6 w-full bg-blue-950 text-white py-3 rounded-xl hover:bg-blue-900 transition duration-200"
-        >
-          Send message
-        </button>
-      </form>
+        </form>
+      </div>
+
     </div>
   </div>
 </section>
 
-{% include "includes/footer.html" %} {% endblock %}
+{% include "includes/footer.html" %}
+{% endblock %}
