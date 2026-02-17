@@ -1,0 +1,158 @@
+{% load static %}
+
+<section class="bg-blue-950 py-20">
+  <div class="max-w-7xl mx-auto px-6 text-center">
+    <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">
+      Our <span class="text-orange-400">Rental Services</span>
+    </h1>
+    <p class="text-gray-300 max-w-3xl mx-auto text-lg">
+      At Daiko Rental Cars, we offer reliable, affordable, and flexible vehicle rental solutions tailored for individuals, businesses, and travelers across Uganda.
+    </p>
+  </div>
+</section>
+
+
+<section class="bg-white py-20">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+
+      <!-- Phone Reservation -->
+      <div class="flex gap-6">
+        <div class="text-orange-400 text-4xl">
+          <i class="fa-solid fa-phone-volume"></i>
+        </div>
+        <div>
+          <h3 class="text-2xl font-bold text-blue-950 mb-3">
+            Phone & WhatsApp Reservations
+          </h3>
+          <p class="text-gray-600 leading-relaxed">
+            Book your vehicle instantly through our direct phone lines or WhatsApp. Our support team is available to assist you with vehicle selection, pricing, and booking confirmation in real time.
+          </p>
+        </div>
+      </div>
+
+      <!-- Special Rates -->
+      <div class="flex gap-6">
+        <div class="text-orange-400 text-4xl">
+          <i class="fa-solid fa-tags"></i>
+        </div>
+        <div>
+          <h3 class="text-2xl font-bold text-blue-950 mb-3">
+            Corporate & Long-Term Discounts
+          </h3>
+          <p class="text-gray-600 leading-relaxed">
+            We offer competitive rates for corporate clients, NGOs, and long-term rentals. The longer you rent, the more you save. Custom pricing packages are available upon request.
+          </p>
+        </div>
+      </div>
+
+      <!-- One Way Rental -->
+      <div class="flex gap-6">
+        <div class="text-orange-400 text-4xl">
+          <i class="fa-solid fa-road"></i>
+        </div>
+        <div>
+          <h3 class="text-2xl font-bold text-blue-950 mb-3">
+            One-Way Rentals
+          </h3>
+          <p class="text-gray-600 leading-relaxed">
+            Travel without returning the vehicle to the original pickup location. Our one-way rental option allows flexible drop-off in major towns and cities across Uganda.
+          </p>
+        </div>
+      </div>
+
+      <!-- Insurance -->
+      <div class="flex gap-6">
+        <div class="text-orange-400 text-4xl">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <div>
+          <h3 class="text-2xl font-bold text-blue-950 mb-3">
+            Comprehensive Insurance Coverage
+          </h3>
+          <p class="text-gray-600 leading-relaxed">
+            All our vehicles come with insurance coverage for your peace of mind. Optional extended coverage plans are available to provide additional protection during your trip.
+          </p>
+        </div>
+      </div>
+
+      <!-- City to City -->
+      <div class="flex gap-6">
+        <div class="text-orange-400 text-4xl">
+          <i class="fa-solid fa-building"></i>
+        </div>
+        <div>
+          <h3 class="text-2xl font-bold text-blue-950 mb-3">
+            City-to-City Transfers
+          </h3>
+          <p class="text-gray-600 leading-relaxed">
+            Whether for business meetings, airport transfers, or intercity travel, our fleet is ready to get you safely and comfortably to your destination.
+          </p>
+        </div>
+      </div>
+
+      <!-- Airport Pickup -->
+      <div class="flex gap-6">
+        <div class="text-orange-400 text-4xl">
+          <i class="fa-solid fa-plane-arrival"></i>
+        </div>
+        <div>
+          <h3 class="text-2xl font-bold text-blue-950 mb-3">
+            Airport Pick-Up & Drop-Off
+          </h3>
+          <p class="text-gray-600 leading-relaxed">
+            We provide reliable airport pickup and drop-off services, ensuring you start and end your journey smoothly. Advance booking guarantees timely service.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<section class="bg-gray-50 py-20">
+  <div class="max-w-7xl mx-auto px-6 text-center">
+
+    <h2 class="text-3xl md:text-4xl font-bold text-blue-950 mb-6">
+      Why Choose Daiko Rental Cars?
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
+
+      <div class="bg-white p-8 rounded-xl shadow-md">
+        <i class="fa-solid fa-car text-3xl text-orange-400 mb-4"></i>
+        <h4 class="font-bold text-blue-950 mb-2">Well Maintained Fleet</h4>
+        <p class="text-gray-600 text-sm">
+          All vehicles are regularly serviced and inspected to guarantee safety and performance.
+        </p>
+      </div>
+
+      <div class="bg-white p-8 rounded-xl shadow-md">
+        <i class="fa-solid fa-clock text-3xl text-orange-400 mb-4"></i>
+        <h4 class="font-bold text-blue-950 mb-2">24/7 Support</h4>
+        <p class="text-gray-600 text-sm">
+          Our customer support team is available around the clock to assist you.
+        </p>
+      </div>
+
+      <div class="bg-white p-8 rounded-xl shadow-md">
+        <i class="fa-solid fa-handshake text-3xl text-orange-400 mb-4"></i>
+        <h4 class="font-bold text-blue-950 mb-2">Transparent Pricing</h4>
+        <p class="text-gray-600 text-sm">
+          No hidden fees. What you see is what you pay.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="mt-12">
+      <a href="{% url 'home:contact' %}"
+         class="bg-orange-400 hover:bg-orange-500 text-white font-semibold py-4 px-10 rounded-xl shadow-lg transition duration-300">
+         Book a Vehicle Today
+      </a>
+    </div>
+
+  </div>
+</section>

@@ -24,6 +24,7 @@ def login_view(request):
     if request.method == "POST":
         email = request.POST.get("username")
         password = request.POST.get("password")
+        remember_me = request.POST.get("remember_me") == "on"
 
         user = authenticate(request, username=email, password=password)
 
@@ -35,9 +36,11 @@ def login_view(request):
             
             if user.is_staff:
                 login(request, user)
+                request.session.set_expiry(60 * 60 * 24 * 30 if remember_me else 0)
                 return redirect("dashboard:home")
             
             login(request, user)
+            request.session.set_expiry(60 * 60 * 24 * 30 if remember_me else 0)
             redirect_to = request.session.pop("auth_next", None)
             if redirect_to and url_has_allowed_host_and_scheme(redirect_to, allowed_hosts={request.get_host()}):
                 return redirect(redirect_to)

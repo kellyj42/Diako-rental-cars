@@ -5,6 +5,7 @@ from .views import (
 	car_create_view,
 	car_update_view,
 	car_delete_view,
+	car_detail_view,
 )
 
 app_name='cars'
@@ -14,5 +15,5 @@ urlpatterns = [
 	path('manage/add/', car_create_view, name='car_create'),
 	path('manage/<int:car_id>/edit/', car_update_view, name='car_update'),
 	path('manage/<int:car_id>/delete/', car_delete_view, name='car_delete'),
-    
+	path('manage/<int:car_id>/detail/', car_detail_view, name='car_detail'),
 ]

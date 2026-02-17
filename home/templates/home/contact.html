@@ -1,16 +1,14 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block content %}
-{% include "includes/nav.html" %}
+{% extends 'base.html' %} {% load static %} {% block content %} {% include
+"includes/nav.html" %}
 
 <section class="bg-white py-20">
   <div class="max-w-6xl mx-auto px-6">
     <div class="grid md:grid-cols-2 gap-14 items-start">
-
       <!-- LEFT SIDE -->
       <div>
-        <p class="text-orange-500 font-semibold uppercase tracking-wide text-sm">
+        <p
+          class="text-orange-500 font-semibold uppercase tracking-wide text-sm"
+        >
           Contact Us
         </p>
 
@@ -24,28 +22,32 @@
         </p>
 
         <div class="mt-8 space-y-5 text-gray-700">
-
           <div class="flex items-center gap-4">
-            <div class="w-10 h-10 flex items-center justify-center bg-orange-100 text-orange-500 rounded-full">
+            <div
+              class="w-10 h-10 flex items-center justify-center bg-orange-100 text-orange-500 rounded-full"
+            >
               <i class="fa-solid fa-phone"></i>
             </div>
-            <span>+1 234 567 890</span>
+            <span>{{ contact_info.phone.header }}</span>
           </div>
 
           <div class="flex items-center gap-4">
-            <div class="w-10 h-10 flex items-center justify-center bg-orange-100 text-orange-500 rounded-full">
+            <div
+              class="w-10 h-10 flex items-center justify-center bg-orange-100 text-orange-500 rounded-full"
+            >
               <i class="fa-solid fa-envelope"></i>
             </div>
-            <span>support@diakorentals.com</span>
+            <span>{{ contact_info.email.contact }}</span>
           </div>
 
           <div class="flex items-center gap-4">
-            <div class="w-10 h-10 flex items-center justify-center bg-orange-100 text-orange-500 rounded-full">
+            <div
+              class="w-10 h-10 flex items-center justify-center bg-orange-100 text-orange-500 rounded-full"
+            >
               <i class="fa-solid fa-location-dot"></i>
             </div>
-            <span>24 Madison Ave, New York, NY</span>
+            <span>{{ contact_info.location.contact }}</span>
           </div>
-
         </div>
 
         <div class="mt-10 rounded-2xl overflow-hidden shadow-md">
@@ -59,13 +61,9 @@
 
       <!-- RIGHT SIDE -->
       <form class="bg-gray-50 rounded-2xl p-8 border border-gray-200 shadow-sm">
-
-        <h3 class="text-xl font-bold text-blue-950 mb-6">
-          Send a message
-        </h3>
+        <h3 class="text-xl font-bold text-blue-950 mb-6">Send a message</h3>
 
         <div class="space-y-5">
-
           <input
             type="text"
             placeholder="Full name"
@@ -89,7 +87,6 @@
             placeholder="Tell us how we can help"
             class="w-full rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500"
           ></textarea>
-
         </div>
 
         <button
@@ -98,12 +95,9 @@
         >
           Send message
         </button>
-
       </form>
-
     </div>
   </div>
 </section>
 
-{% include "includes/footer.html" %}
-{% endblock %}
+{% include "includes/footer.html" %} {% endblock %}

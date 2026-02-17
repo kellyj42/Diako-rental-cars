@@ -1,23 +1,24 @@
 {% load static %}
 
-<header class="shadow-lg relative z-50">
+<header class="shadow-lg relative  z-50">
   <!-- Top Info Bar -->
+
   <div class="bg-blue-950 border-b border-blue-900">
     <div class="flex justify-between items-center px-10 py-3">
-      <ul class="flex space-x-8 text-sm text-gray-200">
+      <ul class="flex space-x-2 text-xs text-gray-200">
         <li class="flex items-center gap-2">
           <i class="fa-solid fa-location-arrow text-orange-400"></i>
-          New York, USA
+          {{ contact_info.location.header }}
         </li>
 
         <li class="flex items-center gap-2">
           <i class="fa-solid fa-phone text-orange-400"></i>
-          +1 234 567 890
+          {{ contact_info.phone.header }}
         </li>
 
         <li class="flex items-center gap-2">
           <i class="fa-solid fa-envelope text-orange-400"></i>
-          info@email.com
+          {{ contact_info.email.header }}
         </li>
 
         <!-- Live Clock -->

@@ -63,3 +63,18 @@ def car_delete_view(request, car_id):
         return redirect("cars:car_manage_list")
 
     return render(request, "cars/car_confirm_delete.html", {"car": car})
+
+
+@admin_required
+def car_detail_view(request, car_id):
+    car = get_object_or_404(Car, id=car_id)
+    
+    # Get all rates for this car
+    rates = car.rates.select_related('trip_type').all()
+    
+    context = {
+        'car': car,
+        'rates': rates,
+    }
+    
+    return render(request, "cars/car_detail.html", context)

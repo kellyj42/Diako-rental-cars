@@ -1,12 +1,13 @@
 <section class="bg-white py-16">
   <div class="max-w-7xl mx-auto px-6">
+
     <!-- Section Header -->
     <div class="text-center max-w-3xl mx-auto mb-12">
       <h2 class="text-4xl font-bold text-blue-950 mb-4">
-        Central <span class="text-orange-400">Services</span>
+        Our <span class="text-orange-400">Services</span>
       </h2>
       <p class="text-gray-600">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+        We provide flexible, affordable, and reliable car rental services designed to meet your travel needs across Uganda.
       </p>
     </div>
 
@@ -47,5 +48,16 @@
 
       {% endfor %}
     </div>
+
+    <!-- CTA Button -->
+    <div class="text-center mt-12">
+      <a
+        href="{% url 'home:services' %}"
+        class="inline-block bg-blue-950 hover:bg-blue-900 text-white font-semibold py-3 px-8 rounded-xl shadow-lg transition duration-300"
+      >
+        View All Services
+      </a>
+    </div>
+
   </div>
 </section>

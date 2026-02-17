@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% load static %} {% block title %}Order
-Confirmed-Diako Travel Agency{% endblock %} {% block content %}
+Confirmed-Daiko Travel Agency{% endblock %} {% block content %}
 <section
   class="min-h-screen bg-linear-to-b from-blue-50 to-white py-12 lg:py-16"
 >
@@ -272,7 +272,7 @@ Confirmed-Diako Travel Agency{% endblock %} {% block content %}
           <div class="p-6">
             <div class="space-y-4">
               <a
-                href="tel:+256800123456"
+                href="tel:{{ contact_info.phone.support.tel }}"
                 class="flex items-center p-4 bg-blue-50 hover:bg-blue-100 rounded-xl transition-colors group"
               >
                 <div
@@ -282,12 +282,14 @@ Confirmed-Diako Travel Agency{% endblock %} {% block content %}
                 </div>
                 <div>
                   <p class="font-semibold text-gray-900">Call Support</p>
-                  <p class="text-blue-600 font-medium">+256 800 123 456</p>
+                  <p class="text-blue-600 font-medium">
+                    {{ contact_info.phone.support.display }}
+                  </p>
                 </div>
               </a>
 
               <a
-                href="mailto:support@diakotravel.com"
+                href="mailto:{{ contact_info.email.support }}"
                 class="flex items-center p-4 bg-green-50 hover:bg-green-100 rounded-xl transition-colors group"
               >
                 <div
@@ -298,13 +300,13 @@ Confirmed-Diako Travel Agency{% endblock %} {% block content %}
                 <div>
                   <p class="font-semibold text-gray-900">Email Us</p>
                   <p class="text-green-600 font-medium">
-                    support@diakotravel.com
+                    {{ contact_info.email.support }}
                   </p>
                 </div>
               </a>
 
               <a
-                href="https://wa.me/256123456789"
+                href="https://wa.me/{{ contact_info.phone.whatsapp.wa }}"
                 target="_blank"
                 class="flex items-center p-4 bg-green-50 hover:bg-green-100 rounded-xl transition-colors group"
               >
@@ -315,7 +317,9 @@ Confirmed-Diako Travel Agency{% endblock %} {% block content %}
                 </div>
                 <div>
                   <p class="font-semibold text-gray-900">WhatsApp</p>
-                  <p class="text-green-600 font-medium">+256 123 456 789</p>
+                  <p class="text-green-600 font-medium">
+                    {{ contact_info.phone.whatsapp.display }}
+                  </p>
                 </div>
               </a>
             </div>

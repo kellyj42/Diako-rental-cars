@@ -1,5 +1,5 @@
 {% load static %}
-<footer class=" bg-blue-950 text-gray-300">
+<footer class="bg-blue-950 text-gray-300">
   <div class="px-10 py-14 grid grid-cols-1 md:grid-cols-4 gap-10">
     <!-- Logo & About -->
     <div>
@@ -7,9 +7,7 @@
         <img
           src="{% static 'home/images/image.png' %}"
           alt="Diako Rentals logo"
-          
         />
-        
       </div>
       <p class="text-sm leading-relaxed">
         Diako Rental Cars provides reliable, affordable, and premium vehicles
@@ -39,15 +37,15 @@
       <ul class="space-y-3 text-sm">
         <li class="flex items-center gap-3">
           <i class="fa-solid fa-location-dot text-orange-400"></i>
-          New York, USA
+          {{ contact_info.location.header }}
         </li>
         <li class="flex items-center gap-3">
           <i class="fa-solid fa-phone text-orange-400"></i>
-          +1 234 567 890
+          {{ contact_info.phone.header }}
         </li>
         <li class="flex items-center gap-3">
           <i class="fa-solid fa-envelope text-orange-400"></i>
-          info@email.com
+          {{ contact_info.email.header }}
         </li>
       </ul>
     </div>

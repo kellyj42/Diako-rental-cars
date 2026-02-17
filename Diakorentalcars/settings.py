@@ -110,6 +110,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'bookings.context_processors.pending_bookings_count',
+                'content.context_processors.contact_info_processor',
             ],
         },
     },
@@ -121,11 +122,14 @@ WSGI_APPLICATION = 'Diakorentalcars.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+database_url = os.getenv("DATABASE_URL", "")
+use_sqlite = not database_url or database_url.startswith("sqlite")
+
 DATABASES = {
     'default': dj_database_url.config(
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
         conn_max_age=600,
-        ssl_require=True
+        ssl_require=not use_sqlite,
     )
 }
 

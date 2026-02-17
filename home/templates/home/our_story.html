@@ -1,30 +1,52 @@
-{% extends 'base.html' %} {% load static %} {% block content %} 
-{% include "includes/nav.html" %}
+{% extends 'base.html' %} {% load static %} {% block content %} {% include "includes/nav.html" %}
 
-<section class="bg-gradient-to-b from-blue-950 to-blue-900 text-white">
-  <div class="max-w-7xl mx-auto px-6 py-16 md:py-24">
+<!-- Hero Section -->
+<section
+  class="relative bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 text-white overflow-hidden"
+>
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 opacity-10">
+    <div
+      class="absolute top-0 left-0 w-72 h-72 bg-orange-400 rounded-full blur-3xl"
+    ></div>
+    <div
+      class="absolute bottom-0 right-0 w-96 h-96 bg-blue-500 rounded-full blur-3xl"
+    ></div>
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
     <div class="grid md:grid-cols-2 gap-10 items-center">
       <div>
-        <p class="text-orange-300 font-semibold tracking-wide">Our Story</p>
-        <h1 class="text-4xl md:text-5xl font-bold mt-2">
+        <p
+          class="text-orange-300 font-semibold tracking-wide uppercase text-sm"
+        >
+          Our Story
+        </p>
+        <h1 class="text-4xl md:text-5xl font-bold mt-2 leading-tight">
           Driven by service, built on trust.
         </h1>
-        <p class="mt-4 text-blue-100">
+        <p class="mt-4 text-blue-100 text-lg leading-relaxed">
           Diako Rental Cars started with a single fleet and a simple promise:
           make every journey feel effortless. Today we help thousands of
           travelers drive with confidence across the city and beyond.
         </p>
         <div class="mt-8 flex flex-wrap gap-4">
-          <div class="bg-white/10 rounded-xl px-5 py-4">
-            <p class="text-2xl font-bold">10+</p>
+          <div
+            class="bg-white/10 backdrop-blur-sm rounded-xl px-5 py-4 border border-white/20"
+          >
+            <p class="text-3xl font-bold">10+</p>
             <p class="text-sm text-blue-200">Years of service</p>
           </div>
-          <div class="bg-white/10 rounded-xl px-5 py-4">
-            <p class="text-2xl font-bold">56</p>
+          <div
+            class="bg-white/10 backdrop-blur-sm rounded-xl px-5 py-4 border border-white/20"
+          >
+            <p class="text-3xl font-bold">56</p>
             <p class="text-sm text-blue-200">Cars available</p>
           </div>
-          <div class="bg-white/10 rounded-xl px-5 py-4">
-            <p class="text-2xl font-bold">4.8★</p>
+          <div
+            class="bg-white/10 backdrop-blur-sm rounded-xl px-5 py-4 border border-white/20"
+          >
+            <p class="text-3xl font-bold">4.8★</p>
             <p class="text-sm text-blue-200">Average rating</p>
           </div>
         </div>
@@ -36,45 +58,245 @@
           class="rounded-2xl shadow-2xl w-full h-80 object-cover"
         />
         <div
-          class="absolute -bottom-6 -left-6 bg-white text-blue-950 rounded-xl p-5 shadow-xl"
+          class="absolute -bottom-6 -left-6 bg-white text-blue-950 rounded-xl p-5 shadow-xl max-w-xs"
         >
           <p class="text-sm font-semibold text-orange-500">Since 2014</p>
-          <p class="text-lg font-bold">We’ve completed 5,000+ trips</p>
+          <p class="text-lg font-bold">We've completed 5,000+ trips</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="bg-white">
-  <div class="max-w-7xl mx-auto px-6 py-16">
-    <h2 class="text-3xl font-bold text-blue-950">Milestones</h2>
-    <p class="text-gray-600 mt-2">A quick look at how we’ve grown.</p>
+<!-- Mission & Vision Section -->
+<section class="bg-gray-50 py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid md:grid-cols-2 gap-8">
+      <!-- Mission Card -->
+      <div
+        class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow"
+      >
+        <div
+          class="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center mb-5"
+        >
+          <i class="fas fa-bullseye text-2xl text-orange-500"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-blue-950 mb-3">Our Mission</h3>
+        <p class="text-gray-600 leading-relaxed">
+          To provide accessible, reliable, and affordable car rental services
+          that empower people to explore freely and travel confidently. We're
+          committed to excellence in customer service and maintaining a diverse
+          fleet that meets every need.
+        </p>
+      </div>
 
-    <div class="mt-10 grid md:grid-cols-3 gap-6">
-      <div class="rounded-2xl border border-gray-200 p-6 shadow-sm">
-        <p class="text-orange-500 font-semibold">2014</p>
-        <h3 class="text-xl font-bold text-blue-950 mt-2">
-          First garage opened
-        </h3>
-        <p class="text-gray-600 mt-2">
-          Launched with 6 vehicles and a 24/7 phone line.
+      <!-- Vision Card -->
+      <div
+        class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow"
+      >
+        <div
+          class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-5"
+        >
+          <i class="fas fa-eye text-2xl text-blue-600"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-blue-950 mb-3">Our Vision</h3>
+        <p class="text-gray-600 leading-relaxed">
+          To become the most trusted car rental partner in the region,
+          recognized for innovation, sustainability, and exceptional customer
+          experiences. We envision a future where mobility is seamless and every
+          journey creates lasting memories.
         </p>
       </div>
-      <div class="rounded-2xl border border-gray-200 p-6 shadow-sm">
-        <p class="text-orange-500 font-semibold">2018</p>
-        <h3 class="text-xl font-bold text-blue-950 mt-2">Citywide expansion</h3>
-        <p class="text-gray-600 mt-2">
-          Added airport pickups and weekend discounts.
+    </div>
+  </div>
+</section>
+
+<!-- Timeline Section -->
+<section class="bg-white py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-blue-950">Our Journey</h2>
+      <p class="text-gray-600 mt-2 max-w-2xl mx-auto">
+        Key milestones that shaped Diako Rental Cars into what we are today.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      <!-- Milestone 1 -->
+      <div class="relative">
+        <div
+          class="bg-orange-50 rounded-2xl border-2 border-orange-200 p-8 hover:border-orange-400 transition-colors"
+        >
+          <div
+            class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mb-5 shadow-lg"
+          >
+            <i class="fas fa-warehouse text-2xl text-white"></i>
+          </div>
+          <div class="flex items-baseline gap-2 mb-3">
+            <span class="text-4xl font-bold text-orange-500">2014</span>
+            <span class="text-sm text-gray-500">The Beginning</span>
+          </div>
+          <h3 class="text-xl font-bold text-blue-950 mb-2">
+            First garage opened
+          </h3>
+          <p class="text-gray-600 leading-relaxed">
+            Launched with 6 vehicles and a 24/7 phone line, bringing
+            personalized rental service to our first customers.
+          </p>
+        </div>
+      </div>
+
+      <!-- Milestone 2 -->
+      <div class="relative">
+        <div
+          class="bg-blue-50 rounded-2xl border-2 border-blue-200 p-8 hover:border-blue-400 transition-colors"
+        >
+          <div
+            class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-5 shadow-lg"
+          >
+            <i class="fas fa-city text-2xl text-white"></i>
+          </div>
+          <div class="flex items-baseline gap-2 mb-3">
+            <span class="text-4xl font-bold text-blue-600">2018</span>
+            <span class="text-sm text-gray-500">Expansion</span>
+          </div>
+          <h3 class="text-xl font-bold text-blue-950 mb-2">
+            Citywide expansion
+          </h3>
+          <p class="text-gray-600 leading-relaxed">
+            Added airport pickups, multiple locations, and weekend discounts to
+            serve more customers across the region.
+          </p>
+        </div>
+      </div>
+
+      <!-- Milestone 3 -->
+      <div class="relative">
+        <div
+          class="bg-green-50 rounded-2xl border-2 border-green-200 p-8 hover:border-green-400 transition-colors"
+        >
+          <div
+            class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mb-5 shadow-lg"
+          >
+            <i class="fas fa-laptop-code text-2xl text-white"></i>
+          </div>
+          <div class="flex items-baseline gap-2 mb-3">
+            <span class="text-4xl font-bold text-green-600">2023</span>
+            <span class="text-sm text-gray-500">Digital Era</span>
+          </div>
+          <h3 class="text-xl font-bold text-blue-950 mb-2">Smart booking</h3>
+          <p class="text-gray-600 leading-relaxed">
+            Introduced online booking with real-time availability, automated
+            confirmations, and a mobile-friendly experience.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Core Values Section -->
+<section class="bg-blue-950 text-white py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold">What We Stand For</h2>
+      <p class="text-blue-200 mt-2 max-w-2xl mx-auto">
+        The values that guide every decision we make and every service we
+        provide.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Value 1 -->
+      <div
+        class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/15 transition-colors"
+      >
+        <div
+          class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-4"
+        >
+          <i class="fas fa-handshake text-xl text-white"></i>
+        </div>
+        <h4 class="text-xl font-bold mb-2">Trust</h4>
+        <p class="text-blue-200 text-sm leading-relaxed">
+          We build lasting relationships through transparency, honesty, and
+          consistent reliability.
         </p>
       </div>
-      <div class="rounded-2xl border border-gray-200 p-6 shadow-sm">
-        <p class="text-orange-500 font-semibold">2023</p>
-        <h3 class="text-xl font-bold text-blue-950 mt-2">Smart booking</h3>
-        <p class="text-gray-600 mt-2">
-          Introduced online booking with real-time availability.
+
+      <!-- Value 2 -->
+      <div
+        class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/15 transition-colors"
+      >
+        <div
+          class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-4"
+        >
+          <i class="fas fa-star text-xl text-white"></i>
+        </div>
+        <h4 class="text-xl font-bold mb-2">Excellence</h4>
+        <p class="text-blue-200 text-sm leading-relaxed">
+          Quality vehicles, professional service, and attention to detail in
+          everything we do.
         </p>
       </div>
+
+      <!-- Value 3 -->
+      <div
+        class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/15 transition-colors"
+      >
+        <div
+          class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-4"
+        >
+          <i class="fas fa-users text-xl text-white"></i>
+        </div>
+        <h4 class="text-xl font-bold mb-2">Customer First</h4>
+        <p class="text-blue-200 text-sm leading-relaxed">
+          Your satisfaction and safety are our top priorities in every
+          interaction.
+        </p>
+      </div>
+
+      <!-- Value 4 -->
+      <div
+        class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/15 transition-colors"
+      >
+        <div
+          class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-4"
+        >
+          <i class="fas fa-lightbulb text-xl text-white"></i>
+        </div>
+        <h4 class="text-xl font-bold mb-2">Innovation</h4>
+        <p class="text-blue-200 text-sm leading-relaxed">
+          Continuously improving our services with modern technology and smart
+          solutions.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section
+  class="bg-gradient-to-r from-orange-500 to-orange-600 text-white py-16"
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to hit the road?</h2>
+    <p class="text-orange-100 text-lg mb-8 max-w-2xl mx-auto">
+      Join thousands of satisfied customers who trust Diako Rental Cars for
+      their travel needs. Book your perfect ride today.
+    </p>
+    <div class="flex flex-wrap gap-4 justify-center">
+      <a
+        href="{% url 'cars:car_list' %}"
+        class="bg-white text-orange-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
+      >
+        Browse Our Fleet
+      </a>
+      <a
+        href="{% url 'home:contact' %}"
+        class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white/10 transition-colors"
+      >
+        Contact Us
+      </a>
     </div>
   </div>
 </section>

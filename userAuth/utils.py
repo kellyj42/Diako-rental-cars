@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from userAuth.tokens import email_verification_token
+from content.content import contact_info
 
 def send_verification_email(request, user):
     token = email_verification_token.make_token(user)
@@ -13,6 +14,8 @@ def send_verification_email(request, user):
     verification_link = request.build_absolute_uri(
         reverse("userAuth:verify_email", kwargs={"uidb64": uid, "token": token})
     )
+
+    support_email = contact_info["email"]["support"]
 
     message = Mail(
         from_email=settings.DEFAULT_FROM_EMAIL,
@@ -49,7 +52,7 @@ def send_verification_email(request, user):
                                 </div>
 
                                 <div style="border-top:1px solid #e2e8f0;padding:16px 24px;text-align:center;color:#94a3b8;font-size:12px;">
-                                    Need help? Contact us at support@diakotravel.com
+                                    Need help? Contact us at {support_email}
                                 </div>
                             </div>
                         </div>

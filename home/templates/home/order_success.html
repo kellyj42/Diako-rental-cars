@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% load static %} {% block title %}Order
-Confirmed-Diako Travel Agency{% endblock %} {% block content %}
+Confirmed-Daiko Travel Agency{% endblock %} {% block content %}
 <section
   class="min-h-screen bg-linear-to-b from-blue-50 to-white py-12 lg:py-16"
 >
@@ -111,8 +111,7 @@ Confirmed-Diako Travel Agency{% endblock %} {% block content %}
             </h2>
             <p class="text-blue-100 mt-1">
               Booking Reference:
-              <span class="font-mono font-bold">
-                {{ booking_reference }}</span>
+              <span class="font-mono font-bold"> {{ booking_reference }}</span>
             </p>
           </div>
 
@@ -135,9 +134,8 @@ Confirmed-Diako Travel Agency{% endblock %} {% block content %}
                 </div>
                 <div class="md:w-2/3">
                   <h4 class="text-xl font-bold text-gray-900">
-                    {{ car.display_name }} {% if car.year %} 
-                    {{ car.year }} 
-                    {% endif %}
+                    {{ car.display_name }} {% if car.year %} {{ car.year }} {%
+                    endif %}
                   </h4>
                   <div class="flex items-center mt-2 mb-4">
                     <div class="flex text-orange-400">
@@ -217,8 +215,7 @@ Confirmed-Diako Travel Agency{% endblock %} {% block content %}
                     {{booking.drop_off_time|time:"g:i A" }}
                   </p>
                   <p class="text-sm text-gray-500 mt-1">
-                    Total: {{ rental_days }} day
-                     {{ rental_days|pluralize }}
+                    Total: {{ rental_days }} day {{ rental_days|pluralize }}
                   </p>
                 </div>
               </div>
@@ -236,13 +233,14 @@ Confirmed-Diako Travel Agency{% endblock %} {% block content %}
                 <div>
                   <p class="text-sm text-gray-500">Name</p>
                   <p class="font-medium">
-                    {{ booking.user.get_full_name|  default:booking.user.email }}
+                    {{ booking.user.get_full_name| default:booking.user.email }}
                   </p>
                 </div>
                 <div>
                   <p class="text-sm text-gray-500">Phone</p>
                   <p class="font-medium">
-                    {% if phone %} {{ phone }} {% else %} Not provided {% endif%}
+                    {% if phone %} {{ phone }} {% else %} Not provided {%
+                    endif%}
                   </p>
                 </div>
                 <div>
@@ -273,7 +271,7 @@ Confirmed-Diako Travel Agency{% endblock %} {% block content %}
           <div class="p-6">
             <div class="space-y-4">
               <a
-                href="tel:+256800123456"
+                href="tel:{{ contact_info.phone.support.tel }}"
                 class="flex items-center p-4 bg-blue-50 hover:bg-blue-100 rounded-xl transition-colors group"
               >
                 <div
@@ -283,12 +281,14 @@ Confirmed-Diako Travel Agency{% endblock %} {% block content %}
                 </div>
                 <div>
                   <p class="font-semibold text-gray-900">Call Support</p>
-                  <p class="text-blue-600 font-medium">+256 800 123 456</p>
+                  <p class="text-blue-600 font-medium">
+                    {{ contact_info.phone.support.display }}
+                  </p>
                 </div>
               </a>
 
               <a
-                href="mailto:support@diakotravel.com"
+                href="mailto:{{ contact_info.email.support }}"
                 class="flex items-center p-4 bg-green-50 hover:bg-green-100 rounded-xl transition-colors group"
               >
                 <div
@@ -299,13 +299,13 @@ Confirmed-Diako Travel Agency{% endblock %} {% block content %}
                 <div>
                   <p class="font-semibold text-gray-900">Email Us</p>
                   <p class="text-green-600 font-medium">
-                    support@diakotravel.com
+                    {{ contact_info.email.support }}
                   </p>
                 </div>
               </a>
 
               <a
-                href="https://wa.me/256123456789"
+                href="https://wa.me/{{ contact_info.phone.whatsapp.wa }}"
                 target="_blank"
                 class="flex items-center p-4 bg-green-50 hover:bg-green-100 rounded-xl transition-colors group"
               >
@@ -316,7 +316,9 @@ Confirmed-Diako Travel Agency{% endblock %} {% block content %}
                 </div>
                 <div>
                   <p class="font-semibold text-gray-900">WhatsApp</p>
-                  <p class="text-green-600 font-medium">+256 123 456 789</p>
+                  <p class="text-green-600 font-medium">
+                    {{ contact_info.phone.whatsapp.display }}
+                  </p>
                 </div>
               </a>
             </div>
@@ -348,7 +350,7 @@ Confirmed-Diako Travel Agency{% endblock %} {% block content %}
           <div class="space-y-3">
             <div class="flex justify-between">
               <span class="text-gray-600"
-                >Daily Rate ({{ rental_days }} 
+                >Daily Rate ({{ rental_days }}
                 day{{rental_days|pluralize}})</span
               >
               <span class="font-medium"> ${{ daily_rate|floatformat:2 }}</span>

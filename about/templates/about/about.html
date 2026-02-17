@@ -1,92 +1,90 @@
 {% load static %}
 <section class="bg-white py-16 overflow-hidden">
   <div class="max-w-7xl mx-auto px-6">
-    <div class="grid grid-cols-2 gap-12 items-center">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      
       <!-- Left Column -->
       <div class="wow fadeInLeft" data-wow-delay="0.2s">
+        
         <!-- Heading -->
         <div class="pb-8">
           <h1 class="text-4xl md:text-5xl font-bold text-blue-950 mb-4">
-            Central <span class="text-orange-400">About</span>
+            About <span class="text-orange-400">Daiko Rental Cars</span>
           </h1>
           <p class="text-gray-600 text-base md:text-lg">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut amet
-            nemo expedita asperiores commodi accusantium at cum harum.
+            Daiko Rental Cars is a trusted vehicle rental company committed to providing safe, reliable, and affordable transportation solutions across Uganda. We serve individuals, families, tourists, and corporate clients with professionalism and excellence.
           </p>
         </div>
 
         <!-- Vision & Mission Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div
-            class="bg-white rounded-xl p-6 text-center shadow-lg border border-gray-200"
-          >
+          
+          <!-- Vision -->
+          <div class="bg-white rounded-xl p-6 text-center shadow-lg border border-gray-200">
             <div class="mb-4">
-              <i class="fa-solid fa-user-astronaut text-4xl text-blue-950"></i>
+              <i class="fa-solid fa-eye text-4xl text-blue-950"></i>
             </div>
             <h5 class="text-gray-900 font-semibold mb-2">Our Vision</h5>
             <p class="text-gray-600 text-sm md:text-base">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              To become Uganda’s most trusted and preferred car rental company by delivering exceptional service, reliable vehicles, and unmatched customer satisfaction.
             </p>
           </div>
 
-          <div
-            class="bg-white rounded-xl p-6 text-center shadow-lg border border-gray-200"
-          >
+          <!-- Mission -->
+          <div class="bg-white rounded-xl p-6 text-center shadow-lg border border-gray-200">
             <div class="mb-4">
-              <i class="fa-solid fa-hand-fist text-orange-400 text-4xl"></i>
+              <i class="fa-solid fa-bullseye text-orange-400 text-4xl"></i>
             </div>
             <h5 class="text-gray-900 font-semibold mb-2">Our Mission</h5>
             <p class="text-gray-600 text-sm md:text-base">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              To provide convenient, affordable, and high-quality rental services while maintaining safety, transparency, and professionalism in every customer interaction.
             </p>
           </div>
         </div>
 
         <!-- Description -->
         <p class="text-gray-600 mb-6">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae,
-          aliquam ipsum. Sed suscipit dolorem libero sequi aut natus debitis
-          reprehenderit.
+          With a growing fleet that includes SUVs, vans, sedans, and saloon cars, we offer flexible rental options for business trips, family travel, airport transfers, and special events. Our team ensures every vehicle is well-maintained and road-ready for a smooth driving experience.
         </p>
 
         <!-- Stats & List -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center mb-6">
-          <!-- Years of Experience -->
-          <div
-            class="bg-white rounded-xl text-center py-6 shadow-lg border border-gray-200"
-          >
-            <h1 class="text-4xl font-bold text-gray-900">17</h1>
-            <h5 class="text-gray-600">Years Of Experience</h5>
+          
+          <!-- Experience -->
+          <div class="bg-white rounded-xl text-center py-6 shadow-lg border border-gray-200">
+            <h1 class="text-4xl font-bold text-gray-900">10+</h1>
+            <h5 class="text-gray-600">Years of Industry Experience</h5>
           </div>
 
-          <!-- Features List -->
+          <!-- Strength Points -->
           <div class="space-y-2 text-gray-700">
             <p class="flex items-center">
               <i class="fa-solid fa-check-circle text-orange-400 mr-2"></i>
-              Morbi tristique senectus
+              Well-maintained & fully insured vehicles
             </p>
             <p class="flex items-center">
               <i class="fa-solid fa-check-circle text-orange-400 mr-2"></i>
-              A scelerisque purus
+              Flexible short-term & long-term rentals
             </p>
             <p class="flex items-center">
               <i class="fa-solid fa-check-circle text-orange-400 mr-2"></i>
-              Dictumst vestibulum
+              Professional customer support
             </p>
             <p class="flex items-center">
               <i class="fa-solid fa-check-circle text-orange-400 mr-2"></i>
-              Dio aenean sed adipiscing
+              Airport & city pick-up services
             </p>
           </div>
         </div>
 
         <!-- Button & Founder -->
         <div class="flex flex-col md:flex-row md:items-center gap-6">
+          
           <a
-            href="#"
+            href="{% url 'home:about' %}"
             class="bg-orange-400 hover:bg-orange-500 text-white font-semibold py-3 px-6 rounded-xl shadow-lg transition"
           >
-            More About Us
+            Learn More About Us
           </a>
 
           <div class="flex items-center gap-4">
@@ -96,10 +94,11 @@
               class="w-20 h-20 rounded-full border-4 border-gray-200"
             />
             <div>
-              <h4 class="text-gray-900 font-semibold">William Burgess</h4>
-              <p class="text-gray-600 text-sm">Carveo Founder</p>
+              <h4 class="text-gray-900 font-semibold">Founder & CEO</h4>
+              <p class="text-gray-600 text-sm">Daiko Rental Cars</p>
             </div>
           </div>
+
         </div>
       </div>
 
@@ -107,15 +106,16 @@
       <div class="wow fadeInRight flex flex-col gap-4" data-wow-delay="0.2s">
         <img
           src="{% static 'home/images/car.jpg' %}"
-          alt="About Image"
+          alt="Our Fleet"
           class="rounded-xl w-full h-64 object-cover shadow-xl"
         />
         <img
           src="{% static 'home/images/car3.jpg' %}"
-          alt="About Image 2"
+          alt="Customer Service"
           class="rounded-xl w-full h-64 object-cover shadow-xl"
         />
       </div>
+
     </div>
   </div>
 </section>
