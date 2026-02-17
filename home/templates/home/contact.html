@@ -1,8 +1,9 @@
-{% extends 'base.html' %} {% load static %} {% block content %} {% include "includes/nav.html" %}
+{% extends 'base.html' %} {% load static %} {% block content %} {% include
+"includes/nav.html" %}
 
-<section class="bg-white py-20">
+<section class="bg-slate-50 py-20">
   <div class="max-w-6xl mx-auto px-6">
-    <div class="grid md:grid-cols-2 gap-14 items-start">
+    <div class="grid lg:grid-cols-2 gap-12 items-start">
       <!-- LEFT SIDE -->
       <div>
         <p
@@ -20,36 +21,59 @@
           opportunities.
         </p>
 
-        <div class="mt-8 space-y-5 text-gray-700">
-          <div class="flex items-center gap-4">
+        <div class="mt-8 space-y-4">
+          <div
+            class="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+          >
             <div
-              class="w-10 h-10 flex items-center justify-center bg-orange-100 text-orange-500 rounded-full"
+              class="w-11 h-11 flex items-center justify-center bg-orange-100 text-orange-500 rounded-full"
             >
               <i class="fa-solid fa-phone"></i>
             </div>
-            <span>{{ contact_info.phone.header }}</span>
+            <div>
+              <p class="text-sm font-semibold text-slate-700">Phone</p>
+              <p class="text-slate-600">{{ contact_info.phone.header }}</p>
+            </div>
           </div>
 
-          <div class="flex items-center gap-4">
+          <div
+            class="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+          >
             <div
-              class="w-10 h-10 flex items-center justify-center bg-orange-100 text-orange-500 rounded-full"
+              class="w-11 h-11 flex items-center justify-center bg-orange-100 text-orange-500 rounded-full"
             >
               <i class="fa-solid fa-envelope"></i>
             </div>
-            <span>{{ contact_info.email.contact }}</span>
+            <div>
+              <p class="text-sm font-semibold text-slate-700">Email</p>
+              <p class="text-slate-600">{{ contact_info.email.contact }}</p>
+            </div>
           </div>
 
-          <div class="flex items-center gap-4">
+          <div
+            class="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+          >
             <div
-              class="w-10 h-10 flex items-center justify-center bg-orange-100 text-orange-500 rounded-full"
+              class="w-11 h-11 flex items-center justify-center bg-orange-100 text-orange-500 rounded-full"
             >
               <i class="fa-solid fa-location-dot"></i>
             </div>
-            <span>{{ contact_info.location.contact }}</span>
+            <div>
+              <p class="text-sm font-semibold text-slate-700">Location</p>
+              <p class="text-slate-600">{{ contact_info.location.contact }}</p>
+            </div>
           </div>
         </div>
 
-        <div class="mt-10 rounded-2xl overflow-hidden shadow-md">
+        <div
+          class="mt-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+        >
+          <p class="text-sm font-semibold text-slate-700">Office hours</p>
+          <p class="text-slate-600">Mon – Sat: 8:00 AM – 7:00 PM</p>
+          <p class="text-slate-600">Sunday: 10:00 AM – 4:00 PM</p>
+        </div>
+
+        <div class="mt-8 rounded-2xl overflow-hidden shadow-md">
           <img
             src="{% static 'home/images/car2.png' %}"
             alt="Customer care"
@@ -59,33 +83,68 @@
       </div>
 
       <!-- RIGHT SIDE -->
-      <form class="bg-gray-50 rounded-2xl p-8 border border-gray-200 shadow-sm">
-        <h3 class="text-xl font-bold text-blue-950 mb-6">Send a message</h3>
+      <form class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+        <h3 class="text-xl font-bold text-blue-950 mb-2">Send a message</h3>
+        <p class="text-sm text-slate-500 mb-6">
+          Tell us what you need and we’ll respond within 24 hours.
+        </p>
 
         <div class="space-y-5">
-          <input
-            type="text"
-            placeholder="Full name"
-            class="w-full rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500"
-          />
+          <div>
+            <label
+              for="contact-name"
+              class="text-sm font-semibold text-slate-700"
+              >Full name</label
+            >
+            <input
+              id="contact-name"
+              type="text"
+              placeholder="e.g. Jane Doe"
+              class="mt-2 w-full rounded-xl border-slate-200 focus:border-orange-500 focus:ring-orange-500"
+            />
+          </div>
 
-          <input
-            type="email"
-            placeholder="Email address"
-            class="w-full rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500"
-          />
+          <div>
+            <label
+              for="contact-email"
+              class="text-sm font-semibold text-slate-700"
+              >Email address</label
+            >
+            <input
+              id="contact-email"
+              type="email"
+              placeholder="you@example.com"
+              class="mt-2 w-full rounded-xl border-slate-200 focus:border-orange-500 focus:ring-orange-500"
+            />
+          </div>
 
-          <input
-            type="text"
-            placeholder="Subject"
-            class="w-full rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500"
-          />
+          <div>
+            <label
+              for="contact-subject"
+              class="text-sm font-semibold text-slate-700"
+              >Subject</label
+            >
+            <input
+              id="contact-subject"
+              type="text"
+              placeholder="Booking support"
+              class="mt-2 w-full rounded-xl border-slate-200 focus:border-orange-500 focus:ring-orange-500"
+            />
+          </div>
 
-          <textarea
-            rows="5"
-            placeholder="Tell us how we can help"
-            class="w-full rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500"
-          ></textarea>
+          <div>
+            <label
+              for="contact-message"
+              class="text-sm font-semibold text-slate-700"
+              >Message</label
+            >
+            <textarea
+              id="contact-message"
+              rows="5"
+              placeholder="Tell us how we can help"
+              class="mt-2 w-full rounded-xl border-slate-200 focus:border-orange-500 focus:ring-orange-500"
+            ></textarea>
+          </div>
         </div>
 
         <button
