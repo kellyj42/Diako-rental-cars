@@ -1,13 +1,14 @@
+import logging
+
 from django.conf import settings
-from django.core.mail import EmailMultiAlternatives
 from django.urls import reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 from content.content import contact_info
 from userAuth.tokens import email_verification_token
-
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -60,26 +61,22 @@ def send_verification_email(request, user):
         </div>
     """
 
-    if not settings.EMAIL_HOST_USER or not settings.EMAIL_HOST_PASSWORD:
+    if not settings.SENDGRID_API_KEY:
         logger.warning(
-            "SMTP email credentials are not configured. Verification email not sent for user %s. Verification link: %s",
+            "SENDGRID_API_KEY is not configured. Verification email not sent for user %s. Verification link: %s",
             user.email,
             verification_link,
         )
         return False
 
     try:
-        message = EmailMultiAlternatives(
-            subject="Verify your email address",
-            body=(
-                "Verify your email to complete your account setup.\n\n"
-                f"Open this link: {verification_link}"
-            ),
+        message = Mail(
             from_email=settings.DEFAULT_FROM_EMAIL,
-            to=[user.email],
+            to_emails=user.email,
+            subject="Verify your email address",
+            html_content=html_content,
         )
-        message.attach_alternative(html_content, "text/html")
-        message.send()
+        SendGridAPIClient(settings.SENDGRID_API_KEY).send(message)
         return True
     except Exception:
         logger.exception(
