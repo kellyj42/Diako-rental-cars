@@ -165,22 +165,21 @@ Rentals{% endblock %} {% block content %}
               <div class="grid grid-cols-3 gap-4 mt-6">
                 <div class="text-center">
                   <div class="text-lg font-bold text-blue-600">
-                    {{ user.profile.total_bookings|default:"0" }}
+                    {{ total_bookings|default:"0" }}
                   </div>
                   <div class="text-xs text-gray-500 font-medium">Bookings</div>
                 </div>
 
                 <div class="text-center">
                   <div class="text-lg font-bold text-green-600">
-                    {{ user.profile.completed_bookings|default:"0" }}
+                    {{ completed_bookings|default:"0" }}
                   </div>
                   <div class="text-xs text-gray-500 font-medium">Completed</div>
                 </div>
 
                 <div class="text-center">
                   <div class="text-lg font-bold text-purple-600">
-                    {% if user.profile.member_since %} {{
-                    user.profile.member_since }} {% else %} New {% endif %}
+                    {{ user.date_joined|date:"Y" }}
                   </div>
                   <div class="text-xs text-gray-500 font-medium">Level</div>
                 </div>
@@ -418,29 +417,28 @@ Rentals{% endblock %} {% block content %}
                   <div class="grid grid-cols-2 gap-4">
                     <div class="bg-blue-50 p-4 rounded-xl">
                       <div class="text-2xl font-bold text-blue-600 mb-1">
-                        {{ user.profile.total_bookings|default:"0" }}
+                        {{ total_bookings|default:"0" }}
                       </div>
                       <p class="text-sm text-gray-600">Total Bookings</p>
                     </div>
 
                     <div class="bg-green-50 p-4 rounded-xl">
                       <div class="text-2xl font-bold text-green-600 mb-1">
-                        {{ user.profile.completed_bookings|default:"0" }}
+                        {{ completed_bookings|default:"0" }}
                       </div>
                       <p class="text-sm text-gray-600">Completed</p>
                     </div>
 
                     <div class="bg-purple-50 p-4 rounded-xl">
                       <div class="text-2xl font-bold text-purple-600 mb-1">
-                        {{ user.profile.upcoming_bookings|default:"0" }}
+                        {{ upcoming_bookings|default:"0" }}
                       </div>
                       <p class="text-sm text-gray-600">Upcoming</p>
                     </div>
 
                     <div class="bg-orange-50 p-4 rounded-xl">
                       <div class="text-2xl font-bold text-orange-600 mb-1">
-                        {% if user.profile.member_since %} {{
-                        user.profile.member_since }} {% else %} New {% endif %}
+                        {{ user.date_joined|date:"Y" }}
                       </div>
                       <p class="text-sm text-gray-600">Member Level</p>
                     </div>
@@ -489,7 +487,7 @@ Rentals{% endblock %} {% block content %}
                         >Last Password Change</span
                       >
                       <span class="text-sm text-gray-600">
-                        {{ user.profile.last_password_change|default:"Never" }}
+                        Protected by your current account password
                       </span>
                     </div>
                   </div>
@@ -548,7 +546,7 @@ Rentals{% endblock %} {% block content %}
                 </p>
               </div>
               <a
-                href="#"
+                href="{% url 'bookings:booking_history' %}"
                 class="text-blue-600 hover:text-blue-800 font-semibold text-sm flex items-center gap-2"
               >
                 View All
@@ -572,13 +570,13 @@ Rentals{% endblock %} {% block content %}
                   </div>
                   <div>
                     <h4 class="font-semibold text-gray-900">
-                      {{ booking.car_model }}
+                      {{ booking.car.display_name }}
                     </h4>
                     <p class="text-sm text-gray-500">
-                      {{ booking.pickup_date }} - {{ booking.return_date }}
+                      {{ booking.pick_up_date|date:"M d, Y" }} - {{ booking.drop_off_date|date:"M d, Y" }}
                     </p>
                     <span
-                      class="inline-block mt-1 px-2 py-1 text-xs font-semibold rounded-full {% if booking.status == 'confirmed' %}bg-green-100 text-green-800 {% elif booking.status == 'pending' %}bg-yellow-100 text-yellow-800 {% elif booking.status == 'cancelled' %}bg-red-100 text-red-800 {% else %}bg-gray-100 text-gray-800{% endif %}"
+                      class="inline-block mt-1 px-2 py-1 text-xs font-semibold rounded-full {% if booking.status == 'confirmed' %}bg-green-100 text-green-800 {% elif booking.status == 'draft' %}bg-yellow-100 text-yellow-800 {% elif booking.status == 'cancelled' %}bg-red-100 text-red-800 {% elif booking.status == 'completed' %}bg-blue-100 text-blue-800 {% else %}bg-gray-100 text-gray-800{% endif %}"
                     >
                       {{ booking.status|title }}
                     </span>
@@ -586,10 +584,10 @@ Rentals{% endblock %} {% block content %}
                 </div>
                 <div class="text-right">
                   <div class="text-lg font-bold text-gray-900">
-                    ${{ booking.total_price }}
+                    ${{ booking.get_total_price|floatformat:2 }}
                   </div>
                   <a
-                    href="#"
+                    href="{% url 'bookings:booking_details' booking.id %}"
                     class="text-sm text-blue-600 hover:text-blue-800 group-hover:underline"
                   >
                     View Details
@@ -614,7 +612,7 @@ Rentals{% endblock %} {% block content %}
                 Rentals and experience premium car rentals.
               </p>
               <a
-                href="#"
+                href="{% url 'cars:car_list' %}"
                 class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 <i class="fas fa-car"></i>

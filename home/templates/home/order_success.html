@@ -4,6 +4,29 @@ Confirmed-Daiko Travel Agency{% endblock %} {% block content %}
   class="min-h-screen bg-linear-to-b from-blue-50 to-white py-12 lg:py-16"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="hidden print:block print-summary">
+      <h1 class="text-2xl font-bold text-gray-900">Booking Summary</h1>
+      <p class="mt-2 text-sm text-gray-600">Reference: {{ booking_reference }}</p>
+      <div class="mt-6 grid grid-cols-2 gap-4 text-sm">
+        <div>
+          <p class="font-semibold text-gray-900">Vehicle</p>
+          <p>{{ car.display_name }}{% if car.year %} {{ car.year }}{% endif %}</p>
+          <p>{{ car.seats }} seats</p>
+        </div>
+        <div>
+          <p class="font-semibold text-gray-900">Pick-up</p>
+          <p>{{ booking.pick_up_location }}</p>
+          <p>{{ booking.pick_up_date|date:"M d, Y" }} at {{ booking.pick_up_time|time:"g:i A" }}</p>
+        </div>
+        <div>
+          <p class="font-semibold text-gray-900">Drop-off</p>
+          <p>{{ booking.drop_off_location }}</p>
+          <p>{{ booking.drop_off_date|date:"M d, Y" }} at {{ booking.drop_off_time|time:"g:i A" }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="print:hidden">
     <!-- Success Confirmation -->
     <div class="text-center mb-12">
       <div class="flex justify-center mb-6">
@@ -134,8 +157,10 @@ Confirmed-Daiko Travel Agency{% endblock %} {% block content %}
                 </div>
                 <div class="md:w-2/3">
                   <h4 class="text-xl font-bold text-gray-900">
-                    {{ car.display_name }} {% if car.year %} {{ car.year }} {%
-                    endif %}
+                    {{ car.display_name }}
+                    {% if car.year %}
+                      {{ car.year }}
+                    {% endif %}
                   </h4>
                   <div class="flex items-center mt-2 mb-4">
                     <div class="flex text-orange-400">
@@ -239,8 +264,11 @@ Confirmed-Daiko Travel Agency{% endblock %} {% block content %}
                 <div>
                   <p class="text-sm text-gray-500">Phone</p>
                   <p class="font-medium">
-                    {% if phone %} {{ phone }} {% else %} Not provided {%
-                    endif%}
+                    {% if phone %}
+                      {{ phone }}
+                    {% else %}
+                      Not provided
+                    {% endif %}
                   </p>
                 </div>
                 <div>
@@ -251,6 +279,12 @@ Confirmed-Daiko Travel Agency{% endblock %} {% block content %}
                   <p class="text-sm text-gray-500">Booking ID</p>
                   <p class="font-mono font-bold text-blue-600">
                     {{ booking_reference }}
+                  </p>
+                </div>
+                <div>
+                  <p class="text-sm text-gray-500">Driver</p>
+                  <p class="font-medium">
+                    {% if booking.driver_required %}Requested{% else %}No driver requested{% endif %}
                   </p>
                 </div>
               </div>
@@ -353,16 +387,18 @@ Confirmed-Daiko Travel Agency{% endblock %} {% block content %}
                 >Daily Rate ({{ rental_days }}
                 day{{rental_days|pluralize}})</span
               >
-              <span class="font-medium"> ${{ daily_rate|floatformat:2 }}</span>
+              <span class="font-medium"> UGX {{ daily_rate|floatformat:2 }}</span>
             </div>
 
             <div class="flex justify-between">
               <span class="text-gray-600">Driver Service</span>
-              <span class="font-medium">$0.00</span>
+              <span class="font-medium">
+                {% if booking.driver_required %}Requested{% else %}No driver{% endif %}
+              </span>
             </div>
 
             <div class="flex justify-between">
-              <span class="text-gray-600">Insurance</span>
+              <span class="text-gray-600">Fuel</span>
               <span class="text-green-600 font-medium">Included</span>
             </div>
 
@@ -371,7 +407,7 @@ Confirmed-Daiko Travel Agency{% endblock %} {% block content %}
             <div class="flex justify-between text-lg font-bold">
               <span>Estimated Total</span>
               <span class="text-blue-700"
-                >${{ estimate_total|floatformat:2 }}</span
+                >UGX {{ estimate_total|floatformat:2 }}</span
               >
             </div>
 
@@ -386,26 +422,29 @@ Confirmed-Daiko Travel Agency{% endblock %} {% block content %}
           <h3 class="text-lg font-bold text-gray-900 mb-4">Next Steps</h3>
 
           <div class="space-y-3">
-            <button
-              class="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl hover:bg-blue-700 transition-colors"
+            <a
+              href="javascript:window.print()"
+              class="block w-full bg-blue-600 text-white font-semibold py-3 rounded-xl hover:bg-blue-700 transition-colors text-center"
             >
               <i class="fas fa-download mr-2"></i>
               Download Booking Summary
-            </button>
+            </a>
 
-            <button
-              class="w-full border-2 border-blue-600 text-blue-600 font-semibold py-3 rounded-xl hover:bg-blue-50 transition-colors"
+            <a
+              href="{% url 'bookings:booking_details' booking.id %}"
+              class="block w-full border-2 border-blue-600 text-blue-600 font-semibold py-3 rounded-xl hover:bg-blue-50 transition-colors text-center"
             >
               <i class="fas fa-edit mr-2"></i>
-              Modify Booking
-            </button>
+              View Booking Details
+            </a>
 
-            <button
-              class="w-full border-2 border-gray-300 text-gray-700 font-semibold py-3 rounded-xl hover:bg-gray-50 transition-colors"
+            <a
+              href="{% url 'home:home' %}"
+              class="block w-full border-2 border-gray-300 text-gray-700 font-semibold py-3 rounded-xl hover:bg-gray-50 transition-colors text-center"
             >
               <i class="fas fa-home mr-2"></i>
               Back to Homepage
-            </button>
+            </a>
           </div>
 
           <div
@@ -450,6 +489,40 @@ Confirmed-Daiko Travel Agency{% endblock %} {% block content %}
         </div>
       </div>
     </div>
+    </div>
   </div>
 </section>
+<style>
+  @media print {
+    body {
+      background: #fff !important;
+      color: #111827 !important;
+    }
+
+    .print-summary {
+      display: block !important;
+    }
+
+    a,
+    button,
+    img,
+    .fa,
+    .fas,
+    .far,
+    .fab {
+      display: none !important;
+    }
+
+    section,
+    .max-w-7xl,
+    .print-summary {
+      max-width: none !important;
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      box-shadow: none !important;
+      background: #fff !important;
+    }
+  }
+</style>
 {% endblock %}

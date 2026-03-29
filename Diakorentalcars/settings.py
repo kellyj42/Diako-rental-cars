@@ -14,35 +14,53 @@ import os
 from pathlib import Path
 import dj_database_url
 
+# âœ… Load environment variables from .env file
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # python-dotenv not required, but .env will be ignored
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# âœ… FIX #7: Use environment variable, validate SECRET_KEY
+SECRET_KEY = os.getenv('SECRET_KEY', '')
+if not SECRET_KEY or SECRET_KEY == 'default-dev-key' or SECRET_KEY == 'replace-me':
+    raise ValueError(
+        'âŒ CRITICAL: SECRET_KEY not configured in environment!\n'
+        'Generate a secure key and add it to .env file:\n'
+        'python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"'
+    )
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
+# âœ… FIX #5: DEBUG from environment, default to False (safe)
+DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 'yes')
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv(
-    "SECRET_KEY",
-    "django-insecure-9skewqghma(6m(mi$tobf0-q68^1c12602s*5mw7d!jrcog&w(",
-)
+# âœ… FIX #6: ALLOWED_HOSTS from environment, properly configured
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS]
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.getenv("DEBUG", "False") == "True"
-DEBUG = True
-ALLOWED_HOSTS = ["*"]
+# âœ… CSRF & Security headers
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost:8000').split(',')
+CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in CSRF_TRUSTED_ORIGINS]
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://diakorentalcars-production.up.railway.app",
-]
+# âœ… FIX #5, #6, #19: Security cookie settings
+CSRF_COOKIE_SECURE = not DEBUG  # Only secure in production
+CSRF_COOKIE_HTTPONLY = True  # Prevent JS access
+CSRF_COOKIE_SAMESITE = 'Lax'
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = not DEBUG
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 3600  # 1 hour
 
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-
-CSRF_COOKIE_SAMESITE = "Lax"
-SESSION_COOKIE_SAMESITE = "Lax"
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
 
 
 
@@ -57,6 +75,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 
     # Tailwind
     'tailwind',
@@ -80,6 +104,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -111,6 +136,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'bookings.context_processors.pending_bookings_count',
                 'content.context_processors.contact_info_processor',
+                'userAuth.context_processors.google_oauth_processor',
             ],
         },
     },
@@ -154,7 +180,31 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Auth redirects
 LOGIN_URL = "userAuth:login"
-LOGIN_REDIRECT_URL = "dashboard:home"
+LOGIN_REDIRECT_URL = "home:home"
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_LOGIN_METHODS = {'email'}
+ACCOUNT_SIGNUP_FIELDS = ['email*']
+
+SOCIALACCOUNT_LOGIN_ON_GET = True
+SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+        'APP': {
+            'client_id': os.getenv('GOOGLE_CLIENT_ID', ''),
+            'secret': os.getenv('GOOGLE_CLIENT_SECRET', ''),
+            'key': '',
+        },
+    }
+}
 
 
 # Internationalization
@@ -184,7 +234,32 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
-DEFAULT_FROM_EMAIL = "kellyjnambale@gmail.com"
+# âœ… FIX #19: Use environment variable instead of hardcoded personal email
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "noreply@diakorentalcars.com")
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+# Logging Configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'debug.log',
+        },
+    },
+    'root': {
+        'handlers': ['console', 'file'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        'django': {
+            'level': 'INFO' if DEBUG else 'WARNING',
+        },
+    },
+}
 

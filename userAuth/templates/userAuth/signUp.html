@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
+{% load socialaccount %}
 {% block title %}Sign Up - Daiko Rental Cars{% endblock %}
 
 {% block content %}
+{% include "includes/mobile_nav.html" %}
 <div class="min-h-[80vh] flex items-center justify-center bg-linear-to-br from-blue-50 via-white to-orange-50 py-8 px-4">
   <div class="w-full max-w-4xl">
 
@@ -15,7 +17,9 @@
           <div class="bg-linear-to-r from-orange-400 to-orange-500 h-2"></div>
 
           <div class="p-8">
-            <!-- {% include "userAuth/includes/signup/_social_signup.html" %} -->
+            {% if google_oauth_enabled %}
+            {% include "userAuth/includes/signup/_social_signup.html" %}
+            {% endif %}
             {% include "userAuth/includes/signup/_email_divider.html" %}
             {% include "userAuth/includes/signup/_signup_form.html" %}
             {% include "userAuth/includes/signup/_login_link.html" %}

@@ -58,22 +58,32 @@ vehicles = [
         {
             "icon": "fa-van-shuttle",
             "name": "Vans",
-           
+            "image": "home/images/showroom/Van.png",
+            "description": "Ideal for airport transfers, group travel, and family road trips.",
         },
         {
             "icon": "fa-car",
             "name": "Sedans",
-           
+            "image": "home/images/showroom/Sedan.png",
+            "description": "Comfortable city and business travel with everyday convenience.",
         },
         {
             "icon": "fa-truck-monster",
             "name": "SUVs",
-            
+            "image": "home/images/showroom/SUV.png",
+            "description": "Spacious, confident handling for upcountry roads and longer journeys.",
+        },
+        {
+            "icon": "fa-bus",
+            "name": "Coasters",
+            "image": "home/images/showroom/Coaster.png",
+            "description": "Best for tours, team travel, events, and larger group transport.",
         },
         
     ]
 nav_links = [
     {"name": "Home", "url": "home:home"},
+    {"name": "Cars", "url": "cars:car_list"},
     {"name": "Services", "url": "home:services"},
     {"name": "Contact Us", "url": "home:contact"},
     {

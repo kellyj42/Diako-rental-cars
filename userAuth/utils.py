@@ -6,6 +6,9 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from userAuth.tokens import email_verification_token
 from content.content import contact_info
+import logging
+
+logger = logging.getLogger(__name__)
 
 def send_verification_email(request, user):
     token = email_verification_token.make_token(user)
@@ -59,5 +62,22 @@ def send_verification_email(request, user):
         """,
     )
 
-    sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
-    sg.send(message)
+    if not settings.SENDGRID_API_KEY:
+        logger.warning(
+            "SENDGRID_API_KEY is not configured. Verification email not sent for user %s. Verification link: %s",
+            user.email,
+            verification_link,
+        )
+        return False
+
+    try:
+        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+        sg.send(message)
+        return True
+    except Exception:
+        logger.exception(
+            "Failed to send verification email for user %s. Verification link: %s",
+            user.email,
+            verification_link,
+        )
+        return False

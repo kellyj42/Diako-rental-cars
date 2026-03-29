@@ -7,7 +7,7 @@
         Vehicle <span class="text-orange-400">Categories</span>
       </h2>
       <p class="text-gray-600">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+        Choose the category that matches your trip style, then continue to the available cars.
       </p>
     </div>
 
@@ -48,43 +48,35 @@
           <!-- Vehicle Card -->
           <div class="shrink-0 w-80 md:w-96">
             <div
-              class="group bg-white border border-gray-200 rounded-xl overflow-hidden shadow-md transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-xl hover:border-orange-400 h-full"
+              class="group h-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-md transition-all duration-300 ease-out hover:-translate-y-2 hover:border-orange-400 hover:shadow-xl"
             >
-              <!-- Image -->
-              <div class="overflow-hidden bg-gray-100">
-                <div class="flex items-center justify-center py-6">
-                  <i class="fas {{ car.icon }} text-5xl text-blue-950"></i>
+              <div class="relative overflow-hidden bg-gradient-to-br from-slate-100 via-white to-orange-50">
+                <img
+                  src="{% static car.image %}"
+                  alt="{{ car.name }}"
+                  class="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div class="absolute right-4 top-4 inline-flex h-14 w-14 items-center justify-center rounded-full bg-orange-400 text-white shadow-lg transition-transform duration-300 group-hover:scale-110">
+                  <i class="fas {{ car.icon }} text-lg"></i>
                 </div>
               </div>
 
               <div class="p-6">
-                <!-- Title -->
                 <h4
                   class="text-xl font-semibold text-gray-900 mb-2 transition-colors duration-300 group-hover:text-orange-500"
                 >
                   {{ car.name }}
                 </h4>
 
-                <!-- Rating -->
-                <div class="flex items-center gap-2 mb-4 text-sm text-gray-600">
-                  <span>{{ car.rating }} Review</span>
-                  <div class="flex text-orange-400">
-                    {% for i in "12345" %}
-                    <i
-                      class="fas fa-star {% if forloop.counter > car.rating|floatformat:0 %}text-gray-300{% endif %}"
-                    ></i>
-                    {% endfor %}
-                  </div>
-                </div>
+                <p class="mb-5 text-sm leading-6 text-gray-600">
+                  {{ car.description }}
+                </p>
 
-                <!-- Specs -->
-
-                <!-- Button -->
                 <a
-                  href="#"
+                  href="{% url 'cars:car_list' %}"
                   class="block text-center bg-orange-400 text-white font-semibold py-3 rounded-xl transition-colors duration-300 hover:bg-orange-500"
                 >
-                  Book Now
+                  Explore {{ car.name }}
                 </a>
               </div>
             </div>

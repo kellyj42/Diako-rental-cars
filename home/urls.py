@@ -14,4 +14,6 @@ urlpatterns = [
     path('about-us/careers/', views.careers_view, name='careers'),
     path('faqs/', views.faqs_view, name='faqs'),
     path('contact/', views.contact_view, name='contact'),
+    path('terms-and-conditions/', views.terms_view, name='terms'),
+    path('privacy-policy/', views.privacy_view, name='privacy'),
 ]

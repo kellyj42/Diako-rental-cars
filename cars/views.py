@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.db.models import ProtectedError
 from cars.models import Car, CarCategory, CarRate, TripType
 from .forms import CarForm
 from dashboard.decorators import admin_required
@@ -59,7 +61,14 @@ def car_delete_view(request, car_id):
     car = get_object_or_404(Car, id=car_id)
 
     if request.method == "POST":
-        car.delete()
+        try:
+            car.delete()
+            messages.success(request, "Car deleted successfully.")
+        except ProtectedError:
+            messages.error(
+                request,
+                "This car cannot be deleted because it has existing bookings."
+            )
         return redirect("cars:car_manage_list")
 
     return render(request, "cars/car_confirm_delete.html", {"car": car})

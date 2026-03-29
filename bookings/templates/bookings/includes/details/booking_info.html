@@ -88,28 +88,18 @@
                     <div class="flex-1">
                       <p class="font-medium">Driver Option</p>
                       <p class="text-sm text-gray-600">
+                        {% if booking.driver_required %}
                         With Professional Driver
+                        {% else %}
+                        Self-drive booking
+                        {% endif %}
                       </p>
                     </div>
-                    <span class="text-green-600 font-semibold">Included</span>
+                    <span class="{% if booking.driver_required %}text-green-600{% else %}text-gray-500{% endif %} font-semibold">
+                      {% if booking.driver_required %}Requested{% else %}Not needed{% endif %}
+                    </span>
                   </div>
 
-                  <div
-                    class="flex items-center bg-white p-4 rounded-lg border border-gray-200"
-                  >
-                    <div class="mr-4">
-                      <div
-                        class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center"
-                      >
-                        <i class="fas fa-shield-alt text-green-600"></i>
-                      </div>
-                    </div>
-                    <div class="flex-1">
-                      <p class="font-medium">Insurance</p>
-                      <p class="text-sm text-gray-600">Full Coverage</p>
-                    </div>
-                    <span class="text-green-600 font-semibold">Included</span>
-                  </div>
                 </div>
               </div>
             </div>

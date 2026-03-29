@@ -2,46 +2,41 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     // Mobile sidebar toggle
-    const mobileMenuToggle = document.getElementById("mobileMenuToggle");
-    const sidebarToggle = document.getElementById("sidebarToggle");
     const sidebar = document.querySelector("aside");
+    const mobileMenuToggle = document.getElementById("mobileMenuToggle");
 
-    mobileMenuToggle.addEventListener("click", function () {
-      sidebar.classList.toggle("-translate-x-64");
-    });
+    if (mobileMenuToggle && sidebar) {
+      mobileMenuToggle.addEventListener("click", function () {
+        sidebar.classList.toggle("-translate-x-64");
+      });
+    }
 
-    sidebarToggle.addEventListener("click", function () {
-      sidebar.classList.toggle("-translate-x-64");
-    });
-
-    // Navigation between sections
+    // Navigation between sections (if present)
     const navItems = document.querySelectorAll(".nav-item");
     const sections = document.querySelectorAll(".dashboard-section");
 
-    navItems.forEach((item) => {
-      item.addEventListener("click", function (e) {
-        e.preventDefault();
+    if (navItems.length && sections.length) {
+      navItems.forEach((item) => {
+        item.addEventListener("click", function (e) {
+          e.preventDefault();
 
-        // Remove active class from all nav items
-        navItems.forEach((nav) => nav.classList.remove("active"));
+          navItems.forEach((nav) => nav.classList.remove("active"));
+          this.classList.add("active");
 
-        // Add active class to clicked nav item
-        this.classList.add("active");
+          sections.forEach((section) => section.classList.add("hidden"));
 
-        // Hide all sections
-        sections.forEach((section) => section.classList.add("hidden"));
+          const sectionId = this.getAttribute("data-section");
+          const activeSection = document.getElementById(sectionId);
+          if (activeSection) {
+            activeSection.classList.remove("hidden");
+          }
 
-        // Show the selected section
-        const sectionId = this.getAttribute("data-section");
-        const activeSection = document.getElementById(sectionId);
-        activeSection.classList.remove("hidden");
-
-        // Close sidebar on mobile after selection
-        if (window.innerWidth < 1024) {
-          sidebar.classList.add("-translate-x-64");
-        }
+          if (window.innerWidth < 1024 && sidebar) {
+            sidebar.classList.add("-translate-x-64");
+          }
+        });
       });
-    });
+    }
 
     // Notification dropdown
     const notificationBtn = document.getElementById("notificationBtn");

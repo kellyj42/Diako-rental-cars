@@ -97,3 +97,34 @@ def contact_view(request):
     return render(request, 'home/contact.html', {
         "nav_links": nav_links,
     })
+
+def terms_view(request):
+    return render(request, 'home/terms.html', {
+        "nav_links": nav_links,
+    })
+
+def privacy_view(request):
+    return render(request, 'home/privacy.html', {
+        "nav_links": nav_links,
+    })
+
+
+# ✅ FIX #2: Error handlers for 404 and 500
+def handler404(request, exception=None):
+    """Handle 404 Not Found errors"""
+    return render(
+        request,
+        'errors/404.html',
+        {'status_code': 404},
+        status=404
+    )
+
+
+def handler500(request):
+    """Handle 500 Internal Server Error"""
+    return render(
+        request,
+        'errors/500.html',
+        {'status_code': 500},
+        status=500
+    )

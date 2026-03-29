@@ -1,0 +1,98 @@
+{% load static %}
+<nav class="mobile-nav bg-white shadow-lg relative z-50 mb-4">
+  <div class="flex items-center justify-between p-4">
+    <img
+      src="{% static 'home/images/image.png' %}"
+      alt="Diako Rentals logo"
+      style="width: 150px"
+    />
+
+    <button
+      id="menu-btn"
+      type="button"
+      class="text-2xl text-gray-700"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="hidden space-y-4 px-4 pb-4">
+    {% for link in nav_links %}
+    <div>
+      <a href="{% url link.url %}" class="block py-2 font-medium text-gray-700">
+        {{ link.name }}
+      </a>
+
+      {% if link.children %}
+      <div class="ml-4 mt-2 space-y-2">
+        {% for child in link.children %}
+        <a href="{% url child.url %}" class="block text-sm text-gray-600 hover:text-orange-500">
+          - {{ child.name }}
+        </a>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    <div class="border-t pt-4">
+      {% if user.is_authenticated %}
+      <p class="font-semibold text-gray-700">
+        {{ user.first_name|default:user.username }}
+      </p>
+
+      <a href="{% url 'bookings:booking_history' %}" class="block py-2 text-gray-700">
+        My Bookings
+      </a>
+
+      <a href="{% url 'userAuth:profile' %}" class="block py-2 text-gray-700">
+        Profile
+      </a>
+
+      {% if user.is_staff %}
+      <a href="{% url 'dashboard:home' %}" class="block py-2 font-semibold text-orange-500">
+        Admin Dashboard
+      </a>
+      {% endif %}
+
+      <form method="post" action="{% url 'userAuth:logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="w-full py-2 text-left text-red-600">
+          Logout
+        </button>
+      </form>
+      {% else %}
+      <a href="{% url 'userAuth:login' %}" class="block py-2 text-gray-700">
+        Login
+      </a>
+
+      <a href="{% url 'userAuth:signup' %}" class="block rounded-md bg-orange-400 py-2 text-center text-white">
+        Sign Up
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+<style>
+  @media (min-width: 768px) {
+    .mobile-nav {
+      display: none !important;
+    }
+  }
+</style>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const menuButton = document.getElementById("menu-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    if (!menuButton || !mobileMenu) return;
+
+    menuButton.addEventListener("click", function () {
+      const isOpen = !mobileMenu.classList.contains("hidden");
+      mobileMenu.classList.toggle("hidden");
+      menuButton.setAttribute("aria-expanded", String(!isOpen));
+    });
+  });
+</script>

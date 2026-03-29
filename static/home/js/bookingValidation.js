@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const form = document.querySelector("form");
+  const form = document.getElementById("bookingForm");
   if (!form) return;
 
   const errorBox = document.getElementById("jsErrorBox");
   const errorList = document.getElementById("jsErrorList");
 
-  const textPattern = /^[A-Za-z\s\-\.,']+$/;
+  const textPattern = /^[A-Za-z0-9\s\-\.,#']+$/;
 
   const pickUp = form.pick_up_location;
   const dropOff = form.drop_off_location;
@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const pickTime = form.pick_up_time;
   const dropTime = form.drop_off_time;
   const agree = form.agree_terms;
+  let isSubmitting = false;
 
   const fieldsToHighlight = [pickUp, dropOff, pickDate, dropDate];
 
@@ -24,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function showErrors(errors) {
     errorList.innerHTML = "";
 
-    errors.forEach(msg => {
+    errors.forEach((msg) => {
       const li = document.createElement("li");
       li.textContent = msg;
       errorList.appendChild(li);
@@ -39,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
     errorBox.classList.add("hidden");
 
     // remove red borders
-    fieldsToHighlight.forEach(el => {
+    fieldsToHighlight.forEach((el) => {
       if (!el) return;
       el.classList.remove("border-red-500");
     });
@@ -56,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // remove red border while user types
-  fieldsToHighlight.forEach(el => {
+  fieldsToHighlight.forEach((el) => {
     if (!el) return;
     el.addEventListener("input", () => markValid(el));
   });
@@ -65,7 +66,12 @@ document.addEventListener("DOMContentLoaded", function () {
   // SUBMIT VALIDATION
   // -------------------------
 
-  form.addEventListener("submit", function (e) {
+  form.addEventListener("submit", async function (e) {
+    if (isSubmitting) {
+      e.preventDefault();
+      return false;
+    }
+
     clearErrors();
 
     const errors = [];
@@ -75,12 +81,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // ---------- LOCATION ----------
     if (!textPattern.test(pickVal) || pickVal.length < 3) {
-      errors.push("Pickup location must be at least 3 alphabetic characters.");
+      errors.push(
+        "Pickup location must be at least 3 characters and may include numbers, commas, or landmark details.",
+      );
       markInvalid(pickUp);
     }
 
     if (!textPattern.test(dropVal) || dropVal.length < 3) {
-      errors.push("Drop-off location must be at least 3 alphabetic characters.");
+      errors.push(
+        "Drop-off location must be at least 3 characters and may include numbers, commas, or landmark details.",
+      );
       markInvalid(dropOff);
     }
 
@@ -118,9 +128,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // ---------- TERMS ----------
-    if (!agree.checked) {
-      errors.push("You must accept the Terms & Conditions.");
-    }
+    // Terms are checked on confirm, not on form submit
+    // if (agree && !agree.checked) {
+    //   errors.push("You must accept the Terms & Conditions.");
+    // }
 
     // ---------- RESULT ----------
     if (errors.length) {
@@ -134,6 +145,32 @@ document.addEventListener("DOMContentLoaded", function () {
       return false;
     }
 
-    return true;
+    e.preventDefault();
+    isSubmitting = true;
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+        },
+        body: new FormData(form),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.redirect_url) {
+        window.location.href = data.redirect_url;
+        return true;
+      }
+
+      showErrors(data.errors || ["We could not create the booking right now. Please try again."]);
+    } catch (error) {
+      showErrors(["We could not create the booking right now. Please check your details and try again."]);
+    } finally {
+      isSubmitting = false;
+    }
+
+    return false;
   });
 });

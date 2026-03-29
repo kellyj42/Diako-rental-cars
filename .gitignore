@@ -86,6 +86,7 @@ build/
 coverage.xml
 htmlcov/
 .ropeproject/
+debug.log
 
 # Tailwind / theme app
 # Ignore node modules used for building Tailwind

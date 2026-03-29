@@ -8,13 +8,17 @@ from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode, url_has_allowed_host_and_scheme
 from django.urls import reverse
 from urllib.parse import urlencode
+from django.views.decorators.http import require_http_methods
 from .forms import SignUpForm, UserManageForm
 from .models import Profile
 from .utils import send_verification_email
 from dashboard.decorators import admin_required
+from bookings.models import Booking
 
 
 # Create your views here.
+AUTH_MESSAGE_TAG = "auth"
+
 
 def login_view(request):
     next_url = request.POST.get("next") or request.GET.get("next") or request.session.get("auth_next")
@@ -30,8 +34,14 @@ def login_view(request):
 
         if user:
             if not user.profile.is_verified:
-                messages.warning(request, "Please verify your email before logging in.")
-                send_verification_email(request, user)
+                messages.warning(request, "Please verify your email before logging in.", extra_tags=AUTH_MESSAGE_TAG)
+                email_sent = send_verification_email(request, user)
+                if not email_sent:
+                    messages.info(
+                        request,
+                        "We could not send the verification email right now. Please try again later or contact support.",
+                        extra_tags=AUTH_MESSAGE_TAG,
+                    )
                 return redirect("userAuth:email_verification")
             
             if user.is_staff:
@@ -46,11 +56,9 @@ def login_view(request):
                 return redirect(redirect_to)
             return redirect("home:home")
 
-        messages.error(request, "Invalid email or password.")
+        messages.error(request, "Invalid email or password.", extra_tags=AUTH_MESSAGE_TAG)
 
     return render(request, "userAuth/login.html", {"next": next_url})
-
-from .utils import send_verification_email
 
 def signup_view(request):
     next_url = request.POST.get("next") or request.GET.get("next")
@@ -67,7 +75,19 @@ def signup_view(request):
             profile.save()
             request.session["verify_user_id"] = user.id
             request.session["verify_email"] = user.email
-            send_verification_email(request, user)
+            email_sent = send_verification_email(request, user)
+            if email_sent:
+                messages.success(
+                    request,
+                    "Account created. We have sent a verification email to continue.",
+                    extra_tags=AUTH_MESSAGE_TAG,
+                )
+            else:
+                messages.warning(
+                    request,
+                    "Account created, but we could not send the verification email right now. You can try resending it from the verification page.",
+                    extra_tags=AUTH_MESSAGE_TAG,
+                )
             return redirect("userAuth:email_verification")  
 
     else:
@@ -105,18 +125,20 @@ def verify_email_view(request, uidb64, token):
         user = None
 
     if not user:
-        print("VERIFY: user not found")
-        messages.error(request, "Invalid verification link.")
+        messages.error(request, "Invalid verification link.", extra_tags=AUTH_MESSAGE_TAG)
         return redirect("userAuth:email_verification")
 
-    token = email_verification_token.make_token(user)
-    print("VERIFY TOKEN RESULT:", token)
-
-    if token:
+    if email_verification_token.check_token(user, token):
         profile = user.profile
 
         if profile.is_verified:
-            messages.info(request, "Your email is already verified. You can now enter your login details")
+            request.session.pop("verify_user_id", None)
+            request.session.pop("verify_email", None)
+            messages.info(
+                request,
+                "Your email is already verified. You can now enter your login details",
+                extra_tags=AUTH_MESSAGE_TAG,
+            )
             next_url = request.session.get("auth_next")
             login_url = reverse("userAuth:login")
             if next_url and url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
@@ -125,25 +147,55 @@ def verify_email_view(request, uidb64, token):
 
         profile.is_verified = True
         profile.save()
+        request.session.pop("verify_user_id", None)
+        request.session.pop("verify_email", None)
 
-        messages.success(request, "Your email has been verified successfully.")
+        messages.success(request, "Your email has been verified successfully.", extra_tags=AUTH_MESSAGE_TAG)
         next_url = request.session.get("auth_next")
         login_url = reverse("userAuth:login")
         if next_url and url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
             return redirect(f"{login_url}?{urlencode({'next': next_url})}")
         return redirect("userAuth:login")
 
-    messages.error(request, "Verification link is invalid or has expired.")
+    messages.error(request, "Verification link is invalid or has expired.", extra_tags=AUTH_MESSAGE_TAG)
     return redirect("userAuth:email_verification")
 
 
-
+@require_http_methods(["POST"])
 def resend_verification_email(request):
-    if request.user.profile.is_verified:
+    user = None
+
+    if request.user.is_authenticated:
+        user = request.user
+    else:
+        verify_user_id = request.session.get("verify_user_id")
+        if verify_user_id:
+            user = User.objects.filter(pk=verify_user_id).first()
+
+    if not user:
+        messages.error(
+            request,
+            "Your verification session has expired. Please sign up or log in again.",
+            extra_tags=AUTH_MESSAGE_TAG,
+        )
+        return redirect("userAuth:login")
+
+    if user.profile.is_verified:
+        request.session.pop("verify_user_id", None)
+        request.session.pop("verify_email", None)
         return redirect("home:home")
 
-    send_verification_email(request, request.user)
-    messages.success(request, "Verification email resent.")
+    request.session["verify_user_id"] = user.id
+    request.session["verify_email"] = user.email
+    email_sent = send_verification_email(request, user)
+    if email_sent:
+        messages.success(request, "Verification email resent.", extra_tags=AUTH_MESSAGE_TAG)
+    else:
+        messages.error(
+            request,
+            "We could not resend the verification email right now. Please try again later.",
+            extra_tags=AUTH_MESSAGE_TAG,
+        )
     return redirect("userAuth:email_verification")
 
 def password_reset_link(request):
@@ -152,7 +204,32 @@ def password_reset_link(request):
 
 @login_required
 def profile_view(request):
-    return render(request, "userAuth/profile.html")
+    bookings = (
+        Booking.objects
+        .filter(user=request.user, is_deleted=False)
+        .select_related("car")
+        .order_by("-created_at")
+    )
+
+    total_bookings = bookings.count()
+    completed_bookings = bookings.filter(status="completed").count()
+    upcoming_bookings = bookings.filter(status__in=["draft", "confirmed"]).count()
+    total_spent = sum(
+        booking.get_total_price()
+        for booking in bookings.filter(status__in=["confirmed", "completed"])
+    )
+
+    return render(
+        request,
+        "userAuth/profile.html",
+        {
+            "bookings": bookings[:3],
+            "total_bookings": total_bookings,
+            "completed_bookings": completed_bookings,
+            "upcoming_bookings": upcoming_bookings,
+            "total_spent": total_spent,
+        },
+    )
 
 
 @admin_required

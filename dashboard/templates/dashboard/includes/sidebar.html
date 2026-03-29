@@ -12,7 +12,7 @@
           <i class="fas fa-car-side text-white text-lg"></i>
         </div>
         <div>
-          <h1 class="text-lg font-bold text-white">Diako Rentals</h1>
+          <h1 class="text-lg font-bold text-white">Daiko Rentals</h1>
           <p class="text-xs text-gray-400">Admin Dashboard</p>
         </div>
       </div>
@@ -31,7 +31,7 @@
             {{ request.user.get_full_name|default:request.user.email }}
           </p>
           <p class="text-xs text-gray-400">
-            {% if user.is_superuser %}Super Admin{% else %}Staff {% endif %}
+            {% if user.is_superuser %}Super Admin{% else %}Staff{%endif %}
           </p>
         </div>
       </div>
@@ -61,38 +61,11 @@
         <span>Cars</span>
       </a>
 
-      <a href="#" class="nav-item">
-        <i class="fas fa-users"></i>
-        <span>Customers</span>
-      </a>
-
       <a href="{% url 'userAuth:user_manage_list' %}" class="nav-item">
         <i class="fas fa-user-shield"></i>
         <span>Users</span>
       </a>
 
-      <a href="#" class="nav-item">
-        <i class="fas fa-map-marker-alt"></i>
-        <span>Locations</span>
-      </a>
-
-      <div class="my-4 border-t border-slate-800"></div>
-
-      <p class="px-3 mb-2 text-xs uppercase text-gray-500 tracking-wider">
-        Reports
-      </p>
-
-      <a href="#" class="nav-item">
-        <i class="fas fa-chart-line"></i>
-        <span>Analytics</span>
-      </a>
-
-      <a href="#" class="nav-item">
-        <i class="fas fa-dollar-sign"></i>
-        <span>Revenue</span>
-      </a>
-
-      {% if user.is_superuser %}
       <div class="my-4 border-t border-slate-800"></div>
 
       <p class="px-3 mb-2 text-xs uppercase text-gray-500 tracking-wider">
@@ -108,7 +81,6 @@
         <i class="fas fa-clipboard-list"></i>
         <span>Activity Logs</span>
       </a>
-      {% endif %}
     </nav>
 
     <!-- Footer -->

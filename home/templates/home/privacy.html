@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Privacy Policy - Diako Rental Cars{% endblock %}
+
+{% block content %}
+{% include "includes/nav.html" %}
+<section class="bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 py-20 text-white">
+  <div class="max-w-5xl mx-auto px-6">
+    <p class="text-orange-400 font-semibold uppercase tracking-wider text-sm">Legal</p>
+    <h1 class="mt-4 text-4xl md:text-5xl font-bold">Privacy Policy</h1>
+    <p class="mt-6 max-w-3xl text-blue-100 text-lg">
+      This policy explains what information we collect, why we collect it, and how we use it when you browse, register, or book with Diako Rental Cars.
+    </p>
+  </div>
+</section>
+
+<section class="bg-slate-50 py-16">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-8 md:p-12 space-y-10 text-slate-700 leading-7">
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">1. Information We Collect</h2>
+        <p>We may collect your name, email address, phone number, booking details, vehicle preferences, pick-up and drop-off information, messages you send us, and other account-related details you provide while using the website or contacting our team.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">2. How We Use Your Information</h2>
+        <p>We use your information to process booking requests, communicate with you about reservations, verify accounts, improve our services, respond to support requests, and operate the website safely and effectively.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">3. Account and Booking Communications</h2>
+        <p>If you create an account or request a booking, we may contact you by email, phone, or other provided channels regarding verification, booking confirmation, schedule changes, payment arrangements, support issues, and important service notices.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">4. Payment and Sensitive Information</h2>
+        <p>We do not publish sensitive customer data. Payment handling may involve third-party processors or offline confirmation steps. Customers should only share payment information through approved channels communicated by our team.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">5. Cookies and Session Data</h2>
+        <p>The website may use cookies or session storage to keep you signed in, remember selected vehicles, preserve booking progress, and support security and performance features. These tools help the site function properly.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">6. How We Share Information</h2>
+        <p>We do not sell your personal information. We may share limited information with trusted service providers, technical platforms, or operational staff where necessary to deliver bookings, maintain the website, meet legal obligations, or protect against fraud and abuse.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">7. Data Retention</h2>
+        <p>We keep information for as long as reasonably necessary to manage bookings, maintain business records, comply with legal or tax obligations, resolve disputes, and protect the integrity of our services.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">8. Security</h2>
+        <p>We take reasonable technical and organizational steps to protect customer information, but no website or transmission method can be guaranteed completely secure. Customers should also protect their login details and device access.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">9. Your Choices</h2>
+        <p>You may contact us to correct inaccurate information, ask questions about your stored data, or request account-related support. Some information may still need to be retained where required for bookings, records, or legal compliance.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">10. Third-Party Services</h2>
+        <p>The site may rely on third-party tools for authentication, communications, hosting, analytics, or email delivery. Those providers may process limited data as needed to support the services they provide to us.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">11. Updates to This Policy</h2>
+        <p>We may update this privacy policy from time to time to reflect service changes, legal requirements, or operational improvements. Continued use of the site after updates means you accept the revised policy.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">12. Contact Us</h2>
+        <p>If you have privacy-related questions, use our <a href="{% url 'home:contact' %}" class="text-blue-700 font-medium hover:underline">contact page</a> and we’ll help you.</p>
+      </div>
+      <p class="text-sm text-slate-500 border-t border-slate-200 pt-6">This privacy policy is intended for normal website and booking operations of Diako Rental Cars and may be updated periodically.</p>
+    </div>
+  </div>
+</section>
+{% include "includes/footer.html" %}
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Terms & Conditions - Diako Rental Cars{% endblock %}
+
+{% block content %}
+{% include "includes/nav.html" %}
+<section class="bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 py-20 text-white">
+  <div class="max-w-5xl mx-auto px-6">
+    <p class="text-orange-400 font-semibold uppercase tracking-wider text-sm">Legal</p>
+    <h1 class="mt-4 text-4xl md:text-5xl font-bold">Terms & Conditions</h1>
+    <p class="mt-6 max-w-3xl text-blue-100 text-lg">
+      These terms explain how bookings, vehicle use, payments, cancellations, and customer responsibilities work when using Diako Rental Cars.
+    </p>
+  </div>
+</section>
+
+<section class="bg-slate-50 py-16">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-8 md:p-12 space-y-10 text-slate-700 leading-7">
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">1. Booking Agreement</h2>
+        <p>By placing a booking request through our website, phone line, WhatsApp, email, or in person, you confirm that the information you provide is accurate and complete. A booking is only considered final after Diako Rental Cars confirms availability and accepts the request.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">2. Customer Eligibility</h2>
+        <p>Customers must provide valid contact information and any identification or driving documentation reasonably requested for the rental. We may refuse or cancel a booking where required documents, payment arrangements, or safety conditions are not met.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">3. Vehicle Availability</h2>
+        <p>All vehicles shown on the site are subject to availability. If the selected vehicle becomes unavailable before final confirmation, we may suggest a similar alternative, revised schedule, or refund any amount already collected for that specific reservation.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">4. Pricing and Payment</h2>
+        <p>Quoted pricing may depend on rental duration, driver requirement, destination, fuel arrangement, and special requests. Final pricing is confirmed directly with the customer before the trip begins. Payment terms, deposits, and accepted methods may vary depending on the booking type.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">5. Driver Option</h2>
+        <p>If you request a driver, we will make reasonable efforts to assign a professional driver for your trip. Driver availability may affect final confirmation, pricing, and timing. If no driver is requested, you remain fully responsible for lawful and safe operation of the vehicle.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">6. Vehicle Use and Customer Responsibility</h2>
+        <p>The vehicle must be used lawfully, safely, and only for the agreed travel purpose. Customers are responsible for fines, misuse, negligence, unauthorized drivers, unlawful activity, avoidable damage, and breaches of agreed travel terms during the rental period.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">7. Fuel, Tolls, Parking, and Extra Charges</h2>
+        <p>Unless expressly stated otherwise, fuel, tolls, parking, waiting charges, out-of-scope travel, and similar operational costs may be billed separately. Any extra charge will be explained to the customer before or during the trip where reasonably possible.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">8. Changes and Cancellations</h2>
+        <p>Customers should request changes or cancellations as early as possible. We may charge cancellation or rescheduling fees where commitments, staffing, or vehicle preparation costs have already been incurred. We reserve the right to cancel or reschedule in cases of force majeure, safety concerns, vehicle breakdown, or operational necessity.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">9. Delays and Breakdowns</h2>
+        <p>We work to keep our fleet roadworthy and dependable. However, traffic, weather, mechanical issues, and third-party disruptions may sometimes affect service. Our liability for delay is limited to the value of the affected service, except where the law requires otherwise.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">10. Website Use</h2>
+        <p>You agree not to misuse the website, interfere with its operation, submit false bookings, or attempt unauthorized access. We may suspend or block access where misuse, fraud, spam, or abuse is detected.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">11. Privacy</h2>
+        <p>Personal information collected through the website is handled according to our <a href="{% url 'home:privacy' %}" class="text-blue-700 font-medium hover:underline">Privacy Policy</a>.</p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-blue-950 mb-3">12. Contact</h2>
+        <p>If you have questions about these terms, contact our team through the <a href="{% url 'home:contact' %}" class="text-blue-700 font-medium hover:underline">contact page</a> before making your booking.</p>
+      </div>
+      <p class="text-sm text-slate-500 border-t border-slate-200 pt-6">These terms are provided as general website booking terms for Diako Rental Cars and may be updated from time to time.</p>
+    </div>
+  </div>
+</section>
+{% include "includes/footer.html" %}
+{% endblock %}

@@ -3,14 +3,14 @@
   <!-- Background Image -->
   <div class="absolute inset-0">
     <img
-      src="{% static 'home/images/car.jpg' %}"
+      src="{% static 'home/images/Hero.png' %}"
       alt="Car Rental"
       class="w-full h-full object-cover opacity-40"
     />
   </div>
 
   <!-- Content -->
-  <div class="flex items-center max-w-7xl mx-auto px-6 py-24">
+  <div class="flex flex-col gap-8 items-start max-w-7xl mx-auto px-6 py-16 lg:flex-row lg:items-center lg:py-24">
     <div class="max-w-3xl">
       <h1 class="text-4xl md:text-5xl font-bold leading-tight">
         Reliable Car Rentals<br />
@@ -25,14 +25,14 @@
       <!-- CTA Buttons -->
       <div class="mt-8 flex flex-wrap gap-4">
         <a
-          href=""
+          href="{% url 'cars:car_list' %}"
           class="bg-yellow-400 text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition"
         >
           Book a Car
         </a>
 
         <a
-          href=""
+          href="{% url 'home:services' %}"
           class="border border-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-gray-900 transition"
         >
           Learn More
@@ -41,9 +41,9 @@
     </div>
 
     <!-- Booking Form -->
-    {% include "bookings/bookingform.html"%}
+    <div class="w-full lg:w-auto">
+      {% include "bookings/bookingform.html"%}
+    </div>
     
   </div>
 </section>
-
-

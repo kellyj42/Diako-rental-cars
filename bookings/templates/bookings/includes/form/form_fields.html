@@ -1,10 +1,64 @@
 <!-- Pick Up Location -->
-<div class="flex">
-  <div class="flex items-center bg-gray-100 text-gray-800 rounded-l-lg px-4">
-    <i class="fas fa-map-marker-alt"></i>
-    <span class="ml-2 font-medium">Pick Up</span>
+<datalist id="uganda-location-suggestions">
+  <option value="Kampala City Centre"></option>
+  <option value="Entebbe International Airport"></option>
+  <option value="Entebbe Town"></option>
+  <option value="Kololo, Kampala"></option>
+  <option value="Nakasero, Kampala"></option>
+  <option value="Ntinda, Kampala"></option>
+  <option value="Naguru, Kampala"></option>
+  <option value="Muyenga, Kampala"></option>
+  <option value="Kisaasi, Kampala"></option>
+  <option value="Bunga, Kampala"></option>
+  <option value="Munyonyo, Kampala"></option>
+  <option value="Lubowa"></option>
+  <option value="Kira Town"></option>
+  <option value="Mukono Town"></option>
+  <option value="Jinja City"></option>
+  <option value="Mbarara City"></option>
+  <option value="Gulu City"></option>
+  <option value="Mbale City"></option>
+  <option value="Fort Portal City"></option>
+  <option value="Masaka City"></option>
+  <option value="Arua City"></option>
+  <option value="Hoima City"></option>
+  <option value="Kabale Town"></option>
+  <option value="Soroti City"></option>
+  <option value="Lira City"></option>
+  <option value="Kasese Town"></option>
+  <option value="Mityana Town"></option>
+  <option value="Iganga Town"></option>
+  <option value="Busia Town"></option>
+  <option value="Tororo Town"></option>
+</datalist>
+
+<div>
+  <div class="flex">
+    <div class="flex items-center bg-gray-100 text-gray-800 rounded-l-lg px-4">
+      <i class="fas fa-map-marker-alt"></i>
+      <span class="ml-2 font-medium">Pick Up</span>
+    </div>
+    <input
+      type="text"
+      name="pick_up_location"
+      id="pickUpLocation"
+      list="uganda-location-suggestions"
+      placeholder="Start typing a town, airport, suburb, or landmark"
+      required
+      value="{{ form.pick_up_location.value|default:'' }}"
+      class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+    />
   </div>
-  <input type="text" name="pick_up_location" placeholder="City or Airport" required value="{{ form.pick_up_location.value|default:'' }}" class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" />
+  <div class="mt-2 flex flex-wrap items-center gap-3 text-sm">
+    <span class="text-gray-300">Suggestions focus on common towns and pickup points in Uganda.</span>
+    <button
+      type="button"
+      data-location-target="pickUpLocation"
+      class="location-picker-trigger text-yellow-300 hover:text-yellow-200 font-medium"
+    >
+      Pick on map
+    </button>
+  </div>
   {% if form and form.errors.pick_up_location %}
   <p class="text-xs text-red-400 mt-1">{{ form.errors.pick_up_location.0 }}</p>
   {% endif %}
@@ -12,17 +66,38 @@
 
 <!-- Drop Off Location -->
 <div>
-  <a href="#" class="text-yellow-300 hover:text-yellow-200 text-sm font-medium mb-2 inline-block">Need a different drop-off location?</a>
+  <p class="text-yellow-300 text-sm font-medium mb-2">
+    Choose from common Uganda towns, suburbs, airports, and landmarks.
+  </p>
   <div class="flex">
     <div class="flex items-center bg-gray-100 text-gray-800 rounded-l-lg px-4">
       <i class="fas fa-map-marker-alt"></i>
       <span class="ml-2 font-medium">Drop Off</span>
     </div>
-    <input type="text" name="drop_off_location" placeholder="City or Airport" required value="{{ form.drop_off_location.value|default:'' }}" class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" />
-    {% if form and form.errors.drop_off_location %}
-    <p class="text-xs text-red-400 mt-1">{{ form.errors.drop_off_location.0 }}</p>
-    {% endif %}
+    <input
+      type="text"
+      name="drop_off_location"
+      id="dropOffLocation"
+      list="uganda-location-suggestions"
+      placeholder="Start typing a town, airport, suburb, or landmark"
+      required
+      value="{{ form.drop_off_location.value|default:'' }}"
+      class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+    />
   </div>
+  <div class="mt-2 flex flex-wrap items-center gap-3 text-sm">
+    <span class="text-gray-300">If the exact place is not listed, type the nearest town, suburb, airport, or a clear landmark.</span>
+    <button
+      type="button"
+      data-location-target="dropOffLocation"
+      class="location-picker-trigger text-yellow-300 hover:text-yellow-200 font-medium"
+    >
+      Pick on map
+    </button>
+  </div>
+  {% if form and form.errors.drop_off_location %}
+  <p class="text-xs text-red-400 mt-1">{{ form.errors.drop_off_location.0 }}</p>
+  {% endif %}
 </div>
 
 <!-- Pick Up Date & Time -->
@@ -38,14 +113,14 @@
     {% endif %}
   </div>
 
-  <select name="pick_up_time" required class="p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400">
-    {% for hour in '01234567891011121314151617181920212223'|make_list %}
-    {% with hh=hour|add:'0' %}
-    <option value="{{ hh }}:00" {% if form and form.pick_up_time.value == hh|stringformat:':00' %}selected{% endif %}>{{ hh }}:00</option>
-    <option value="{{ hh }}:30" {% if form and form.pick_up_time.value == hh|stringformat:':30' %}selected{% endif %}>{{ hh }}:30</option>
-    {% endwith %}
-    {% endfor %}
-  </select>
+  <input
+    type="time"
+    name="pick_up_time"
+    required
+    step="1800"
+    value="{{ form.pick_up_time.value|default:'08:00' }}"
+    class="p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+  />
   {% if form and form.errors.pick_up_time %}
   <p class="text-xs text-red-400 mt-1">{{ form.errors.pick_up_time.0 }}</p>
   {% endif %}
@@ -64,14 +139,14 @@
     {% endif %}
   </div>
 
-  <select name="drop_off_time" required class="p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400">
-    {% for hour in '01234567891011121314151617181920212223'|make_list %}
-    {% with hh=hour|add:'0' %}
-    <option value="{{ hh }}:00" {% if form and form.drop_off_time.value == hh|stringformat:':00' %}selected{% endif %}>{{ hh }}:00</option>
-    <option value="{{ hh }}:30" {% if form and form.drop_off_time.value == hh|stringformat:':30' %}selected{% endif %}>{{ hh }}:30</option>
-    {% endwith %}
-    {% endfor %}
-  </select>
+  <input
+    type="time"
+    name="drop_off_time"
+    required
+    step="1800"
+    value="{{ form.drop_off_time.value|default:'18:00' }}"
+    class="p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+  />
   {% if form and form.errors.drop_off_time %}
   <p class="text-xs text-red-400 mt-1">{{ form.errors.drop_off_time.0 }}</p>
   {% endif %}
@@ -79,6 +154,24 @@
 
 <!-- Additional Notes -->
 <div>
+  <div class="mb-4 rounded-lg border border-gray-600 bg-gray-800/60 p-4">
+    <label for="driverRequired" class="flex items-start gap-3 cursor-pointer">
+      <input
+        type="checkbox"
+        name="driver_required"
+        id="driverRequired"
+        class="mt-1 h-4 w-4 rounded border-gray-500 text-yellow-400 focus:ring-yellow-400"
+        {% if form and form.driver_required.value %}checked{% endif %}
+      />
+      <span>
+        <span class="block text-sm font-medium text-white">I need a driver</span>
+        <span class="block text-sm text-gray-300">
+          Tick this if you want a professional driver included with your booking.
+        </span>
+      </span>
+    </label>
+  </div>
+
   <label class="block text-sm font-medium text-gray-300 mb-2">Additional Notes / Special Requests</label>
   <textarea name="additional_notes" rows="4" placeholder="Tell us anything special you need (extra luggage space, child seat, long trip, etc.)" class="w-full p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 resize-none">{{ form.additional_notes.value|default:'' }}</textarea>
   {% if form and form.errors.additional_notes %}
@@ -87,18 +180,20 @@
 </div>
 
 <!-- Terms Agreement -->
+{% if form.agree_terms %}
 <div class="flex items-start">
-  <input type="checkbox" name="agree_terms" id="agreeTerms" required class="mt-1 mr-2" {% if form and form.agree_terms.value %}checked{% endif %} />
+  <input type="checkbox" name="agree_terms" id="agreeTerms" class="mt-1 mr-2" {% if form and form.agree_terms.value %}checked{% endif %} />
   {% if form and form.errors.agree_terms %}
   <p class="text-xs text-red-400 mt-1">{{ form.errors.agree_terms.0 }}</p>
   {% endif %}
   <label for="agreeTerms" class="text-sm text-gray-300">
     I agree to the
-    <a href="#" class="text-yellow-400 hover:text-yellow-300">Terms & Conditions</a>
+    <a href="{% url 'home:terms' %}" class="text-yellow-400 hover:text-yellow-300">Terms & Conditions</a>
     and
-    <a href="#" class="text-yellow-400 hover:text-yellow-300">Privacy Policy</a>
+    <a href="{% url 'home:privacy' %}" class="text-yellow-400 hover:text-yellow-300">Privacy Policy</a>
   </label>
 </div>
+{% endif %}
 
 <!-- Submit Button -->
 <button type="submit" class="w-full bg-yellow-400 text-gray-900 font-bold py-3.5 rounded-lg hover:bg-yellow-500 transition shadow-lg hover:shadow-xl">

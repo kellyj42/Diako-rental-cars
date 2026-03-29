@@ -1,0 +1,16 @@
+{% if messages %}
+<div class="mb-6 space-y-3">
+  {% for message in messages %}
+    {% if 'auth' in message.tags %}
+    <div
+      class="p-4 rounded-xl border flex items-start gap-3 {% if message.tags == 'error auth' or message.tags == 'auth error' %} bg-red-50 border-red-300 text-red-700 {% elif message.tags == 'success auth' or message.tags == 'auth success' %} bg-green-50 border-green-300 text-green-700 {% elif message.tags == 'warning auth' or message.tags == 'auth warning' %} bg-yellow-50 border-yellow-300 text-yellow-700 {% else %} bg-blue-50 border-blue-300 text-blue-700 {% endif %}"
+    >
+      <i
+        class="fas {% if 'error' in message.tags %} fa-times-circle {% elif 'success' in message.tags %} fa-check-circle {% elif 'warning' in message.tags %} fa-exclamation-triangle {% else %} fa-info-circle {% endif %} mt-1"
+      ></i>
+      <span class="text-sm font-medium">{{ message }}</span>
+    </div>
+    {% endif %}
+  {% endfor %}
+</div>
+{% endif %}

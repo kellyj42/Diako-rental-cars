@@ -1,9 +1,9 @@
 {% load static %}
 
-<header class="shadow-lg relative  z-50">
+<header class="desktop-nav shadow-lg relative">
   <!-- Top Info Bar -->
 
-  <div class="bg-blue-950 border-b border-blue-900">
+  <div class="desktop-topbar bg-blue-950 border-b border-blue-900">
     <div class="flex justify-between items-center px-10 py-3">
       <ul class="flex space-x-2 text-xs text-gray-200">
         <li class="flex items-center gap-2">
@@ -49,6 +49,7 @@
   </div>
 
   <!-- Main Navigation -->
+   
   <nav class="bg-white">
     <div class="flex justify-between items-center p-2">
       <!-- Logo -->
@@ -61,7 +62,7 @@
       </div>
 
       <!-- Navigation Links -->
-      <ul class="flex space-x-8 text-gray-700 font-medium">
+      <ul class="desktop-nav-links flex space-x-8 text-gray-700 font-medium">
         {% for link in nav_links %}
         <li class="relative group">
           <a
@@ -178,3 +179,12 @@
     </div>
   </nav>
 </header>
+<style>
+  @media (max-width: 767px) {
+    .desktop-nav,
+    .desktop-topbar,
+    .desktop-nav-links {
+      display: none !important;
+    }
+  }
+</style>
