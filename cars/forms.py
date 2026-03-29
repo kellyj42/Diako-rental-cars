@@ -151,9 +151,6 @@ class CarForm(forms.ModelForm):
 		if value <= 0:
 			raise ValidationError("Price must be greater than 0")
 
-		if value > 99999.99:
-			raise ValidationError("Price too high (maximum 99,999.99)")
-
 		return value
 
 	# ✅ FIX #15: Validate color and engine
