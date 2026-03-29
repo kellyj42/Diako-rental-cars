@@ -1,33 +1,23 @@
 services = [
     {
-        "icon": "fa-phone-alt",
-        "title": "Phone Reservation",
-        "description": "Book your preferred vehicle quickly and easily through our customer support team. We provide fast confirmations and personalized assistance to meet your travel needs."
+        "icon": "fa-plane-arrival",
+        "title": "Airport Pickups",
+        "description": "Enjoy timely airport pickup and drop-off services with comfortable vehicles and dependable drivers for local and visiting travelers."
     },
     {
-        "icon": "fa-money-bill-alt",
-        "title": "Special Rates",
-        "description": "Enjoy competitive pricing with flexible daily, weekly, and long-term rental packages tailored for individuals, families, and corporate clients."
+        "icon": "fa-id-badge",
+        "title": "Driver Hire",
+        "description": "Hire a professional driver for business trips, city movements, family travel, events, or long-distance journeys across Uganda."
     },
     {
-        "icon": "fa-road",
-        "title": "One Way Rental",
-        "description": "Travel conveniently from one destination to another without the need to return the vehicle to the original pick-up location."
+        "icon": "fa-ticket",
+        "title": "Ticket Booking",
+        "description": "Get support with ticket booking arrangements for selected travel needs, giving clients a smoother transport and travel planning experience."
     },
     {
-        "icon": "fa-umbrella",
-        "title": "Life Insurance",
-        "description": "Drive with confidence knowing our rental vehicles are insured, giving you peace of mind and added protection throughout your journey."
-    },
-    {
-        "icon": "fa-building",
-        "title": "City to City",
-        "description": "We provide reliable inter-city transportation services, making travel between major towns and cities across Uganda safe and comfortable."
-    },
-    {
-        "icon": "fa-car-alt",
-        "title": "Good Servises",
-        "description": "Selected packages include complimentary pick-up and drop-off services within designated areas for added convenience."
+        "icon": "fa-car-side",
+        "title": "Car Rentals",
+        "description": "Choose from our rental fleet for self-drive or chauffeur-supported travel, with options suitable for individuals, families, and groups."
     },
 ]
 
