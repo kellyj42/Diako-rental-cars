@@ -2,12 +2,14 @@ from django import forms
 from django.core.exceptions import ValidationError
 from datetime import datetime
 import re
-from .models import Car
+from .models import Car, CarCategory
 
 
 class CarForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
+		self.fields["category"].queryset = CarCategory.objects.order_by("name")
+		self.fields["category"].empty_label = "Select a category"
 		for field in self.fields.values():
 			base_class = "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
 			if field.widget.__class__.__name__ in {"CheckboxInput"}:
