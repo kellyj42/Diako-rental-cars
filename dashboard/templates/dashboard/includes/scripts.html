@@ -7,34 +7,7 @@
 
     if (mobileMenuToggle && sidebar) {
       mobileMenuToggle.addEventListener("click", function () {
-        sidebar.classList.toggle("-translate-x-64");
-      });
-    }
-
-    // Navigation between sections (if present)
-    const navItems = document.querySelectorAll(".nav-item");
-    const sections = document.querySelectorAll(".dashboard-section");
-
-    if (navItems.length && sections.length) {
-      navItems.forEach((item) => {
-        item.addEventListener("click", function (e) {
-          e.preventDefault();
-
-          navItems.forEach((nav) => nav.classList.remove("active"));
-          this.classList.add("active");
-
-          sections.forEach((section) => section.classList.add("hidden"));
-
-          const sectionId = this.getAttribute("data-section");
-          const activeSection = document.getElementById(sectionId);
-          if (activeSection) {
-            activeSection.classList.remove("hidden");
-          }
-
-          if (window.innerWidth < 1024 && sidebar) {
-            sidebar.classList.add("-translate-x-64");
-          }
-        });
+        sidebar.classList.toggle("-translate-x-full");
       });
     }
 
@@ -43,77 +16,81 @@
     const notificationDropdown = document.getElementById(
       "notificationDropdown",
     );
-
-    notificationBtn.addEventListener("click", function (e) {
-      e.stopPropagation();
-      notificationDropdown.classList.toggle("hidden");
-      userDropdown.classList.add("hidden");
-    });
-
-    // User dropdown
     const userMenuBtn = document.getElementById("userMenuBtn");
     const userDropdown = document.getElementById("userDropdown");
 
-    userMenuBtn.addEventListener("click", function (e) {
-      e.stopPropagation();
-      userDropdown.classList.toggle("hidden");
-      notificationDropdown.classList.add("hidden");
-    });
+    if (notificationBtn && notificationDropdown) {
+      notificationBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        notificationDropdown.classList.toggle("hidden");
+        if (userDropdown) userDropdown.classList.add("hidden");
+      });
+    }
+
+    // User dropdown
+    if (userMenuBtn && userDropdown) {
+      userMenuBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        userDropdown.classList.toggle("hidden");
+        if (notificationDropdown) notificationDropdown.classList.add("hidden");
+      });
+    }
 
     // Close dropdowns when clicking outside
     document.addEventListener("click", function () {
-      notificationDropdown.classList.add("hidden");
-      userDropdown.classList.add("hidden");
+      if (notificationDropdown) notificationDropdown.classList.add("hidden");
+      if (userDropdown) userDropdown.classList.add("hidden");
     });
 
     // Logout button
     const logoutBtn = document.getElementById("logoutBtn");
 
-    logoutBtn.addEventListener("click", function (e) {
-      e.preventDefault();
-      if (confirm("Are you sure you want to logout?")) {
-        alert(
-          "You have been logged out. This is a demo, so no actual logout occurs.",
-        );
-      }
-    });
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (confirm("Are you sure you want to logout?")) {
+          alert(
+            "You have been logged out. This is a demo, so no actual logout occurs.",
+          );
+        }
+      });
+    }
 
     // Dark mode toggle
     const darkModeToggle = document.getElementById("darkModeToggle");
     const toggleDot = document.querySelector(".toggle-dot");
 
-    darkModeToggle.addEventListener("change", function () {
-      if (this.checked) {
-        document.body.classList.add("dark-mode");
-        document.querySelector("aside").classList.add("dark-sidebar");
-        toggleDot.style.transform = "translateX(1.5rem)";
-      } else {
-        document.body.classList.remove("dark-mode");
-        document.querySelector("aside").classList.remove("dark-sidebar");
-        toggleDot.style.transform = "translateX(0)";
-      }
-    });
+    if (darkModeToggle && toggleDot && sidebar) {
+      darkModeToggle.addEventListener("change", function () {
+        if (this.checked) {
+          document.body.classList.add("dark-mode");
+          sidebar.classList.add("dark-sidebar");
+          toggleDot.style.transform = "translateX(1.5rem)";
+        } else {
+          document.body.classList.remove("dark-mode");
+          sidebar.classList.remove("dark-sidebar");
+          toggleDot.style.transform = "translateX(0)";
+        }
+      });
+    }
 
     // Refresh data button
     const refreshBtn = document.getElementById("refreshData");
 
-    refreshBtn.addEventListener("click", function () {
-      // Simulate loading
-      this.innerHTML =
-        '<i class="fas fa-spinner fa-spin mr-2"></i> Refreshing...';
-      this.disabled = true;
+    if (refreshBtn) {
+      refreshBtn.addEventListener("click", function () {
+        this.innerHTML =
+          '<i class="fas fa-spinner fa-spin mr-2"></i> Refreshing...';
+        this.disabled = true;
 
-      setTimeout(() => {
-        this.innerHTML = '<i class="fas fa-sync-alt mr-2"></i> Refresh Data';
-        this.disabled = false;
-
-        // Show success notification
-        showNotification("Dashboard data refreshed successfully!", "success");
-
-        // Animate some stats
-        animateStats();
-      }, 1500);
-    });
+        setTimeout(() => {
+          this.innerHTML = '<i class="fas fa-sync-alt mr-2"></i> Refresh Data';
+          this.disabled = false;
+          showNotification("Dashboard data refreshed successfully!", "success");
+          animateStats();
+        }, 1500);
+      });
+    }
 
     // Show notification function
     function showNotification(message, type = "info") {

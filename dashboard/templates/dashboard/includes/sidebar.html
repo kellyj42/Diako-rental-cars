@@ -43,12 +43,18 @@
         Core
       </p>
 
-      <a href="{% url 'dashboard:home' %}" class="nav-item nav-item--active">
+      <a
+        href="{% url 'dashboard:home' %}"
+        class="nav-item {% if request.resolver_match and request.resolver_match.namespace == 'dashboard' %}nav-item--active{% endif %}"
+      >
         <i class="fas fa-gauge-high"></i>
         <span>Dashboard</span>
       </a>
 
-      <a href="{% url 'bookings:booking_manage_list' %}" class="nav-item">
+      <a
+        href="{% url 'bookings:booking_manage_list' %}"
+        class="nav-item {% if '/bookings/manage' in request.path %}nav-item--active{% endif %}"
+      >
         <i class="fas fa-calendar-check"></i>
         <span>Bookings</span>
         {% if pending_bookings %}
@@ -56,12 +62,18 @@
         {% endif %}
       </a>
 
-      <a href="{% url 'cars:car_manage_list' %}" class="nav-item">
+      <a
+        href="{% url 'cars:car_manage_list' %}"
+        class="nav-item {% if '/cars/manage' in request.path %}nav-item--active{% endif %}"
+      >
         <i class="fas fa-car"></i>
         <span>Cars</span>
       </a>
 
-      <a href="{% url 'userAuth:user_manage_list' %}" class="nav-item">
+      <a
+        href="{% url 'userAuth:user_manage_list' %}"
+        class="nav-item {% if '/auth/manage' in request.path %}nav-item--active{% endif %}"
+      >
         <i class="fas fa-user-shield"></i>
         <span>Users</span>
       </a>
@@ -72,12 +84,12 @@
         System
       </p>
 
-      <a href="/admin/" class="nav-item">
+      <a href="/admin/" class="nav-item {% if '/admin/' in request.path %}nav-item--active{% endif %}">
         <i class="fas fa-cogs"></i>
         <span>Django Admin</span>
       </a>
 
-      <a href="#" class="nav-item">
+      <a href="/admin/admin/logentry/" class="nav-item">
         <i class="fas fa-clipboard-list"></i>
         <span>Activity Logs</span>
       </a>

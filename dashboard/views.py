@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.db.models import Q
 from django.utils import timezone
 from datetime import timedelta
+from decimal import Decimal
 
 from bookings.models import Booking
 from cars.models import Car
@@ -23,9 +24,9 @@ def dashboard_home(request):
     booking_totals = [b.get_total_price() for b in all_bookings if b.status in ["confirmed", "completed"]]
     total_revenue = sum(booking_totals)
 
-    avg_booking_value = 0
+    avg_booking_value = Decimal("0")
     if all_bookings.count() > 0:
-        avg_booking_value = total_revenue / float(all_bookings.count())
+        avg_booking_value = total_revenue / Decimal(all_bookings.count())
 
     # Revenue by last 7 days for chart
     revenue_by_day = []
@@ -85,4 +86,3 @@ def dashboard_home(request):
     }
 
     return render(request, "dashboard/index.html", context)
-
