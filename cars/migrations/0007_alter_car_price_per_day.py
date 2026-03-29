@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
                 decimal_places=2,
                 default=0,
                 help_text="Rental price per day in USD.",
-                max_digits=10,
+                max_digits=14,
             ),
         ),
     ]

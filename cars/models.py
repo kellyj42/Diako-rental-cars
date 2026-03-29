@@ -29,7 +29,7 @@ class CarCategory(models.Model):
 # CAR
 # -------------------------
 class Car(models.Model):
-    price_per_day = models.DecimalField(max_digits=10, decimal_places=2, default=0, help_text="Rental price per day in USD.")
+    price_per_day = models.DecimalField(max_digits=14, decimal_places=2, default=0, help_text="Rental price per day in USD.")
 
     TRANSMISSION_CHOICES = [
         ('automatic', 'Automatic'),
