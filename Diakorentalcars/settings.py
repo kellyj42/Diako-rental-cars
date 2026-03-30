@@ -94,6 +94,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'cloudinary',
+    'cloudinary_storage',
 
     # Tailwind
     'tailwind',
@@ -246,6 +248,21 @@ STATICFILES_DIRS = [
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": os.getenv("CLOUDINARY_CLOUD_NAME", ""),
+    "API_KEY": os.getenv("CLOUDINARY_API_KEY", ""),
+    "API_SECRET": os.getenv("CLOUDINARY_API_SECRET", ""),
+    "SECURE": True,
+}
+
+USE_CLOUDINARY_MEDIA = all(
+    [
+        CLOUDINARY_STORAGE["CLOUD_NAME"],
+        CLOUDINARY_STORAGE["API_KEY"],
+        CLOUDINARY_STORAGE["API_SECRET"],
+    ]
+)
+
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY", "")
 # âœ… FIX #19: Use environment variable instead of hardcoded personal email
 DEFAULT_FROM_EMAIL = os.getenv(
@@ -253,7 +270,18 @@ DEFAULT_FROM_EMAIL = os.getenv(
     "noreply@diakorentalcars.com",
 )
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STORAGES = {
+    "default": {
+        "BACKEND": (
+            "cloudinary_storage.storage.MediaCloudinaryStorage"
+            if USE_CLOUDINARY_MEDIA
+            else "django.core.files.storage.FileSystemStorage"
+        ),
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # Logging Configuration
 LOGGING = {
