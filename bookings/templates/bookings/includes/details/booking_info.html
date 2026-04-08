@@ -72,7 +72,7 @@
               <div class="md:col-span-2 bg-gray-50 p-5 rounded-xl">
                 <h3 class="font-semibold text-gray-900 mb-4 flex items-center">
                   <i class="fas fa-user-tie text-orange-500 mr-3"></i>
-                  Service Options
+                  Service Information
                 </h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div
@@ -86,20 +86,34 @@
                       </div>
                     </div>
                     <div class="flex-1">
-                      <p class="font-medium">Driver Option</p>
+                      <p class="font-medium">Driver Included</p>
                       <p class="text-sm text-gray-600">
-                        {% if booking.driver_required %}
-                        With Professional Driver
-                        {% else %}
-                        Self-drive booking
-                        {% endif %}
+                        Every booking comes with a professional driver.
                       </p>
                     </div>
-                    <span class="{% if booking.driver_required %}text-green-600{% else %}text-gray-500{% endif %} font-semibold">
-                      {% if booking.driver_required %}Requested{% else %}Not needed{% endif %}
+                    <span class="text-green-600 font-semibold">
+                      Included
                     </span>
                   </div>
 
+                  <div
+                    class="flex items-center bg-white p-4 rounded-lg border border-gray-200"
+                  >
+                    <div class="mr-4">
+                      <div
+                        class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center"
+                      >
+                        <i class="fas fa-gas-pump text-orange-600"></i>
+                      </div>
+                    </div>
+                    <div class="flex-1">
+                      <p class="font-medium">Fuel Policy</p>
+                      <p class="text-sm text-gray-600">
+                        Fuel is paid independently and accounted at about 1 litre per 6.5-7 km.
+                      </p>
+                    </div>
+                    <span class="text-orange-600 font-semibold">Separate</span>
+                  </div>
                 </div>
               </div>
             </div>

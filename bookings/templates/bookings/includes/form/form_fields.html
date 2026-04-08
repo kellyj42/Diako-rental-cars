@@ -100,6 +100,14 @@
   {% endif %}
 </div>
 
+<div class="rounded-lg border border-yellow-400/30 bg-yellow-400/10 p-4 text-sm text-yellow-100">
+  <p class="font-semibold text-yellow-300">Trip pricing note</p>
+  <p class="mt-1">
+    Every booking comes with a professional driver. Fuel is paid independently and is typically accounted at about
+    1 litre per 6.5-7 km.
+  </p>
+</div>
+
 <!-- Pick Up Date & Time -->
 <div class="flex flex-col md:flex-row gap-3">
   <div class="flex flex-1">
@@ -154,24 +162,6 @@
 
 <!-- Additional Notes -->
 <div>
-  <div class="mb-4 rounded-lg border border-gray-600 bg-gray-800/60 p-4">
-    <label for="driverRequired" class="flex items-start gap-3 cursor-pointer">
-      <input
-        type="checkbox"
-        name="driver_required"
-        id="driverRequired"
-        class="mt-1 h-4 w-4 rounded border-gray-500 text-yellow-400 focus:ring-yellow-400"
-        {% if form and form.driver_required.value %}checked{% endif %}
-      />
-      <span>
-        <span class="block text-sm font-medium text-white">I need a driver</span>
-        <span class="block text-sm text-gray-300">
-          Tick this if you want a professional driver included with your booking.
-        </span>
-      </span>
-    </label>
-  </div>
-
   <label class="block text-sm font-medium text-gray-300 mb-2">Additional Notes / Special Requests</label>
   <textarea name="additional_notes" rows="4" placeholder="Tell us anything special you need (extra luggage space, child seat, long trip, etc.)" class="w-full p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 resize-none">{{ form.additional_notes.value|default:'' }}</textarea>
   {% if form and form.errors.additional_notes %}

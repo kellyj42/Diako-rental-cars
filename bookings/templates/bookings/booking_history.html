@@ -149,6 +149,7 @@ Daiko Rentals{% endblock %} {% block content %}
                 <img
                   src="{{ booking.car.thumbnail_url }}"
                   alt="{{ booking.car.name }}"
+                  onerror="this.onerror=null;this.src='{{ booking.car.fallback_thumbnail_url }}';"
                   class="w-full h-48 object-cover transition-transform duration-500 hover:scale-105"
                 />
                 <div class="absolute top-3 left-3">
@@ -268,10 +269,7 @@ Daiko Rentals{% endblock %} {% block content %}
           <div class="flex justify-between items-center">
             <div class="flex items-center gap-2 text-sm text-gray-600">
               <i class="fas fa-user-circle text-gray-400"></i>
-              <span
-                >Driver: {{ booking.driver_required|yesno:"Driver
-provided,Self-drive" }}</span
-              >
+              <span>Driver: Included</span>
             </div>
             <div class="flex gap-3">
               <a

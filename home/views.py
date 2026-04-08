@@ -1,9 +1,49 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-from cars.models import Car
+from cars.models import Car, CarCategory
 from bookings.models import Booking
 from content.content import services,achievements,vehicles,nav_links
+
+
+def _build_homepage_categories():
+    fallback_by_name = {vehicle["name"]: vehicle for vehicle in vehicles}
+    homepage_categories = []
+    allowed_category_names = list(fallback_by_name.keys())
+
+    categories = (
+        CarCategory.objects
+        .filter(name__in=allowed_category_names)
+        .prefetch_related("cars")
+        .order_by("name")
+    )
+
+    for category in categories:
+        image_url = ""
+        for car in category.cars.all():
+            if car.thumbnail:
+                image_url = car.thumbnail.url
+                break
+
+        fallback = fallback_by_name.get(category.name, {})
+        homepage_categories.append(
+            {
+                "icon": category.icon.replace("fas ", "").replace("fa ", ""),
+                "name": category.name,
+                "image": fallback.get("image", ""),
+                "image_url": image_url or fallback.get("image_url", ""),
+                "description": category.description or fallback.get("description", ""),
+            }
+        )
+
+    if homepage_categories:
+        homepage_categories.sort(
+            key=lambda category: allowed_category_names.index(category["name"])
+            if category["name"] in allowed_category_names
+            else len(allowed_category_names)
+        )
+
+    return homepage_categories or vehicles
 
 
 def indexView(request):
@@ -20,7 +60,7 @@ def indexView(request):
                 {
                  "services": services,
                  "achievements": achievements,
-                 "vehicles": vehicles,
+                 "vehicles": _build_homepage_categories(),
                  "nav_links": nav_links,
                  "selected_car": selected_car,
                 })

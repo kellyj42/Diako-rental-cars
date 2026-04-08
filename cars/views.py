@@ -7,10 +7,10 @@ from dashboard.decorators import admin_required
 
 
 def car_list_view(request):
-    cars = Car.objects.all()
+    cars = Car.objects.select_related("category").all()
     categories = CarCategory.objects.all()
     triptypes = TripType.objects.all()
-    rates = CarRate.objects.all()
+    rates = CarRate.objects.filter(car__in=cars)
 
     context = {
         'cars': cars,

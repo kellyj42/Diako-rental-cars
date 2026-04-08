@@ -30,6 +30,7 @@
         <img
           src="{{ car.thumbnail_url }}"
           alt="{{ car.display_name }}"
+          onerror="this.onerror=null;this.src='{{ car.fallback_thumbnail_url }}';"
           class="w-full h-48 object-cover  bg-gray-700"
         />
 

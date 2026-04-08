@@ -1,3 +1,5 @@
+import os
+
 services = [
     {
         "icon": "fa-plane-arrival",
@@ -24,22 +26,17 @@ services = [
 achievements = [
         {
             "icon": "car",
-            "count": 829,
+            "count": 212,
             "label": "Happy Clients",
         },
         {
             "icon": "bus",
-            "count": 56,
+            "count": 15,
             "label": "Cars Available",
         },
         {
-            "icon": "car-front",
-            "count": 127,
-            "label": "Service Centers",
-        },
-        {
             "icon": "truck",
-            "count": 589,
+            "count": 380,
             "label": "Total Trips Completed",
         },
     ]
@@ -49,24 +46,28 @@ vehicles = [
             "icon": "fa-van-shuttle",
             "name": "Vans",
             "image": "home/images/showroom/Van.png",
+            "image_url": os.getenv("CATEGORY_VANS_IMAGE_URL", "").strip(),
             "description": "Ideal for airport transfers, group travel, and family road trips.",
         },
         {
             "icon": "fa-car",
             "name": "Sedans",
             "image": "home/images/showroom/Sedan.png",
+            "image_url": os.getenv("CATEGORY_SEDANS_IMAGE_URL", "").strip(),
             "description": "Comfortable city and business travel with everyday convenience.",
         },
         {
             "icon": "fa-truck-monster",
             "name": "SUVs",
             "image": "home/images/showroom/SUV.png",
+            "image_url": os.getenv("CATEGORY_SUVS_IMAGE_URL", "").strip(),
             "description": "Spacious, confident handling for upcountry roads and longer journeys.",
         },
         {
             "icon": "fa-bus",
             "name": "Coasters",
             "image": "home/images/showroom/Coaster.png",
+            "image_url": os.getenv("CATEGORY_COASTERS_IMAGE_URL", "").strip(),
             "description": "Best for tours, team travel, events, and larger group transport.",
         },
         
@@ -90,20 +91,20 @@ nav_links = [
 
 contact_info = {
     "location": {
-        "header": "Shell, Najjera 1 kilimani mall opposite, kampala",
-        "contact": "Shell, Najjera 1 kilimani mall opposite, kampala",
-        "faqs": "Shell, Najjera 1 kilimani mall opposite, kampala",
+        "header": "A5 Plaza Najjera 1, near Shell",
+        "contact": "A5 Plaza Najjera 1, near Shell",
+        "faqs": "A5 Plaza Najjera 1, near Shell",
     },
     "phone": {
-        "header": "+256 751757306/ +256 774747851",
-        "faqs": "+256 751757306/ +256 774747851",
+        "header": "0749744516",
+        "faqs": "0749744516",
         "support": {
-            "display": "+256 751757306/ +256 774747851",
-            "tel": "+256 751757306/ +256 774747851",
+            "display": "0749744516",
+            "tel": "0749744516",
         },
         "whatsapp": {
-            "display": "+256 751757306/ +256 774747851",
-            "wa": "+256 751757306/ +256 774747851",
+            "display": "0749744516",
+            "wa": "256749744516",
         },
     },
     "email": {

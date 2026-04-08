@@ -128,10 +128,23 @@ class Car(models.Model):
         return [f.strip() for f in self.features.split(',')] if self.features else []
 
     @property
+    def fallback_thumbnail_url(self):
+        category_slug = (self.category.slug if self.category_id and self.category else "").lower()
+
+        fallback_by_slug = {
+            "vans": "/static/home/images/showroom/Van.png",
+            "sedans": "/static/home/images/showroom/Sedan.png",
+            "suvs": "/static/home/images/showroom/SUV.png",
+            "coasters": "/static/home/images/showroom/Coaster.png",
+        }
+
+        return fallback_by_slug.get(category_slug, "/static/home/images/showroom/Sedan.png")
+
+    @property
     def thumbnail_url(self):
         if self.thumbnail:
             return self.thumbnail.url
-        return '/static/images/car-thumbnail.jpg'
+        return self.fallback_thumbnail_url
 
 
 # -------------------------

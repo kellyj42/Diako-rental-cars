@@ -152,6 +152,7 @@ Confirmed-Daiko Travel Agency{% endblock %} {% block content %}
                   <img
                     src="{{ car.thumbnail_url }}"
                     alt="{{ car.display_name }}"
+                    onerror="this.onerror=null;this.src='{{ car.fallback_thumbnail_url }}';"
                     class="w-full rounded-xl shadow-md"
                   />
                 </div>
@@ -283,9 +284,7 @@ Confirmed-Daiko Travel Agency{% endblock %} {% block content %}
                 </div>
                 <div>
                   <p class="text-sm text-gray-500">Driver</p>
-                  <p class="font-medium">
-                    {% if booking.driver_required %}Requested{% else %}No driver requested{% endif %}
-                  </p>
+                  <p class="font-medium">Included</p>
                 </div>
               </div>
             </div>
@@ -392,15 +391,17 @@ Confirmed-Daiko Travel Agency{% endblock %} {% block content %}
 
             <div class="flex justify-between">
               <span class="text-gray-600">Driver Service</span>
-              <span class="font-medium">
-                {% if booking.driver_required %}Requested{% else %}No driver{% endif %}
-              </span>
+              <span class="font-medium">Included</span>
             </div>
 
             <div class="flex justify-between">
               <span class="text-gray-600">Fuel</span>
-              <span class="text-green-600 font-medium">Included</span>
+              <span class="text-orange-600 font-medium">Paid separately</span>
             </div>
+
+            <p class="text-sm text-gray-500">
+              Fuel is independently paid and typically accounted at about 1 litre per 6.5-7 km.
+            </p>
 
             <hr class="my-3 border-gray-200" />
 

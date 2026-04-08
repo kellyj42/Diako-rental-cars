@@ -20,7 +20,6 @@ class BookingForm(forms.ModelForm):
             "pick_up_time",
             "drop_off_date",
             "drop_off_time",
-            "driver_required",
             "additional_notes",
         ]
 

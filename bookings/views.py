@@ -126,6 +126,7 @@ def booking_form_view(request):
             booking = form.save(commit=False)
             booking.car = car
             booking.user = request.user if request.user.is_authenticated else None
+            booking.driver_required = True
             booking.status = "draft"
 
             try:
@@ -259,6 +260,7 @@ def save_booking_draft(request):
         booking = form.save(commit=False)
         booking.car = car
         booking.user = request.user if request.user.is_authenticated else None
+        booking.driver_required = True
         booking.status = "draft"
         
         try:
