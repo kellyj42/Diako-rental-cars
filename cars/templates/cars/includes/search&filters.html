@@ -25,7 +25,7 @@
       >
         <option value="">All Categories</option>
         {% for category in categories %}
-        <option value="{{ category.slug }}">{{ category.name }}</option>
+        <option value="{{ category.slug }}" {% if selected_category == category.slug %}selected{% endif %}>{{ category.name }}</option>
         {% endfor %}
       </select>
     </div>

@@ -10,6 +10,11 @@ def car_list_view(request):
     cars = Car.objects.select_related("category").all()
     categories = CarCategory.objects.all()
     triptypes = TripType.objects.all()
+    selected_category = request.GET.get("category", "").strip()
+
+    if selected_category:
+        cars = cars.filter(category__slug=selected_category)
+
     rates = CarRate.objects.filter(car__in=cars)
 
     context = {
@@ -17,6 +22,7 @@ def car_list_view(request):
         'categories': categories,
         'triptypes': triptypes,
         'rates': rates,
+        'selected_category': selected_category,
     }
     
     return render(request, 'cars/cars.html', context)
