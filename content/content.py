@@ -91,9 +91,9 @@ nav_links = [
 
 contact_info = {
     "location": {
-        "header": "A5 Plaza Najjera 1, near Shell",
-        "contact": "A5 Plaza Najjera 1, near Shell",
-        "faqs": "A5 Plaza Najjera 1, near Shell",
+        "header": "Shell, Najjera 1 Kilimani mall",
+        "contact": "Shell, Najjera 1 Kilimani mall",
+        "faqs": "Shell, Najjera 1 Kilimani mall",
     },
     "phone": {
         "header": "0749744516",
