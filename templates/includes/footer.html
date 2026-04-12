@@ -10,7 +10,7 @@
         />
       </div>
       <p class="text-sm leading-relaxed">
-        Daiko Rental Cars provides reliable, affordable, and premium vehicles
+        Daiko Travel Agency provides reliable, affordable, and premium vehicles
         for your personal and business needs.
       </p>
     </div>
@@ -19,17 +19,27 @@
     <div>
       <h3 class="text-white font-semibold mb-4">Quick Links</h3>
       <ul class="space-y-2 text-sm">
-        <li class="hover:text-orange-400 transition"><a href="{% url 'home:home' %}">Home</a></li>
+        <li class="hover:text-orange-400 transition">
+          <a href="{% url 'home:home' %}">Home</a>
+        </li>
         <li class="hover:text-orange-400 transition">
           <a href="{% url 'home:services' %}">Services</a>
         </li>
-        <li class="hover:text-orange-400 transition"><a href="{% url 'cars:car_list' %}">Cars</a></li>
-        <li class="hover:text-orange-400 transition"><a href="{% url 'home:faqs' %}">FAQs</a></li>
+        <li class="hover:text-orange-400 transition">
+          <a href="{% url 'cars:car_list' %}">Cars</a>
+        </li>
+        <li class="hover:text-orange-400 transition">
+          <a href="{% url 'home:faqs' %}">FAQs</a>
+        </li>
         <li class="hover:text-orange-400 transition">
           <a href="{% url 'home:about' %}">About Us</a>
         </li>
-        <li class="hover:text-orange-400 transition"><a href="{% url 'home:terms' %}">Terms & Conditions</a></li>
-        <li class="hover:text-orange-400 transition"><a href="{% url 'home:privacy' %}">Privacy Policy</a></li>
+        <li class="hover:text-orange-400 transition">
+          <a href="{% url 'home:terms' %}">Terms & Conditions</a>
+        </li>
+        <li class="hover:text-orange-400 transition">
+          <a href="{% url 'home:privacy' %}">Privacy Policy</a>
+        </li>
       </ul>
     </div>
 
@@ -84,7 +94,6 @@
       class="px-10 py-4 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400"
     >
       <p>© 2026 Diako Rental Cars. All rights reserved.</p>
-      
     </div>
   </div>
 </footer>
