@@ -1,5 +1,5 @@
 {% extends "base.html" %} {% load static %} {% block title %} My Bookings -
-Daiko Rentals{% endblock %} {% block content %}
+Daiko Travel Agency{% endblock %} {% block content %}
 <section
   class="min-h-screen bg-gradient-to-b from-gray-50 to-white py-8 md:py-12 px-4"
 >
@@ -311,7 +311,8 @@ Daiko Rentals{% endblock %} {% block content %}
         >
           <i class="fas fa-chevron-left"></i>
         </a>
-        {% endif %} {% for num in bookings.paginator.page_range %} {% if bookings.number == num %}
+        {% endif %} {% for num in bookings.paginator.page_range %} {% if
+        bookings.number == num %}
         <span class="px-4 py-2 rounded-xl bg-blue-600 text-white font-semibold"
           >{{ num }}</span
         >
@@ -348,7 +349,7 @@ Daiko Rentals{% endblock %} {% block content %}
 
         <p class="text-gray-600 mb-8">
           You haven't made any bookings yet. Start your journey with Daiko
-          Rentals and experience premium car rentals.
+          Travel Agency and experience premium car rentals.
         </p>
 
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
