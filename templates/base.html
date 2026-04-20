@@ -7,6 +7,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="{% static 'home/images/car2.png' %}" />
     {% tailwind_css %}
+    <style>
+      input,
+      select,
+      textarea {
+        color: #111827 !important;
+        -webkit-text-fill-color: #111827;
+      }
+
+      input::placeholder,
+      textarea::placeholder,
+      select:invalid {
+        color: #4b5563 !important;
+        opacity: 1;
+      }
+
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus,
+      textarea:-webkit-autofill,
+      textarea:-webkit-autofill:focus,
+      select:-webkit-autofill,
+      select:-webkit-autofill:focus {
+        -webkit-text-fill-color: #111827;
+        box-shadow: 0 0 0px 1000px #ffffff inset;
+        transition: background-color 9999s ease-in-out 0s;
+      }
+    </style>
   </head>
 
   <body class="leading-normal tracking-normal">
