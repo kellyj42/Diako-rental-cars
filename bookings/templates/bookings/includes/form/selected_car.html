@@ -13,6 +13,9 @@
       
       <div>
         <div class="font-semibold">{{ selected_car.name }}</div>
+        {% if selected_car.model %}
+        <div class="text-sm text-gray-200">Model: {{ selected_car.model }}</div>
+        {% endif %}
         <div class="text-sm text-gray-300">
           {{ selected_car.seats }} seats • {{ selected_car.transmission }} •
           UGX {{selected_car.price_per_day }}/day
