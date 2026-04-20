@@ -8,27 +8,27 @@
     <link rel="icon" type="image/png" href="{% static 'home/images/car2.png' %}" />
     {% tailwind_css %}
     <style>
-      input,
-      select,
-      textarea {
-        color: #111827 !important;
+      input:not(.text-white):not([data-keep-form-color="true"]),
+      select:not(.text-white):not([data-keep-form-color="true"]),
+      textarea:not(.text-white):not([data-keep-form-color="true"]) {
+        color: #111827;
         -webkit-text-fill-color: #111827;
       }
 
-      input::placeholder,
-      textarea::placeholder,
-      select:invalid {
-        color: #4b5563 !important;
+      input:not(.text-white):not([data-keep-form-color="true"])::placeholder,
+      textarea:not(.text-white):not([data-keep-form-color="true"])::placeholder,
+      select:not(.text-white):not([data-keep-form-color="true"]):invalid {
+        color: #4b5563;
         opacity: 1;
       }
 
-      input:-webkit-autofill,
-      input:-webkit-autofill:hover,
-      input:-webkit-autofill:focus,
-      textarea:-webkit-autofill,
-      textarea:-webkit-autofill:focus,
-      select:-webkit-autofill,
-      select:-webkit-autofill:focus {
+      input:not(.text-white):not([data-keep-form-color="true"]):-webkit-autofill,
+      input:not(.text-white):not([data-keep-form-color="true"]):-webkit-autofill:hover,
+      input:not(.text-white):not([data-keep-form-color="true"]):-webkit-autofill:focus,
+      textarea:not(.text-white):not([data-keep-form-color="true"]):-webkit-autofill,
+      textarea:not(.text-white):not([data-keep-form-color="true"]):-webkit-autofill:focus,
+      select:not(.text-white):not([data-keep-form-color="true"]):-webkit-autofill,
+      select:not(.text-white):not([data-keep-form-color="true"]):-webkit-autofill:focus {
         -webkit-text-fill-color: #111827;
         box-shadow: 0 0 0px 1000px #ffffff inset;
         transition: background-color 9999s ease-in-out 0s;
