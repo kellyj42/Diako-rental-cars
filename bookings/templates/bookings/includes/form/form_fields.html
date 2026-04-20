@@ -46,11 +46,13 @@
       placeholder="Start typing a town, airport, suburb, or landmark"
       required
       value="{{ form.pick_up_location.value|default:'' }}"
-      class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+      class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 text-white placeholder-white"
     />
   </div>
   <div class="mt-2 flex flex-wrap items-center gap-3 text-sm">
-    <span class="text-gray-300">Suggestions focus on common towns and pickup points in Uganda.</span>
+    <span class="text-gray-300"
+      >Suggestions focus on common towns and pickup points in Uganda.</span
+    >
     <button
       type="button"
       data-location-target="pickUpLocation"
@@ -82,11 +84,14 @@
       placeholder="Start typing a town, airport, suburb, or landmark"
       required
       value="{{ form.drop_off_location.value|default:'' }}"
-      class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+      class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 text-white placeholder-white"
     />
   </div>
   <div class="mt-2 flex flex-wrap items-center gap-3 text-sm">
-    <span class="text-gray-300">If the exact place is not listed, type the nearest town, suburb, airport, or a clear landmark.</span>
+    <span class="text-gray-300"
+      >If the exact place is not listed, type the nearest town, suburb, airport,
+      or a clear landmark.</span
+    >
     <button
       type="button"
       data-location-target="dropOffLocation"
@@ -100,11 +105,13 @@
   {% endif %}
 </div>
 
-<div class="rounded-lg border border-yellow-400/30 bg-yellow-400/10 p-4 text-sm text-yellow-100">
+<div
+  class="rounded-lg border border-yellow-400/30 bg-yellow-400/10 p-4 text-sm text-yellow-100"
+>
   <p class="font-semibold text-yellow-300">Trip pricing note</p>
   <p class="mt-1">
-    Every booking comes with a professional driver. Fuel is paid independently and is typically accounted at about
-    1 litre per 6.5-7 km.
+    Every booking comes with a professional driver. Fuel is paid independently
+    and is typically accounted at about 1 litre per 6.5-7 km.
   </p>
 </div>
 
@@ -115,7 +122,14 @@
       <i class="fas fa-calendar-alt"></i>
       <span class="ml-2 font-medium">Pick Up</span>
     </div>
-    <input type="date" name="pick_up_date" required min="{% now 'Y-m-d' %}" value="{{ form.pick_up_date.value|default:'' }}" class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" />
+    <input
+      type="date"
+      name="pick_up_date"
+      required
+      min="{% now 'Y-m-d' %}"
+      value="{{ form.pick_up_date.value|default:'' }}"
+      class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 text-white placeholder-white"
+    />
     {% if form and form.errors.pick_up_date %}
     <p class="text-xs text-red-400 mt-1">{{ form.errors.pick_up_date.0 }}</p>
     {% endif %}
@@ -127,7 +141,7 @@
     required
     step="1800"
     value="{{ form.pick_up_time.value|default:'08:00' }}"
-    class="p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+    class="p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 placeholder-white"
   />
   {% if form and form.errors.pick_up_time %}
   <p class="text-xs text-red-400 mt-1">{{ form.errors.pick_up_time.0 }}</p>
@@ -141,7 +155,14 @@
       <i class="fas fa-calendar-alt"></i>
       <span class="ml-2 font-medium">Drop Off</span>
     </div>
-    <input type="date" name="drop_off_date" required min="{% now 'Y-m-d' %}" value="{{ form.drop_off_date.value|default:'' }}" class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" />
+    <input
+      type="date"
+      name="drop_off_date"
+      required
+      min="{% now 'Y-m-d' %}"
+      value="{{ form.drop_off_date.value|default:'' }}"
+      class="grow p-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 text-white placeholder-white"
+    />
     {% if form and form.errors.drop_off_date %}
     <p class="text-xs text-red-400 mt-1">{{ form.errors.drop_off_date.0 }}</p>
     {% endif %}
@@ -153,7 +174,7 @@
     required
     step="1800"
     value="{{ form.drop_off_time.value|default:'18:00' }}"
-    class="p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+    class="p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 placeholder-white"
   />
   {% if form and form.errors.drop_off_time %}
   <p class="text-xs text-red-400 mt-1">{{ form.errors.drop_off_time.0 }}</p>
@@ -162,8 +183,17 @@
 
 <!-- Additional Notes -->
 <div>
-  <label class="block text-sm font-medium text-gray-300 mb-2">Additional Notes / Special Requests</label>
-  <textarea name="additional_notes" rows="4" placeholder="Tell us anything special you need (extra luggage space, child seat, long trip, etc.)" class="w-full p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 resize-none">{{ form.additional_notes.value|default:'' }}</textarea>
+  <label class="block text-sm font-medium text-gray-300 mb-2"
+    >Additional Notes / Special Requests</label
+  >
+  <textarea
+    name="additional_notes"
+    rows="4"
+    placeholder="Tell us anything special you need (extra luggage space, child seat, long trip, etc.)"
+    class="w-full p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 resize-none placeholder-white"
+  >
+{{ form.additional_notes.value|default:'' }}</textarea
+  >
   {% if form and form.errors.additional_notes %}
   <p class="text-xs text-red-400 mt-1">{{ form.errors.additional_notes.0 }}</p>
   {% endif %}
@@ -172,21 +202,45 @@
 <!-- Terms Agreement -->
 {% if form.agree_terms %}
 <div class="flex items-start">
-  <input type="checkbox" name="agree_terms" id="agreeTerms" class="mt-1 mr-2" {% if form and form.agree_terms.value %}checked{% endif %} />
+  <input
+    type="checkbox"
+    name="agree_terms"
+    id="agreeTerms"
+    class="mt-1 mr-2"
+    {%
+    if
+    form
+    and
+    form.agree_terms.value
+    %}checked{%
+    endif
+    %}
+  />
   {% if form and form.errors.agree_terms %}
   <p class="text-xs text-red-400 mt-1">{{ form.errors.agree_terms.0 }}</p>
   {% endif %}
   <label for="agreeTerms" class="text-sm text-gray-300">
     I agree to the
-    <a href="{% url 'home:terms' %}" class="text-yellow-400 hover:text-yellow-300">Terms & Conditions</a>
+    <a
+      href="{% url 'home:terms' %}"
+      class="text-yellow-400 hover:text-yellow-300"
+      >Terms & Conditions</a
+    >
     and
-    <a href="{% url 'home:privacy' %}" class="text-yellow-400 hover:text-yellow-300">Privacy Policy</a>
+    <a
+      href="{% url 'home:privacy' %}"
+      class="text-yellow-400 hover:text-yellow-300"
+      >Privacy Policy</a
+    >
   </label>
 </div>
 {% endif %}
 
 <!-- Submit Button -->
-<button type="submit" class="w-full bg-yellow-400 text-gray-900 font-bold py-3.5 rounded-lg hover:bg-yellow-500 transition shadow-lg hover:shadow-xl">
+<button
+  type="submit"
+  class="w-full bg-yellow-400 text-gray-900 font-bold py-3.5 rounded-lg hover:bg-yellow-500 transition shadow-lg hover:shadow-xl"
+>
   <i class="fas fa-calendar-check mr-2"></i>
   Book Now
 </button>
