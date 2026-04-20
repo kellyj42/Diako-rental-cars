@@ -1,15 +1,29 @@
-from django import forms
-from django.core.exceptions import ValidationError
+from decimal import Decimal, InvalidOperation
 from datetime import datetime
 import re
+
+from django import forms
+from django.core.exceptions import ValidationError
+
 from .models import Car, CarCategory
 
 
 class CarForm(forms.ModelForm):
+	price_per_day = forms.CharField(
+		label="Price per day",
+		help_text="Enter any valid amount, for example 1500000 or 1500000.50.",
+	)
+
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.fields["category"].queryset = CarCategory.objects.order_by("name")
 		self.fields["category"].empty_label = "Select a category"
+		self.fields["price_per_day"].widget = forms.TextInput(
+			attrs={
+				"inputmode": "decimal",
+				"placeholder": "e.g. 1500000",
+			}
+		)
 		for field in self.fields.values():
 			base_class = "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
 			if field.widget.__class__.__name__ in {"CheckboxInput"}:
@@ -142,8 +156,15 @@ class CarForm(forms.ModelForm):
 		"""Validate daily rental price"""
 		value = self.cleaned_data.get("price_per_day")
 
-		if value is None:
+		if value in {None, ""}:
 			raise ValidationError("Price per day is required")
+
+		if isinstance(value, str):
+			normalized_value = value.replace(",", "").strip()
+			try:
+				value = Decimal(normalized_value)
+			except (InvalidOperation, ValueError):
+				raise ValidationError("Enter a valid amount for price per day")
 
 		if value < 0:
 			raise ValidationError("Price cannot be negative")
