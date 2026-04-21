@@ -142,6 +142,12 @@ class Booking(models.Model):
 
     def soft_delete(self):
         """Mark as deleted without removing from database."""
+        deleted_at = timezone.now()
+        type(self).objects.filter(pk=self.pk).update(
+            is_deleted=True,
+            deleted_at=deleted_at,
+            updated_at=deleted_at,
+        )
         self.is_deleted = True
-        self.deleted_at = timezone.now()
-        self.save()
+        self.deleted_at = deleted_at
+        self.updated_at = deleted_at

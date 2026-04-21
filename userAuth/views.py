@@ -291,3 +291,30 @@ def user_delete_view(request, user_id):
         return redirect("userAuth:user_manage_list")
 
     return render(request, "userAuth/user_confirm_delete.html", {"user_obj": user})
+
+
+@admin_required
+@require_http_methods(["POST"])
+def user_bulk_delete_view(request):
+    user_ids = request.POST.getlist("selected_ids")
+
+    if not user_ids:
+        messages.error(request, "Select at least one user to delete.")
+        return redirect("userAuth:user_manage_list")
+
+    deleted_count = 0
+    skipped_count = 0
+
+    for user in User.objects.filter(id__in=user_ids):
+        if user == request.user:
+            skipped_count += 1
+            continue
+        user.delete()
+        deleted_count += 1
+
+    if deleted_count:
+        messages.success(request, f"{deleted_count} user(s) deleted successfully.")
+    if skipped_count:
+        messages.error(request, "Your own account was skipped and not deleted.")
+
+    return redirect("userAuth:user_manage_list")

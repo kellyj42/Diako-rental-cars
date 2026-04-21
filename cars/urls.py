@@ -5,6 +5,7 @@ from .views import (
 	car_create_view,
 	car_update_view,
 	car_delete_view,
+	car_bulk_delete_view,
 	car_detail_view,
 )
 
@@ -13,6 +14,7 @@ urlpatterns = [
 	path('list/', car_list_view, name='car_list'),
 	path('manage/', car_manage_list_view, name='car_manage_list'),
 	path('manage/add/', car_create_view, name='car_create'),
+	path('manage/bulk-delete/', car_bulk_delete_view, name='car_bulk_delete'),
 	path('manage/<int:car_id>/edit/', car_update_view, name='car_update'),
 	path('manage/<int:car_id>/delete/', car_delete_view, name='car_delete'),
 	path('manage/<int:car_id>/detail/', car_detail_view, name='car_detail'),

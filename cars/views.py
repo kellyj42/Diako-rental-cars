@@ -81,6 +81,38 @@ def car_delete_view(request, car_id):
 
 
 @admin_required
+def car_bulk_delete_view(request):
+    if request.method != "POST":
+        return redirect("cars:car_manage_list")
+
+    car_ids = request.POST.getlist("selected_ids")
+
+    if not car_ids:
+        messages.error(request, "Select at least one car to delete.")
+        return redirect("cars:car_manage_list")
+
+    deleted_count = 0
+    failed_count = 0
+
+    for car in Car.objects.filter(id__in=car_ids):
+        try:
+            car.delete()
+            deleted_count += 1
+        except ProtectedError:
+            failed_count += 1
+
+    if deleted_count:
+        messages.success(request, f"{deleted_count} car(s) deleted successfully.")
+    if failed_count:
+        messages.error(
+            request,
+            f"{failed_count} car(s) could not be deleted because they have related bookings.",
+        )
+
+    return redirect("cars:car_manage_list")
+
+
+@admin_required
 def car_detail_view(request, car_id):
     car = get_object_or_404(Car, id=car_id)
     

@@ -456,3 +456,31 @@ def booking_delete_view(request, booking_id):
             messages.error(request, "Error deleting booking")
 
     return render(request, "bookings/booking_confirm_delete.html", {"booking": booking})
+
+
+@admin_required
+@require_http_methods(["POST"])
+def booking_bulk_delete_view(request):
+    """Admin: Bulk soft delete bookings."""
+    booking_ids = request.POST.getlist("selected_ids")
+
+    if not booking_ids:
+        messages.error(request, "Select at least one booking to delete.")
+        return redirect("bookings:booking_manage_list")
+
+    deleted_count = 0
+    failed_count = 0
+
+    for booking in Booking.objects.filter(id__in=booking_ids, is_deleted=False):
+        try:
+            booking.soft_delete()
+            deleted_count += 1
+        except Exception:
+            failed_count += 1
+
+    if deleted_count:
+        messages.success(request, f"{deleted_count} booking(s) deleted successfully.")
+    if failed_count:
+        messages.error(request, f"{failed_count} booking(s) could not be deleted.")
+
+    return redirect("bookings:booking_manage_list")

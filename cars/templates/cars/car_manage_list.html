@@ -43,6 +43,19 @@
             <i class="fas fa-plus mr-2"></i>
             Add New Car
           </a>
+          <form id="carBulkDeleteForm" method="post" action="{% url 'cars:car_bulk_delete' %}">
+            {% csrf_token %}
+            <button
+              type="submit"
+              id="bulkDeleteCarsBtn"
+              disabled
+              onclick="return confirm('Delete the selected cars?');"
+              class="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-red-600 text-white font-medium hover:bg-red-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <i class="fas fa-trash mr-2"></i>
+              Delete Selected
+            </button>
+          </form>
         </div>
       </div>
     </div>
@@ -126,6 +139,15 @@
               <th
                 class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
+                <input
+                  type="checkbox"
+                  id="selectAllCars"
+                  class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+                />
+              </th>
+              <th
+                class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
                 Vehicle
               </th>
               <th
@@ -152,6 +174,15 @@
               data-status="{% if car.is_available %}available{% else %}unavailable{% endif %}"
               data-category="{{ car.category.id }}"
             >
+              <td class="px-6 py-4">
+                <input
+                  type="checkbox"
+                  name="selected_ids"
+                  value="{{ car.id }}"
+                  form="carBulkDeleteForm"
+                  class="car-select h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+                />
+              </td>
               <!-- Vehicle Column -->
               <td class="px-6 py-4">
                 <div class="flex items-center">
@@ -279,7 +310,7 @@
             </tr>
             {% empty %}
             <tr>
-              <td colspan="4" class="px-6 py-12 text-center">
+              <td colspan="5" class="px-6 py-12 text-center">
                 <div class="text-gray-400 mb-4">
                   <i class="fas fa-car text-4xl"></i>
                 </div>
@@ -351,6 +382,20 @@
     // Search functionality
     const searchInput = document.getElementById("carSearch");
     const carRows = document.querySelectorAll(".car-row");
+    const selectAllCars = document.getElementById("selectAllCars");
+    const carCheckboxes = Array.from(document.querySelectorAll(".car-select"));
+    const bulkDeleteCarsBtn = document.getElementById("bulkDeleteCarsBtn");
+
+    function syncCarSelectionState() {
+      const checkedCount = carCheckboxes.filter((checkbox) => checkbox.checked).length;
+      if (bulkDeleteCarsBtn) {
+        bulkDeleteCarsBtn.disabled = checkedCount === 0;
+      }
+      if (selectAllCars) {
+        selectAllCars.checked = checkedCount > 0 && checkedCount === carCheckboxes.length;
+        selectAllCars.indeterminate = checkedCount > 0 && checkedCount < carCheckboxes.length;
+      }
+    }
 
     searchInput.addEventListener("input", function (e) {
       const searchTerm = e.target.value.toLowerCase();
@@ -382,6 +427,19 @@
 
     statusFilter.addEventListener("change", applyFilters);
     categoryFilter.addEventListener("change", applyFilters);
+
+    if (selectAllCars) {
+      selectAllCars.addEventListener("change", function () {
+        carCheckboxes.forEach((checkbox) => {
+          checkbox.checked = selectAllCars.checked;
+        });
+        syncCarSelectionState();
+      });
+    }
+
+    carCheckboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", syncCarSelectionState);
+    });
 
     // Toggle featured status
     document.querySelectorAll(".toggle-featured").forEach((button) => {
@@ -432,6 +490,8 @@
         setTimeout(() => toast.remove(), 300);
       }, 3000);
     }
+
+    syncCarSelectionState();
   });
 </script>
 

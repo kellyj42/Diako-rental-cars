@@ -26,6 +26,19 @@
         <i class="fas fa-user-plus mr-2"></i>
         Add User
       </a>
+      <form id="userBulkDeleteForm" method="post" action="{% url 'userAuth:user_bulk_delete' %}">
+        {% csrf_token %}
+        <button
+          type="submit"
+          id="bulkDeleteUsersBtn"
+          disabled
+          onclick="return confirm('Delete the selected users?');"
+          class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <i class="fas fa-trash mr-2"></i>
+          Delete Selected
+        </button>
+      </form>
     </div>
 
     <div class="bg-white shadow-sm rounded-xl overflow-hidden">
@@ -33,6 +46,13 @@
         <table class="min-w-full text-sm">
           <thead class="bg-gray-50 text-gray-700">
             <tr>
+              <th class="px-4 py-3 text-left">
+                <input
+                  type="checkbox"
+                  id="selectAllUsers"
+                  class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+                />
+              </th>
               <th class="px-4 py-3 text-left">Name</th>
               <th class="px-4 py-3 text-left">Email</th>
               <th class="px-4 py-3 text-left">Phone</th>
@@ -45,6 +65,15 @@
           <tbody class="divide-y">
             {% for u in users %}
             <tr class="hover:bg-slate-50">
+              <td class="px-4 py-3">
+                <input
+                  type="checkbox"
+                  name="selected_ids"
+                  value="{{ u.id }}"
+                  form="userBulkDeleteForm"
+                  class="user-select h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+                />
+              </td>
               <td class="px-4 py-3 font-medium text-gray-900">
                 {{ u.get_full_name|default:u.email }}
               </td>
@@ -102,7 +131,7 @@
             </tr>
             {% empty %}
             <tr>
-              <td colspan="7" class="px-4 py-8 text-center text-gray-500">
+              <td colspan="8" class="px-4 py-8 text-center text-gray-500">
                 No users found.
               </td>
             </tr>
@@ -113,4 +142,35 @@
     </div>
   </div>
 </section>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const selectAllUsers = document.getElementById("selectAllUsers");
+    const userCheckboxes = Array.from(document.querySelectorAll(".user-select"));
+    const bulkDeleteUsersBtn = document.getElementById("bulkDeleteUsersBtn");
+
+    function syncUserSelectionState() {
+      const checkedCount = userCheckboxes.filter((checkbox) => checkbox.checked).length;
+      bulkDeleteUsersBtn.disabled = checkedCount === 0;
+      if (selectAllUsers) {
+        selectAllUsers.checked = checkedCount > 0 && checkedCount === userCheckboxes.length;
+        selectAllUsers.indeterminate = checkedCount > 0 && checkedCount < userCheckboxes.length;
+      }
+    }
+
+    if (selectAllUsers) {
+      selectAllUsers.addEventListener("change", function () {
+        userCheckboxes.forEach((checkbox) => {
+          checkbox.checked = selectAllUsers.checked;
+        });
+        syncUserSelectionState();
+      });
+    }
+
+    userCheckboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", syncUserSelectionState);
+    });
+
+    syncUserSelectionState();
+  });
+</script>
 {% endblock %}

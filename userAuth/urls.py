@@ -15,6 +15,7 @@ urlpatterns = [
     path("profile/", views.profile_view, name="profile"),
     path("manage/", views.user_manage_list_view, name="user_manage_list"),
     path("manage/add/", views.user_create_view, name="user_create"),
+    path("manage/bulk-delete/", views.user_bulk_delete_view, name="user_bulk_delete"),
     path("manage/<int:user_id>/edit/", views.user_update_view, name="user_update"),
     path("manage/<int:user_id>/delete/", views.user_delete_view, name="user_delete"),
 ]

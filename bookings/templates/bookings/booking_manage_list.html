@@ -18,6 +18,24 @@
 
         <p class="text-sm text-gray-600">Review and update booking statuses.</p>
       </div>
+      <div class="flex items-center gap-3">
+        <label class="inline-flex items-center gap-2 text-sm text-gray-600">
+          <input type="checkbox" id="selectAllBookings" class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500" />
+          Select all
+        </label>
+        <form id="bookingBulkDeleteForm" method="post" action="{% url 'bookings:booking_bulk_delete' %}">
+          {% csrf_token %}
+          <button
+            type="submit"
+            id="bulkDeleteBookingsBtn"
+            disabled
+            onclick="return confirm('Delete the selected bookings?');"
+            class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Delete Selected
+          </button>
+        </form>
+      </div>
     </div>
 
     <div class="bg-white shadow-sm rounded-xl overflow-hidden">
@@ -25,6 +43,9 @@
         <table class="min-w-full text-sm">
           <thead class="bg-gray-50 text-gray-700">
             <tr>
+              <th class="px-4 py-3 text-left">
+                <span class="sr-only">Select</span>
+              </th>
               <th class="px-4 py-3 text-left">Reference</th>
               <th class="px-4 py-3 text-left">Customer</th>
               <th class="px-4 py-3 text-left">Car</th>
@@ -36,6 +57,15 @@
           <tbody class="divide-y">
             {% for booking in bookings %}
             <tr class="hover:bg-slate-50">
+              <td class="px-4 py-3">
+                <input
+                  type="checkbox"
+                  name="selected_ids"
+                  value="{{ booking.id }}"
+                  form="bookingBulkDeleteForm"
+                  class="booking-select h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+                />
+              </td>
               <td class="px-4 py-3 font-mono text-xs text-gray-700">
                 DRC-{{ booking.id|stringformat:"06d" }}
               </td>
@@ -117,7 +147,7 @@
             </tr>
             {% empty %}
             <tr>
-              <td colspan="6" class="px-4 py-8 text-center text-gray-500">
+              <td colspan="7" class="px-4 py-8 text-center text-gray-500">
                 No bookings found.
               </td>
             </tr>
@@ -128,4 +158,35 @@
     </div>
   </div>
 </section>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const selectAll = document.getElementById("selectAllBookings");
+    const checkboxes = Array.from(document.querySelectorAll(".booking-select"));
+    const bulkDeleteBtn = document.getElementById("bulkDeleteBookingsBtn");
+
+    function syncBookingSelectionState() {
+      const checkedCount = checkboxes.filter((checkbox) => checkbox.checked).length;
+      bulkDeleteBtn.disabled = checkedCount === 0;
+      if (selectAll) {
+        selectAll.checked = checkedCount > 0 && checkedCount === checkboxes.length;
+        selectAll.indeterminate = checkedCount > 0 && checkedCount < checkboxes.length;
+      }
+    }
+
+    if (selectAll) {
+      selectAll.addEventListener("change", function () {
+        checkboxes.forEach((checkbox) => {
+          checkbox.checked = selectAll.checked;
+        });
+        syncBookingSelectionState();
+      });
+    }
+
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", syncBookingSelectionState);
+    });
+
+    syncBookingSelectionState();
+  });
+</script>
 {% endblock %}
