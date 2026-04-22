@@ -134,8 +134,8 @@ class CarForm(forms.ModelForm):
 		if value is None:
 			raise ValidationError("Seats is required")
 
-		if value < 1 or value > 8:
-			raise ValidationError("Seats must be between 1 and 8")
+		if value < 1 or value > 60:
+			raise ValidationError("Seats must be between 1 and 60")
 
 		return value
 
