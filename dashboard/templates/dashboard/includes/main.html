@@ -160,10 +160,8 @@
                   {{ booking.car.name }}
                 </h4>
                 <p class="text-sm text-gray-600">
-                  {% if booking.user
-                  %}{{booking.user.get_full_name|default:booking.user.username
-                  }}{%else %}Guest{% endif %} • {{
-                  booking.pick_up_date|date:'Md' }}
+                  {% if booking.user%}{{booking.user.get_full_name|default:booking.user.username}}{%else %}Guest
+                  {%endif %} • {{booking.pick_up_date|date:'Md' }}
                 </p>
               </div>
             </div>
@@ -285,9 +283,7 @@
               #{{ booking.id }}
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-              {% if
-              booking.user%}{{booking.user.get_full_name|default:booking.user.username}}{%else%}Guest{%
-              endif %}
+              {% if booking.user%}{{booking.user.get_full_name|default:booking.user.username}}{%else%} Guest {%endif %}
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
               {{ booking.car.name }}
