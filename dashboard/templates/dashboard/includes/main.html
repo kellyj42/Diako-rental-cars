@@ -160,7 +160,10 @@
                   {{ booking.car.name }}
                 </h4>
                 <p class="text-sm text-gray-600">
-                  {% if booking.user %}{{booking.user.get_full_name|default:booking.user.username }}{%else %}Guest{% endif %} • {{ booking.pick_up_date|date:'Md' }}
+                  {% if booking.user
+                  %}{{booking.user.get_full_name|default:booking.user.username
+                  }}{%else %}Guest{% endif %} • {{
+                  booking.pick_up_date|date:'Md' }}
                 </p>
               </div>
             </div>
@@ -188,7 +191,7 @@
       >
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-blue-100">Avg. Booking Value</p>
+            <p class="text-white">Avg. Booking Value</p>
             <h3 class="text-3xl font-bold mt-2">
               UGX {{ avg_booking_value|floatformat:2 }}
             </h3>
@@ -202,7 +205,7 @@
       >
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-purple-100">Cars Rented Today</p>
+            <p class="text-white">Cars Rented Today</p>
             <h3 class="text-3xl font-bold mt-2">{{ todays_rentals }}</h3>
           </div>
           <i class="fas fa-car text-4xl opacity-75"></i>
@@ -214,11 +217,11 @@
       >
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-green-100">Customer Satisfaction</p>
+            <p class="text-white">Customer Satisfaction</p>
             <h3 class="text-3xl font-bold mt-2">
               {{ customer_satisfaction|floatformat:1 }}
             </h3>
-            <p class="text-green-100 mt-1">{{ customer_star_display }}</p>
+            <p class="text-white mt-1">{{ customer_star_display }}</p>
           </div>
           <i class="fas fa-smile text-4xl opacity-75"></i>
         </div>
@@ -282,7 +285,9 @@
               #{{ booking.id }}
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-              {% if booking.user%}{{booking.user.get_full_name|default:booking.user.username}}{%else%}Guest{% endif %}
+              {% if
+              booking.user%}{{booking.user.get_full_name|default:booking.user.username}}{%else%}Guest{%
+              endif %}
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
               {{ booking.car.name }}
