@@ -311,8 +311,8 @@ Daiko Travel Agency Ltd{% endblock %} {% block content %}
         >
           <i class="fas fa-chevron-left"></i>
         </a>
-        {% endif %} {% for num in bookings.paginator.page_range %} {% if
-        bookings.number == num %}
+        {% endif %} {% for num in bookings.paginator.page_range %} 
+        {% if bookings.number == num %}
         <span class="px-4 py-2 rounded-xl bg-blue-600 text-white font-semibold"
           >{{ num }}</span
         >
