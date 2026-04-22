@@ -3,7 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from allauth.account.models import EmailAddress
-from allauth.account.signals import email_confirmed
+from allauth.account.signals import email_confirmed, user_signed_up
 from allauth.socialaccount.signals import social_account_added
 from .models import Profile
 
@@ -27,5 +27,14 @@ def mark_profile_verified_on_social_connect(request, sociallogin, **kwargs):
     profile, _ = Profile.objects.get_or_create(user=user)
 
     if EmailAddress.objects.filter(user=user, verified=True).exists() and not profile.is_verified:
+        profile.is_verified = True
+        profile.save(update_fields=["is_verified"])
+
+
+@receiver(user_signed_up)
+def mark_profile_verified_on_social_signup(request, user, sociallogin=None, **kwargs):
+    profile, _ = Profile.objects.get_or_create(user=user)
+
+    if sociallogin and not profile.is_verified:
         profile.is_verified = True
         profile.save(update_fields=["is_verified"])

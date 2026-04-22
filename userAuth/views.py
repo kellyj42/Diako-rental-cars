@@ -27,7 +27,8 @@ def _is_user_verified(user):
         return True
 
     has_verified_email = EmailAddress.objects.filter(user=user, verified=True).exists()
-    if has_verified_email:
+    has_social_account = user.socialaccount_set.exists()
+    if has_verified_email or has_social_account:
         profile.is_verified = True
         profile.save(update_fields=["is_verified"])
         return True
