@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from allauth.account.models import EmailAddress
 from userAuth.tokens import email_verification_token
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode, url_has_allowed_host_and_scheme
@@ -20,6 +21,20 @@ from bookings.models import Booking
 AUTH_MESSAGE_TAG = "auth"
 
 
+def _is_user_verified(user):
+    profile = user.profile
+    if profile.is_verified:
+        return True
+
+    has_verified_email = EmailAddress.objects.filter(user=user, verified=True).exists()
+    if has_verified_email:
+        profile.is_verified = True
+        profile.save(update_fields=["is_verified"])
+        return True
+
+    return False
+
+
 def login_view(request):
     next_url = request.POST.get("next") or request.GET.get("next") or request.session.get("auth_next")
     if next_url and url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
@@ -33,7 +48,7 @@ def login_view(request):
         user = authenticate(request, username=email, password=password)
 
         if user:
-            if not user.profile.is_verified:
+            if not _is_user_verified(user):
                 messages.warning(request, "Please verify your email before logging in.", extra_tags=AUTH_MESSAGE_TAG)
                 email_sent = send_verification_email(request, user)
                 if not email_sent:
@@ -131,7 +146,7 @@ def verify_email_view(request, uidb64, token):
     if email_verification_token.check_token(user, token):
         profile = user.profile
 
-        if profile.is_verified:
+        if _is_user_verified(user):
             request.session.pop("verify_user_id", None)
             request.session.pop("verify_email", None)
             messages.info(
@@ -146,7 +161,7 @@ def verify_email_view(request, uidb64, token):
             return redirect("userAuth:login")
 
         profile.is_verified = True
-        profile.save()
+        profile.save(update_fields=["is_verified"])
         request.session.pop("verify_user_id", None)
         request.session.pop("verify_email", None)
 
@@ -180,7 +195,7 @@ def resend_verification_email(request):
         )
         return redirect("userAuth:login")
 
-    if user.profile.is_verified:
+    if _is_user_verified(user):
         request.session.pop("verify_user_id", None)
         request.session.pop("verify_email", None)
         return redirect("home:home")
