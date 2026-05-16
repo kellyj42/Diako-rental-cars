@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 from django.contrib.auth.models import User
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone
 
@@ -9,6 +9,17 @@ from bookings.models import Booking
 from cars.models import Car, CarCategory
 
 
+TEST_STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
+
+@override_settings(STORAGES=TEST_STORAGES)
 class GuestBookingFlowTests(TestCase):
     def setUp(self):
         self.category = CarCategory.objects.create(name="SUV")
@@ -86,6 +97,7 @@ class GuestBookingFlowTests(TestCase):
         self.assertNotContains(second_response, 'id="agreeTerms"')
 
 
+@override_settings(STORAGES=TEST_STORAGES)
 class BookingTermsAcceptanceTests(TestCase):
     def setUp(self):
         self.category = CarCategory.objects.create(name="Sedan")
@@ -137,3 +149,51 @@ class BookingTermsAcceptanceTests(TestCase):
         # Create another booking
         second_response = self.client.get(reverse("bookings:booking_form"))
         self.assertNotContains(second_response, 'id="agreeTerms"')
+
+
+@override_settings(STORAGES=TEST_STORAGES)
+class BookingHistoryViewTests(TestCase):
+    def setUp(self):
+        self.category = CarCategory.objects.create(name="Compact")
+        self.car = Car.objects.create(
+            name="Toyota",
+            model="Vitz",
+            year=2022,
+            category=self.category,
+            price_per_day=75,
+            seats=5,
+        )
+        self.user = User.objects.create_user(
+            username="history@example.com",
+            email="history@example.com",
+            password="testpass123",
+        )
+
+    def test_empty_booking_history_renders(self):
+        self.client.force_login(self.user)
+
+        response = self.client.get(reverse("bookings:booking_history"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "No Bookings Yet")
+        self.assertContains(response, reverse("cars:car_list"))
+
+    def test_booking_history_pagination_renders(self):
+        for index in range(11):
+            Booking.objects.create(
+                user=self.user,
+                car=self.car,
+                pick_up_location=f"Pickup {index}",
+                drop_off_location=f"Dropoff {index}",
+                pick_up_date=timezone.now().date() + timedelta(days=index + 1),
+                pick_up_time="09:00",
+                drop_off_date=timezone.now().date() + timedelta(days=index + 2),
+                drop_off_time="10:00",
+                status="draft",
+            )
+
+        self.client.force_login(self.user)
+        response = self.client.get(reverse("bookings:booking_history"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "?page=2")

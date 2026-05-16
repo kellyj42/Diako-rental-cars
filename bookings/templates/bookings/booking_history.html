@@ -301,32 +301,34 @@ Daiko Travel Agency Ltd{% endblock %} {% block content %}
     </div>
 
     <!-- Pagination (if needed) -->
-    {% if bookings.has_other_pages %}
+    {% if page_obj.has_other_pages %}
     <div class="mt-12 flex justify-center">
       <nav class="flex items-center gap-2">
-        {% if bookings.has_previous %}
+        {% if page_obj.has_previous %}
         <a
-          href="?page={{ bookings.previous_page_number }}"
+          href="?page={{ page_obj.previous_page_number }}"
           class="px-4 py-2 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
         >
           <i class="fas fa-chevron-left"></i>
         </a>
-        {% endif %} {% for num in bookings.paginator.page_range %} {% if
-        bookings.number == num %}
+        {% endif %}
+        {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
         <span class="px-4 py-2 rounded-xl bg-blue-600 text-white font-semibold">
           {{ num }}
         </span>
-        {% elif num > bookings.number|add:'-3' and num < bookings.number|add:'3'
-        %}
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
         <a
           href="?page={{ num }}"
           class="px-4 py-2 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
         >
           {{ num }}
         </a>
-        {% endif %} {% endfor %} {% if bookings.has_next %}
+        {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
         <a
-          href="?page={{ bookings.next_page_number }}"
+          href="?page={{ page_obj.next_page_number }}"
           class="px-4 py-2 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
         >
           <i class="fas fa-chevron-right"></i>
@@ -355,7 +357,7 @@ Daiko Travel Agency Ltd{% endblock %} {% block content %}
 
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <a
-            href="{% url 'cars' %}"
+            href="{% url 'cars:car_list' %}"
             class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3.5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5"
           >
             <i class="fas fa-car"></i>
@@ -363,7 +365,7 @@ Daiko Travel Agency Ltd{% endblock %} {% block content %}
           </a>
 
           <a
-            href="{% url 'home' %}"
+            href="{% url 'home:home' %}"
             class="inline-flex items-center justify-center gap-2 bg-white border border-gray-300 hover:border-blue-500 text-gray-700 hover:text-blue-700 font-semibold px-8 py-3.5 rounded-xl transition-colors"
           >
             <i class="fas fa-home"></i>
@@ -379,7 +381,7 @@ Daiko Travel Agency Ltd{% endblock %} {% block content %}
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             {% for category in popular_categories %}
             <a
-              href="{% url 'cars' %}?category={{ category.slug }}"
+              href="{% url 'cars:car_list' %}?category={{ category.slug }}"
               class="bg-gray-50 hover:bg-blue-50 rounded-xl p-4 text-center transition-colors group"
             >
               <div

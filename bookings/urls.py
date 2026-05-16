@@ -15,6 +15,4 @@ urlpatterns = [
      path("manage/<int:booking_id>/status/", views.booking_update_status_view, name="booking_update_status"),
      path("manage/<int:booking_id>/delete/", views.booking_delete_view, name="booking_delete"),
      path("manage/bulk-delete/", views.booking_bulk_delete_view, name="booking_bulk_delete"),
-
-
 ] 
