@@ -29,10 +29,7 @@ urlpatterns = [
     path('cars/', include('cars.urls')),
     path('bookings/', include('bookings.urls')),
     path('', home_view, name='home'),
-    path(
-        "favicon.ico",
-        RedirectView.as_view(url=f"{settings.STATIC_URL}home/images/car2.png", permanent=False),
-    ),
+    
     path("dashboard/", include("dashboard.urls")),
 ]
 

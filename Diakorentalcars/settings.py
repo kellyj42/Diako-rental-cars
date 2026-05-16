@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 import os
 from pathlib import Path
 import dj_database_url
+from dotenv import load_dotenv
 
 # âœ… Load environment variables from .env file
 try:
@@ -266,7 +267,7 @@ USE_CLOUDINARY_MEDIA = all(
     ]
 )
 
-SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY", "")
+RESEND_API_KEY = os.getenv("RESEND_API_KEY", "")
 # âœ… FIX #19: Use environment variable instead of hardcoded personal email
 DEFAULT_FROM_EMAIL = os.getenv(
     "DEFAULT_FROM_EMAIL",
