@@ -313,16 +313,17 @@ Daiko Travel Agency Ltd{% endblock %} {% block content %}
         </a>
         {% endif %} {% for num in bookings.paginator.page_range %} {% if
         bookings.number == num %}
-        <span class="px-4 py-2 rounded-xl bg-blue-600 text-white font-semibold"
-          >{{ num }}</span
-        >
+        <span class="px-4 py-2 rounded-xl bg-blue-600 text-white font-semibold">
+          {{ num }}
+        </span>
         {% elif num > bookings.number|add:'-3' and num < bookings.number|add:'3'
         %}
         <a
           href="?page={{ num }}"
           class="px-4 py-2 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
-          >{{ num }}</a
         >
+          {{ num }}
+        </a>
         {% endif %} {% endfor %} {% if bookings.has_next %}
         <a
           href="?page={{ bookings.next_page_number }}"
