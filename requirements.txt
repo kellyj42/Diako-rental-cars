@@ -17,7 +17,7 @@ pycparser==3.0
 pytailwindcss==0.3.0
 python-dotenv==1.0.0
 python-http-client==3.3.7
-resend==2.13.0
+sendgrid==6.12.5
 sqlparse==0.5.5
 tzdata==2025.3
 Werkzeug==3.1.5

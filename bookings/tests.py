@@ -21,7 +21,7 @@ TEST_STORAGES = {
 }
 
 
-@override_settings(STORAGES=TEST_STORAGES, RESEND_API_KEY="")
+@override_settings(STORAGES=TEST_STORAGES, SENDGRID_API_KEY="")
 class GuestBookingFlowTests(TestCase):
     def setUp(self):
         self.category = CarCategory.objects.create(name="SUV")
@@ -101,7 +101,7 @@ class GuestBookingFlowTests(TestCase):
         self.assertNotContains(second_response, 'id="agreeTerms"')
 
 
-@override_settings(STORAGES=TEST_STORAGES, RESEND_API_KEY="")
+@override_settings(STORAGES=TEST_STORAGES, SENDGRID_API_KEY="")
 class BookingTermsAcceptanceTests(TestCase):
     def setUp(self):
         self.category = CarCategory.objects.create(name="Sedan")
@@ -159,7 +159,7 @@ class BookingTermsAcceptanceTests(TestCase):
         self.assertNotContains(second_response, 'id="agreeTerms"')
 
 
-@override_settings(STORAGES=TEST_STORAGES, RESEND_API_KEY="")
+@override_settings(STORAGES=TEST_STORAGES, SENDGRID_API_KEY="")
 class BookingHistoryViewTests(TestCase):
     def setUp(self):
         self.category = CarCategory.objects.create(name="Compact")
@@ -207,7 +207,7 @@ class BookingHistoryViewTests(TestCase):
         self.assertContains(response, "?page=2")
 
 
-@override_settings(STORAGES=TEST_STORAGES, RESEND_API_KEY="", BOOKING_NOTIFICATION_EMAILS=[])
+@override_settings(STORAGES=TEST_STORAGES, SENDGRID_API_KEY="", BOOKING_NOTIFICATION_EMAILS=[])
 class BookingNotificationRecipientTests(TestCase):
     def test_uses_active_superuser_email_when_no_recipients_are_configured(self):
         User.objects.create_superuser(

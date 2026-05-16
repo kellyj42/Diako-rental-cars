@@ -1,10 +1,11 @@
 import logging
 
-import resend
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.utils.html import escape
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 from content.content import contact_info
 
@@ -65,23 +66,22 @@ def send_booking_notification_email(request, booking):
         </div>
     """
 
-    if not settings.RESEND_API_KEY:
+    if not settings.SENDGRID_API_KEY:
         logger.warning(
-            "RESEND_API_KEY is not configured. Booking notification not sent for booking %s.",
+            "SENDGRID_API_KEY is not configured. Booking notification not sent for booking %s.",
             booking.id,
         )
         return False
 
     try:
-        resend.api_key = settings.RESEND_API_KEY
-        resend.Emails.send(
-            {
-                "from": settings.DEFAULT_FROM_EMAIL,
-                "to": recipients,
-                "subject": f"New booking confirmed #{booking.id:06d}",
-                "html": html_content,
-            }
+        client = SendGridAPIClient(settings.SENDGRID_API_KEY)
+        message = Mail(
+            from_email=settings.SENDGRID_FROM_EMAIL or settings.DEFAULT_FROM_EMAIL,
+            to_emails=recipients,
+            subject=f"New booking confirmed #{booking.id:06d}",
+            html_content=html_content,
         )
+        client.send(message)
         return True
     except Exception:
         logger.exception("Failed to send booking notification for booking %s.", booking.id)

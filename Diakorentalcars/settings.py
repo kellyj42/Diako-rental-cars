@@ -267,7 +267,7 @@ USE_CLOUDINARY_MEDIA = all(
     ]
 )
 
-RESEND_API_KEY = os.getenv("RESEND_API_KEY", "")
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY", "")
 BOOKING_NOTIFICATION_EMAILS = [
     email.strip()
     for email in os.getenv("BOOKING_NOTIFICATION_EMAILS", "").split(",")
@@ -278,6 +278,7 @@ DEFAULT_FROM_EMAIL = os.getenv(
     "DEFAULT_FROM_EMAIL",
     "noreply@diakorentalcars.com",
 )
+SENDGRID_FROM_EMAIL = os.getenv("SENDGRID_FROM_EMAIL", DEFAULT_FROM_EMAIL)
 
 STORAGES = {
     "default": {
