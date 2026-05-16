@@ -1,4 +1,5 @@
 from datetime import timedelta
+from unittest.mock import patch
 
 from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
@@ -6,6 +7,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 from bookings.models import Booking
+from bookings.utils import get_booking_notification_recipients
 from cars.models import Car, CarCategory
 
 
@@ -19,7 +21,7 @@ TEST_STORAGES = {
 }
 
 
-@override_settings(STORAGES=TEST_STORAGES)
+@override_settings(STORAGES=TEST_STORAGES, RESEND_API_KEY="")
 class GuestBookingFlowTests(TestCase):
     def setUp(self):
         self.category = CarCategory.objects.create(name="SUV")
@@ -75,11 +77,13 @@ class GuestBookingFlowTests(TestCase):
         )
         self.client.force_login(user)
 
-        response = self.client.post(reverse("bookings:confirm_booking", args=[booking.id]), {"agree_terms": "on"})
+        with patch("bookings.views.send_booking_notification_email") as mock_send_notification:
+            response = self.client.post(reverse("bookings:confirm_booking", args=[booking.id]), {"agree_terms": "on"})
 
         booking.refresh_from_db()
         self.assertEqual(booking.user, user)
         self.assertEqual(booking.status, "confirmed")
+        mock_send_notification.assert_called_once()
         self.assertRedirects(response, reverse("home:order_success_detail", args=[booking.id]))
 
     def test_guest_only_accepts_terms_once_per_session(self):
@@ -97,7 +101,7 @@ class GuestBookingFlowTests(TestCase):
         self.assertNotContains(second_response, 'id="agreeTerms"')
 
 
-@override_settings(STORAGES=TEST_STORAGES)
+@override_settings(STORAGES=TEST_STORAGES, RESEND_API_KEY="")
 class BookingTermsAcceptanceTests(TestCase):
     def setUp(self):
         self.category = CarCategory.objects.create(name="Sedan")
@@ -140,7 +144,11 @@ class BookingTermsAcceptanceTests(TestCase):
         self.assertRedirects(response, reverse("bookings:booking_details", args=[booking.id]))
 
         # Confirm the booking with terms
-        confirm_response = self.client.post(reverse("bookings:confirm_booking", args=[booking.id]), {"agree_terms": "on"})
+        with patch("bookings.views.send_booking_notification_email"):
+            confirm_response = self.client.post(
+                reverse("bookings:confirm_booking", args=[booking.id]),
+                {"agree_terms": "on"},
+            )
         self.assertRedirects(confirm_response, reverse("home:order_success_detail", args=[booking.id]))
 
         self.user.refresh_from_db()
@@ -151,7 +159,7 @@ class BookingTermsAcceptanceTests(TestCase):
         self.assertNotContains(second_response, 'id="agreeTerms"')
 
 
-@override_settings(STORAGES=TEST_STORAGES)
+@override_settings(STORAGES=TEST_STORAGES, RESEND_API_KEY="")
 class BookingHistoryViewTests(TestCase):
     def setUp(self):
         self.category = CarCategory.objects.create(name="Compact")
@@ -197,3 +205,25 @@ class BookingHistoryViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "?page=2")
+
+
+@override_settings(STORAGES=TEST_STORAGES, RESEND_API_KEY="", BOOKING_NOTIFICATION_EMAILS=[])
+class BookingNotificationRecipientTests(TestCase):
+    def test_uses_active_superuser_email_when_no_recipients_are_configured(self):
+        User.objects.create_superuser(
+            username="owner@example.com",
+            email="owner@example.com",
+            password="testpass123",
+        )
+
+        self.assertEqual(get_booking_notification_recipients(), ["owner@example.com"])
+
+    @override_settings(BOOKING_NOTIFICATION_EMAILS=["bookings@example.com"])
+    def test_uses_configured_booking_notification_email_first(self):
+        User.objects.create_superuser(
+            username="owner@example.com",
+            email="owner@example.com",
+            password="testpass123",
+        )
+
+        self.assertEqual(get_booking_notification_recipients(), ["bookings@example.com"])

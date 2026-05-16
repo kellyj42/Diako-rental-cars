@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from .models import Booking
+from .utils import send_booking_notification_email
 from dashboard.decorators import admin_required
 from django.core.paginator import Paginator
 from django.urls import reverse
@@ -179,7 +180,7 @@ def booking_form_view(request):
             messages.error(request, "Please correct the highlighted booking form fields and submit again.")
 
     else:
-        form = BookingForm(initial={"car_id": car.id}, require_terms=_requires_booking_terms(request))
+        form = BookingForm(initial={"car_id": car.id}, require_terms=False)
 
     return render(request, "bookings/bookingform.html", {
         "form": form,
@@ -254,7 +255,7 @@ def save_booking_draft(request):
             is_deleted=False,
         ).first()
 
-    require_terms = _requires_booking_terms(request)
+    require_terms = False
     form = BookingForm(request.POST, instance=existing_guest_booking, require_terms=require_terms)
     if form.is_valid():
         booking = form.save(commit=False)
@@ -327,6 +328,7 @@ def confirm_booking(request, booking_id):
     try:
         booking.save()
         request.session.pop("guest_booking_id", None)
+        send_booking_notification_email(request, booking)
         messages.success(request, "Booking confirmed successfully!")
         logger.info(f"Booking confirmed by {request.user.username}: {booking.id}")
     except Exception as e:

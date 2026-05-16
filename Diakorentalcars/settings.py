@@ -268,6 +268,11 @@ USE_CLOUDINARY_MEDIA = all(
 )
 
 RESEND_API_KEY = os.getenv("RESEND_API_KEY", "")
+BOOKING_NOTIFICATION_EMAILS = [
+    email.strip()
+    for email in os.getenv("BOOKING_NOTIFICATION_EMAILS", "").split(",")
+    if email.strip()
+]
 # âœ… FIX #19: Use environment variable instead of hardcoded personal email
 DEFAULT_FROM_EMAIL = os.getenv(
     "DEFAULT_FROM_EMAIL",
