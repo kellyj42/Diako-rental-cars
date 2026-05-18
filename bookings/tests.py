@@ -206,6 +206,28 @@ class BookingHistoryViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "?page=2")
 
+    def test_canceling_booking_sends_notification(self):
+        self.client.force_login(self.user)
+        booking = Booking.objects.create(
+            user=self.user,
+            car=self.car,
+            pick_up_location="Airport",
+            drop_off_location="City Center",
+            pick_up_date=timezone.now().date() + timedelta(days=3),
+            pick_up_time="09:00",
+            drop_off_date=timezone.now().date() + timedelta(days=5),
+            drop_off_time="10:00",
+            status="confirmed",
+        )
+
+        with patch("bookings.views.send_booking_notification_email") as mock_send_notification:
+            response = self.client.post(reverse("bookings:cancel_booking", args=[booking.id]))
+
+        booking.refresh_from_db()
+        self.assertEqual(booking.status, "cancelled")
+        self.assertEqual(mock_send_notification.call_count, 1)
+        self.assertRedirects(response, reverse("bookings:booking_history"))
+
 
 @override_settings(STORAGES=TEST_STORAGES, SENDGRID_API_KEY="", BOOKING_NOTIFICATION_EMAILS=[])
 class BookingNotificationRecipientTests(TestCase):

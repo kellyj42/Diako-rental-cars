@@ -412,6 +412,7 @@ def cancel_booking_view(request, booking_id):
 
     booking.status = "cancelled"
     booking.save(update_fields=["status", "updated_at"])
+    send_booking_notification_email(request, booking, event="cancelled")
     messages.success(request, f"Booking #{booking.id} canceled successfully.")
     return redirect("bookings:booking_history")
 

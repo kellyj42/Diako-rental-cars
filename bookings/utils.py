@@ -33,21 +33,29 @@ def get_booking_notification_recipients():
     return [contact_info["email"]["support"]]
 
 
-def send_booking_notification_email(request, booking):
+def send_booking_notification_email(request, booking, event="confirmed"):
     recipients = get_booking_notification_recipients()
     dashboard_url = _absolute_url(request, reverse("bookings:booking_manage_list"))
     admin_url = _absolute_url(request, reverse("admin:bookings_booking_change", args=[booking.id]))
     customer_name = booking.user.get_full_name() or booking.user.email if booking.user_id else "Guest"
     customer_email = booking.user.email if booking.user_id else "Guest booking"
 
+    event_title = "New booking confirmed" if event == "confirmed" else "Booking canceled"
+    event_description = (
+        "A customer has confirmed a booking on Daiko Travel Agency Ltd."
+        if event == "confirmed"
+        else "A customer has canceled a booking on Daiko Travel Agency Ltd."
+    )
+    subject_prefix = "New booking confirmed" if event == "confirmed" else "Booking canceled"
+
     html_content = f"""
         <div style="background-color:#f5f7fb;padding:32px 0;font-family:Arial,sans-serif;">
             <div style="max-width:640px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(15,23,42,0.08);">
                 <div style="background:#1e3a8a;padding:18px 24px;">
-                    <h1 style="margin:0;color:#ffffff;font-size:20px;">New booking confirmed</h1>
+                    <h1 style="margin:0;color:#ffffff;font-size:20px;">{event_title}</h1>
                 </div>
                 <div style="padding:28px 32px;color:#0f172a;">
-                    <p style="margin:0 0 16px;color:#475569;">A customer has confirmed a booking on Daiko Travel Agency Ltd.</p>
+                    <p style="margin:0 0 16px;color:#475569;">{event_description}</p>
                     <table style="width:100%;border-collapse:collapse;font-size:14px;">
                         <tr><td style="padding:8px 0;color:#64748b;">Booking ID</td><td style="padding:8px 0;font-weight:700;">#{booking.id:06d}</td></tr>
                         <tr><td style="padding:8px 0;color:#64748b;">Customer</td><td style="padding:8px 0;">{escape(customer_name)} ({escape(customer_email)})</td></tr>
@@ -74,7 +82,7 @@ def send_booking_notification_email(request, booking):
 
     try:
         message = EmailMessage(
-            subject=f"New booking confirmed #{booking.id:06d}",
+            subject=f"{subject_prefix} #{booking.id:06d}",
             body=html_content,
             from_email=settings.DEFAULT_FROM_EMAIL,
             to=recipients,
