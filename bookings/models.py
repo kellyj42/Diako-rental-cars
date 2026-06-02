@@ -64,7 +64,7 @@ class Booking(models.Model):
         return f"Booking #{self.id} - {user_label} - {car_label}"
 
     def clean(self):
-        """Validate booking dates, times, and prevent overbooking."""
+        """Validate booking dates and times."""
         if not all(
             [
                 self.pick_up_date,
@@ -85,24 +85,6 @@ class Booking(models.Model):
 
         if self.drop_off_date == self.pick_up_date and self.drop_off_time <= self.pick_up_time:
             raise ValidationError("Drop-off time must be after pick-up time for same-day rentals")
-
-        if self.car_id is None:
-            return
-
-        conflicting_bookings = Booking.objects.filter(
-            car=self.car,
-            status__in=["confirmed", "completed"],
-            is_deleted=False,
-        ).exclude(id=self.id if self.id else None)
-
-        for booking in conflicting_bookings:
-            if not (
-                self.drop_off_date < booking.pick_up_date
-                or self.pick_up_date > booking.drop_off_date
-            ):
-                raise ValidationError(
-                    f"Car is already booked from {booking.pick_up_date} to {booking.drop_off_date}"
-                )
 
     def save(self, *args, **kwargs):
         """Run validations before saving."""

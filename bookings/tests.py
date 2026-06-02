@@ -249,3 +249,51 @@ class BookingNotificationRecipientTests(TestCase):
         )
 
         self.assertEqual(get_booking_notification_recipients(), ["bookings@example.com"])
+
+
+class BookingAvailabilityTests(TestCase):
+    def setUp(self):
+        self.category = CarCategory.objects.create(name="SUV")
+        self.car = Car.objects.create(
+            name="Toyota",
+            model="Prado",
+            year=2024,
+            category=self.category,
+            price_per_day=120,
+            seats=5,
+        )
+        self.user = User.objects.create_user(
+            username="availability@example.com",
+            email="availability@example.com",
+            password="testpass123",
+        )
+
+    def test_same_car_can_be_booked_for_overlapping_dates(self):
+        pick_up_date = timezone.now().date() + timedelta(days=3)
+        drop_off_date = timezone.now().date() + timedelta(days=5)
+
+        Booking.objects.create(
+            user=self.user,
+            car=self.car,
+            pick_up_location="Airport",
+            drop_off_location="City Center",
+            pick_up_date=pick_up_date,
+            pick_up_time="09:00",
+            drop_off_date=drop_off_date,
+            drop_off_time="10:00",
+            status="confirmed",
+        )
+
+        second_booking = Booking.objects.create(
+            user=self.user,
+            car=self.car,
+            pick_up_location="Airport",
+            drop_off_location="City Center",
+            pick_up_date=pick_up_date,
+            pick_up_time="11:00",
+            drop_off_date=drop_off_date,
+            drop_off_time="12:00",
+            status="confirmed",
+        )
+
+        self.assertEqual(second_booking.car, self.car)
