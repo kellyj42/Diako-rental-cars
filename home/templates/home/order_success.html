@@ -16,12 +16,12 @@ Confirmed-Daiko Travel Agency Ltd{% endblock %} {% block content %}
         <div>
           <p class="font-semibold text-gray-900">Pick-up</p>
           <p>{{ booking.pick_up_location }}</p>
-          <p>{{ booking.pick_up_date|date:"M d, Y" }} at {{ booking.pick_up_time|time:"g:i A" }}</p>
+          <p>{{ booking.pick_up_date|date:"M d, Y" }}</p>
         </div>
         <div>
           <p class="font-semibold text-gray-900">Drop-off</p>
           <p>{{ booking.drop_off_location }}</p>
-          <p>{{ booking.drop_off_date|date:"M d, Y" }} at {{ booking.drop_off_time|time:"g:i A" }}</p>
+          <p>{{ booking.drop_off_date|date:"M d, Y" }}</p>
         </div>
       </div>
     </div>
@@ -221,8 +221,7 @@ Confirmed-Daiko Travel Agency Ltd{% endblock %} {% block content %}
                     {{ booking.pick_up_location }}
                   </p>
                   <p class="text-gray-600">
-                    {{ booking.pick_up_date|date:"M d, Y" }},
-                    {{booking.pick_up_time|time:"g:i A" }}
+                    {{ booking.pick_up_date|date:"M d, Y" }}
                   </p>
                 </div>
 
@@ -237,8 +236,7 @@ Confirmed-Daiko Travel Agency Ltd{% endblock %} {% block content %}
                     {{ booking.drop_off_location }}
                   </p>
                   <p class="text-gray-600">
-                    {{ booking.drop_off_date|date:"M d, Y" }},
-                    {{booking.drop_off_time|time:"g:i A" }}
+                    {{ booking.drop_off_date|date:"M d, Y" }}
                   </p>
                   <p class="text-sm text-gray-500 mt-1">
                     Total: {{ rental_days }} day {{ rental_days|pluralize }}

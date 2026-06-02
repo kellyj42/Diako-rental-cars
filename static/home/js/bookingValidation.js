@@ -11,8 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const dropOff = form.drop_off_location;
   const pickDate = form.pick_up_date;
   const dropDate = form.drop_off_date;
-  const pickTime = form.pick_up_time;
-  const dropTime = form.drop_off_time;
   const agree = form.agree_terms;
   let isSubmitting = false;
 

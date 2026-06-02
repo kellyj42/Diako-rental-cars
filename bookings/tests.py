@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 from bookings.models import Booking
+from bookings.forms import DEFAULT_DROP_OFF_TIME, DEFAULT_PICK_UP_TIME
 from bookings.utils import get_booking_notification_recipients
 from cars.models import Car, CarCategory
 
@@ -37,9 +38,7 @@ class GuestBookingFlowTests(TestCase):
             "pick_up_location": "Airport Road",
             "drop_off_location": "City Center",
             "pick_up_date": (timezone.now().date() + timedelta(days=2)).isoformat(),
-            "pick_up_time": "09:00",
             "drop_off_date": (timezone.now().date() + timedelta(days=4)).isoformat(),
-            "drop_off_time": "10:00",
             "additional_notes": "Guest checkout flow",
             "agree_terms": "on",
         }
@@ -53,6 +52,8 @@ class GuestBookingFlowTests(TestCase):
 
         booking = Booking.objects.get()
         self.assertIsNone(booking.user)
+        self.assertEqual(booking.pick_up_time, DEFAULT_PICK_UP_TIME)
+        self.assertEqual(booking.drop_off_time, DEFAULT_DROP_OFF_TIME)
         self.assertRedirects(response, reverse("bookings:booking_details", args=[booking.id]))
 
         session = self.client.session
@@ -94,6 +95,7 @@ class GuestBookingFlowTests(TestCase):
         first_response = self.client.get(reverse("bookings:booking_form"))
         # Terms are now required on confirm
         self.assertNotContains(first_response, 'id="agreeTerms"')
+        self.assertNotContains(first_response, 'type="time"')
 
         self.client.post(reverse("bookings:booking_form"), self.booking_payload)
 
@@ -122,9 +124,7 @@ class BookingTermsAcceptanceTests(TestCase):
             "pick_up_location": "Airport Road",
             "drop_off_location": "City Center",
             "pick_up_date": (timezone.now().date() + timedelta(days=3)).isoformat(),
-            "pick_up_time": "09:00",
             "drop_off_date": (timezone.now().date() + timedelta(days=5)).isoformat(),
-            "drop_off_time": "10:00",
             "additional_notes": "",
             "agree_terms": "on",
         }
@@ -141,6 +141,8 @@ class BookingTermsAcceptanceTests(TestCase):
 
         response = self.client.post(reverse("bookings:booking_form"), self.payload)
         booking = Booking.objects.get()
+        self.assertEqual(booking.pick_up_time, DEFAULT_PICK_UP_TIME)
+        self.assertEqual(booking.drop_off_time, DEFAULT_DROP_OFF_TIME)
         self.assertRedirects(response, reverse("bookings:booking_details", args=[booking.id]))
 
         # Confirm the booking with terms

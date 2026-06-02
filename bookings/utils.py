@@ -60,8 +60,8 @@ def send_booking_notification_email(request, booking, event="confirmed"):
                         <tr><td style="padding:8px 0;color:#64748b;">Booking ID</td><td style="padding:8px 0;font-weight:700;">#{booking.id:06d}</td></tr>
                         <tr><td style="padding:8px 0;color:#64748b;">Customer</td><td style="padding:8px 0;">{escape(customer_name)} ({escape(customer_email)})</td></tr>
                         <tr><td style="padding:8px 0;color:#64748b;">Vehicle</td><td style="padding:8px 0;">{escape(booking.car.display_name)}</td></tr>
-                        <tr><td style="padding:8px 0;color:#64748b;">Pick-up</td><td style="padding:8px 0;">{escape(booking.pick_up_location)} on {booking.pick_up_date} at {booking.pick_up_time}</td></tr>
-                        <tr><td style="padding:8px 0;color:#64748b;">Drop-off</td><td style="padding:8px 0;">{escape(booking.drop_off_location)} on {booking.drop_off_date} at {booking.drop_off_time}</td></tr>
+                        <tr><td style="padding:8px 0;color:#64748b;">Pick-up</td><td style="padding:8px 0;">{escape(booking.pick_up_location)} on {booking.pick_up_date}</td></tr>
+                        <tr><td style="padding:8px 0;color:#64748b;">Drop-off</td><td style="padding:8px 0;">{escape(booking.drop_off_location)} on {booking.drop_off_date}</td></tr>
                         <tr><td style="padding:8px 0;color:#64748b;">Total</td><td style="padding:8px 0;font-weight:700;">UGX {booking.total_price}</td></tr>
                     </table>
                     <div style="margin:26px 0 8px;">

@@ -115,7 +115,7 @@
   </p>
 </div>
 
-<!-- Pick Up Date & Time -->
+<!-- Pick Up Date -->
 <div class="flex flex-col md:flex-row gap-3">
   <div class="flex flex-1">
     <div class="flex items-center bg-gray-100 text-gray-800 rounded-l-lg px-4">
@@ -134,21 +134,9 @@
     <p class="text-xs text-red-400 mt-1">{{ form.errors.pick_up_date.0 }}</p>
     {% endif %}
   </div>
-
-  <input
-    type="time"
-    name="pick_up_time"
-    required
-    step="1800"
-    value="{{ form.pick_up_time.value|default:'08:00' }}"
-    class="p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 placeholder-white"
-  />
-  {% if form and form.errors.pick_up_time %}
-  <p class="text-xs text-red-400 mt-1">{{ form.errors.pick_up_time.0 }}</p>
-  {% endif %}
 </div>
 
-<!-- Drop Off Date & Time -->
+<!-- Drop Off Date -->
 <div class="flex flex-col md:flex-row gap-3">
   <div class="flex flex-1">
     <div class="flex items-center bg-gray-100 text-gray-800 rounded-l-lg px-4">
@@ -167,18 +155,6 @@
     <p class="text-xs text-red-400 mt-1">{{ form.errors.drop_off_date.0 }}</p>
     {% endif %}
   </div>
-
-  <input
-    type="time"
-    name="drop_off_time"
-    required
-    step="1800"
-    value="{{ form.drop_off_time.value|default:'18:00' }}"
-    class="p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 placeholder-white"
-  />
-  {% if form and form.errors.drop_off_time %}
-  <p class="text-xs text-red-400 mt-1">{{ form.errors.drop_off_time.0 }}</p>
-  {% endif %}
 </div>
 
 <!-- Additional Notes -->
