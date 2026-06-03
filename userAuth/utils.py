@@ -2,6 +2,7 @@ import logging
 
 from django.conf import settings
 from django.core.mail import EmailMessage
+from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
@@ -12,15 +13,18 @@ from userAuth.tokens import email_verification_token
 logger = logging.getLogger(__name__)
 
 
+def _absolute_url(request, path):
+    if settings.APP_BASE_URL:
+        return f"{settings.APP_BASE_URL.rstrip('/')}{path}"
+    return request.build_absolute_uri(path)
+
+
 def send_verification_email(request, user):
     token = email_verification_token.make_token(user)
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     verification_path = reverse("userAuth:verify_email", kwargs={"uidb64": uid, "token": token})
 
-    if settings.APP_BASE_URL:
-        verification_link = f"{settings.APP_BASE_URL.rstrip('/')}{verification_path}"
-    else:
-        verification_link = request.build_absolute_uri(verification_path)
+    verification_link = _absolute_url(request, verification_path)
 
     support_email = contact_info["email"]["support"]
     html_content = f"""
@@ -83,5 +87,74 @@ def send_verification_email(request, user):
             "Failed to send verification email for user %s. Verification link: %s",
             user.email,
             verification_link,
+        )
+        return False
+
+
+def send_password_reset_email(request, user):
+    token = default_token_generator.make_token(user)
+    uid = urlsafe_base64_encode(force_bytes(user.pk))
+    reset_path = reverse("userAuth:reset_password_confirm", kwargs={"uidb64": uid, "token": token})
+    reset_link = _absolute_url(request, reset_path)
+
+    support_email = contact_info["email"]["support"]
+    html_content = f"""
+        <div style="background-color:#f5f7fb;padding:32px 0;font-family:Arial,sans-serif;">
+            <div style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(15,23,42,0.08);">
+                <div style="background:linear-gradient(90deg,#1e3a8a,#1d4ed8);padding:18px 24px;">
+                    <h1 style="margin:0;color:#ffffff;font-size:20px;letter-spacing:0.5px;">Daiko Travel Agency Ltd</h1>
+                </div>
+
+                <div style="padding:28px 32px;color:#0f172a;">
+                    <p style="margin:0 0 12px;font-size:14px;color:#64748b;">Hi {user.first_name or user.username},</p>
+                    <h2 style="margin:0 0 12px;font-size:24px;color:#0f172a;">Reset your password</h2>
+                    <p style="margin:0 0 18px;line-height:1.6;color:#475569;">
+                        We received a request to reset your Daiko Travel Agency Ltd account password. Click the button below to choose a new password.
+                    </p>
+
+                    <div style="text-align:center;margin:24px 0 28px;">
+                        <a href="{reset_link}"
+                           style="display:inline-block;background:#f97316;color:#ffffff;text-decoration:none;padding:12px 24px;border-radius:999px;font-weight:600;">
+                            Reset Password
+                        </a>
+                    </div>
+
+                    <p style="margin:0 0 8px;color:#64748b;font-size:13px;">If you did not request this, you can safely ignore this email.</p>
+                    <div style="margin-top:24px;padding:12px 16px;background:#f8fafc;border-radius:12px;color:#64748b;font-size:12px;">
+                        Trouble with the button? Copy and paste this URL into your browser:<br/>
+                        <span style="word-break:break-all;color:#2563eb;">{reset_link}</span>
+                    </div>
+                </div>
+
+                <div style="border-top:1px solid #e2e8f0;padding:16px 24px;text-align:center;color:#94a3b8;font-size:12px;">
+                    Need help? Contact us at {support_email}
+                </div>
+            </div>
+        </div>
+    """
+
+    if not settings.EMAIL_HOST_USER or not settings.EMAIL_HOST_PASSWORD:
+        logger.warning(
+            "SMTP settings are not configured. Password reset email not sent for user %s. Reset link: %s",
+            user.email,
+            reset_link,
+        )
+        return False
+
+    try:
+        message = EmailMessage(
+            subject="Reset your password",
+            body=html_content,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[user.email],
+        )
+        message.content_subtype = "html"
+        message.send(fail_silently=False)
+        return True
+    except Exception:
+        logger.exception(
+            "Failed to send password reset email for user %s. Reset link: %s",
+            user.email,
+            reset_link,
         )
         return False

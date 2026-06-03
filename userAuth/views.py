@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from allauth.account.models import EmailAddress
@@ -12,7 +14,7 @@ from urllib.parse import urlencode
 from django.views.decorators.http import require_http_methods
 from .forms import SignUpForm, UserManageForm
 from .models import Profile
-from .utils import send_verification_email
+from .utils import send_password_reset_email, send_verification_email
 from dashboard.decorators import admin_required
 from bookings.models import Booking
 
@@ -117,8 +119,30 @@ def signup_view(request):
 
 
 
-def reset_password_view(request):
-    return render(request, 'userAuth/resetpassword.html')
+def reset_password_view(request, uidb64=None, token=None):
+    if not uidb64 or not token:
+        return redirect("userAuth:password_reset_link")
+
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid, is_active=True)
+    except (User.DoesNotExist, ValueError, TypeError):
+        user = None
+
+    if not user or not default_token_generator.check_token(user, token):
+        messages.error(request, "This password reset link is invalid or has expired.", extra_tags=AUTH_MESSAGE_TAG)
+        return redirect("userAuth:password_reset_link")
+
+    if request.method == "POST":
+        form = SetPasswordForm(user, request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your password has been reset. You can now sign in.", extra_tags=AUTH_MESSAGE_TAG)
+            return redirect("userAuth:login")
+    else:
+        form = SetPasswordForm(user)
+
+    return render(request, "userAuth/resetpassword.html", {"form": form})
 
 
 def email_verification_view(request):
@@ -215,8 +239,21 @@ def resend_verification_email(request):
     return redirect("userAuth:email_verification")
 
 def password_reset_link(request):
+    if request.method == "POST":
+        email = (request.POST.get("email") or "").strip().lower()
+        user = User.objects.filter(email__iexact=email, is_active=True).first()
 
-    return render(request, 'userAuth/_passwordLink.html')
+        if user:
+            send_password_reset_email(request, user)
+
+        request.session["password_reset_email"] = email
+        return redirect("userAuth:password_reset_done")
+
+    return render(request, "userAuth/password_reset_request.html")
+
+
+def password_reset_done(request):
+    return render(request, "userAuth/_passwordLink.html")
 
 @login_required
 def profile_view(request):
