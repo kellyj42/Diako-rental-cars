@@ -90,15 +90,30 @@ class PasswordResetTests(TestCase):
         self.assertRedirects(response, reverse("userAuth:password_reset_done"))
         mock_send.assert_called_once()
 
-    def test_password_reset_request_does_not_reveal_unknown_email(self):
+    def test_password_reset_request_rejects_unknown_email(self):
         with patch("userAuth.views.send_password_reset_email") as mock_send:
             response = self.client.post(
                 reverse("userAuth:password_reset_link"),
                 {"email": "missing@example.com"},
             )
 
-        self.assertRedirects(response, reverse("userAuth:password_reset_done"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "No account was found with that email address.")
+        self.assertContains(response, "missing@example.com")
         mock_send.assert_not_called()
+
+    def test_valid_password_reset_token_renders_form(self):
+        uid = urlsafe_base64_encode(force_bytes(self.user.pk))
+        token = default_token_generator.make_token(self.user)
+
+        response = self.client.get(
+            reverse("userAuth:reset_password_confirm", kwargs={"uidb64": uid, "token": token})
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Create New Password")
+        self.assertContains(response, 'name="new_password1"')
+        self.assertContains(response, 'name="new_password2"')
 
     def test_valid_password_reset_token_changes_password(self):
         uid = urlsafe_base64_encode(force_bytes(self.user.pk))

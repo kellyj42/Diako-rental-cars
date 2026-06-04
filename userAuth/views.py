@@ -243,8 +243,15 @@ def password_reset_link(request):
         email = (request.POST.get("email") or "").strip().lower()
         user = User.objects.filter(email__iexact=email, is_active=True).first()
 
-        if user:
-            send_password_reset_email(request, user)
+        if not user:
+            messages.error(
+                request,
+                "No account was found with that email address.",
+                extra_tags=AUTH_MESSAGE_TAG,
+            )
+            return render(request, "userAuth/password_reset_request.html", {"email": email})
+
+        send_password_reset_email(request, user)
 
         request.session["password_reset_email"] = email
         return redirect("userAuth:password_reset_done")
